@@ -15,9 +15,9 @@
     --card: #ffffff;
     --accent: #ff7a9c;
     --accent2: #ffb347;
+    --accent3: #7bc8a4;
     --shadow: rgba(255, 122, 156, 0.25);
     --huella: rgba(255, 122, 156, 0.15);
-    --game-bg: #ffeef4;
   }
 
   body.dark {
@@ -26,9 +26,9 @@
     --card: #25253f;
     --accent: #ff9ec4;
     --accent2: #ffd166;
+    --accent3: #7be4b6;
     --shadow: rgba(255, 158, 196, 0.3);
     --huella: rgba(255, 158, 196, 0.1);
-    --game-bg: #1f1f3a;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -50,6 +50,7 @@
     50%      { background-position: 100% 50%; }
   }
 
+  /* Huellas flotantes */
   .huellas {
     position: fixed; inset: 0;
     pointer-events: none; z-index: 0; overflow: hidden;
@@ -118,13 +119,224 @@
     100% { transform: translateX(-150px) scaleX(1); }
   }
 
-  /* Galería */
+  /* Títulos de sección */
+  .seccion-titulo {
+    text-align: center;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: var(--accent);
+    margin: 50px auto 10px;
+    position: relative; z-index: 1;
+  }
+  .seccion-desc {
+    text-align: center; opacity: 0.8;
+    margin-bottom: 30px; font-size: 1rem;
+    position: relative; z-index: 1;
+  }
+
+  /* ============================================================
+     🎨 PERRITOS HECHOS CON CÓDIGO
+     ============================================================ */
+  .perros-code {
+    max-width: 1100px;
+    margin: 20px auto 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    position: relative; z-index: 1;
+  }
+
+  .perro-card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 20px 15px 18px;
+    box-shadow: 0 6px 20px var(--shadow);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.7s, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .perro-card.visible { opacity: 1; transform: translateY(0); }
+  .perro-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 15px 40px var(--shadow);
+  }
+
+  .perro-card .perro-svg {
+    width: 100%;
+    height: 200px;
+    display: block;
+    margin-bottom: 8px;
+    animation: breathe 2.8s ease-in-out infinite;
+  }
+
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.025); }
+  }
+
+  .perro-card h3 {
+    color: var(--accent);
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+  }
+  .perro-card p {
+    font-size: 0.95rem;
+    opacity: 0.8;
+  }
+
+  /* --- Perro sentado --- */
+  .perro-sentado .cola {
+    transform-box: fill-box;
+    transform-origin: bottom left;
+    animation: wagTail 0.45s ease-in-out infinite alternate;
+  }
+  @keyframes wagTail {
+    from { transform: rotate(-25deg); }
+    to   { transform: rotate(25deg); }
+  }
+
+  .perro-sentado .ojo {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: blinkEyes 4s infinite;
+  }
+  @keyframes blinkEyes {
+    0%, 42%, 50%, 100% { transform: scaleY(1); }
+    45%                { transform: scaleY(0.1); }
+  }
+
+  .perro-sentado .lengua {
+    transform-box: fill-box;
+    transform-origin: top center;
+    animation: lick 1.8s ease-in-out infinite;
+  }
+  @keyframes lick {
+    0%, 100% { transform: scaleY(1) translateY(0); }
+    50%      { transform: scaleY(1.4) translateY(2px); }
+  }
+
+  /* --- Perro caminando --- */
+  .perro-caminando .pata-trasera-1,
+  .perro-caminando .pata-trasera-2,
+  .perro-caminando .pata-delantera-1,
+  .perro-caminando .pata-delantera-2 {
+    transform-box: fill-box;
+    transform-origin: center top;
+  }
+  .perro-caminando .pata-trasera-1  { animation: walk 0.7s ease-in-out infinite; }
+  .perro-caminando .pata-trasera-2  { animation: walk 0.7s ease-in-out infinite reverse; }
+  .perro-caminando .pata-delantera-1 { animation: walk 0.7s ease-in-out infinite reverse; }
+  .perro-caminando .pata-delantera-2 { animation: walk 0.7s ease-in-out infinite; }
+
+  @keyframes walk {
+    0%, 100% { transform: rotate(0deg); }
+    50%      { transform: rotate(20deg); }
+  }
+
+  .perro-caminando .cola-caminando {
+    transform-box: fill-box;
+    transform-origin: bottom right;
+    animation: wagTail 0.35s ease-in-out infinite alternate;
+  }
+
+  .perro-caminando .lengua-caminando {
+    transform-box: fill-box;
+    transform-origin: top center;
+    animation: lick 1.2s ease-in-out infinite;
+  }
+
+  .perro-caminando .oreja-caminando {
+    transform-box: fill-box;
+    transform-origin: top center;
+    animation: flappyEar 0.7s ease-in-out infinite alternate;
+  }
+  @keyframes flappyEar {
+    from { transform: rotate(-20deg); }
+    to   { transform: rotate(-8deg); }
+  }
+
+  /* --- Perro durmiendo --- */
+  .perro-durmiendo .zeta {
+    font-family: 'Comic Sans MS', sans-serif;
+    animation: floatZ 3s ease-in-out infinite;
+    opacity: 0;
+  }
+  .perro-durmiendo .zeta-1 { animation-delay: 0s; }
+  .perro-durmiendo .zeta-2 { animation-delay: 0.8s; }
+  .perro-durmiendo .zeta-3 { animation-delay: 1.6s; }
+
+  @keyframes floatZ {
+    0%   { opacity: 0; transform: translate(0, 0) scale(0.5); }
+    20%  { opacity: 1; }
+    100% { opacity: 0; transform: translate(-12px, -45px) scale(1.4); }
+  }
+
+  /* ============================================================
+     💡 CURIOSIDADES
+     ============================================================ */
+  .curiosidades {
+    max-width: 1100px;
+    margin: 20px auto 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+    position: relative; z-index: 1;
+  }
+
+  .curiosidad {
+    background: var(--card);
+    padding: 18px 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px var(--shadow);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: default;
+  }
+  .curiosidad.visible { opacity: 1; transform: translateX(0); }
+  .curiosidad:hover {
+    transform: translateX(6px) scale(1.02);
+    box-shadow: 0 10px 25px var(--shadow);
+  }
+
+  .curiosidad-icono {
+    font-size: 1.9rem;
+    flex-shrink: 0;
+    animation: bounceEmoji 2s ease-in-out infinite;
+    display: inline-block;
+  }
+  @keyframes bounceEmoji {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50%      { transform: translateY(-6px) rotate(3deg); }
+  }
+
+  .curiosidad-texto {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    text-align: left;
+  }
+  .curiosidad-texto strong {
+    color: var(--accent);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 1rem;
+  }
+
+  /* ============================================================
+     📸 GALERÍA
+     ============================================================ */
   .galeria {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 25px;
-    max-width: 1000px;
-    margin: 40px auto;
+    max-width: 1100px;
+    margin: 20px auto 40px;
     position: relative; z-index: 1;
   }
   .card {
@@ -145,24 +357,129 @@
     transform: translateY(-10px) scale(1.04) rotate(-1deg);
     box-shadow: 0 15px 40px var(--shadow);
   }
+  .card .media-wrap {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    border-radius: 15px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ffe0e9, #ffd1dc);
+  }
+  body.dark .card .media-wrap {
+    background: linear-gradient(135deg, #2a2a4a, #1f1f3a);
+  }
   .card img {
-    width: 100%; border-radius: 15px; height: 200px;
-    object-fit: cover; transition: transform 0.5s;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s;
   }
   .card:hover img { transform: scale(1.08); }
+
+  .card .fallback {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    animation: saltito 1.2s ease-in-out infinite;
+  }
+  .card.error .fallback { display: flex; }
+  .card.error img { display: none; }
+
+  @keyframes saltito {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50%      { transform: translateY(-15px) rotate(5deg); }
+  }
+
   .card p {
     margin-top: 12px; font-weight: bold; color: var(--accent);
-    font-size: 1.1rem; transition: letter-spacing 0.3s;
+    font-size: 1.05rem; transition: letter-spacing 0.3s;
   }
-  .card:hover p { letter-spacing: 2px; }
+  .card:hover p { letter-spacing: 1.5px; }
   .card::after {
     content: '🐾'; position: absolute; top: 10px; right: 10px;
-    font-size: 1.5rem; opacity: 0; transition: all 0.3s;
+    font-size: 1.4rem; opacity: 0; transition: all 0.3s;
+    z-index: 3;
   }
   .card:hover::after { opacity: 1; animation: girar 1s linear infinite; }
   @keyframes girar { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-  /* Info */
+  /* ============================================================
+     🩺 CUIDADOS
+     ============================================================ */
+  .cuidados {
+    max-width: 1100px;
+    margin: 20px auto 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+    position: relative; z-index: 1;
+  }
+
+  .cuidado {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 6px 20px var(--shadow);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.7s, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+  }
+  .cuidado.visible { opacity: 1; transform: translateY(0); }
+  .cuidado::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, var(--accent) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+  }
+  .cuidado:hover::before { opacity: 0.08; }
+  .cuidado:hover {
+    transform: translateY(-8px) scale(1.02) rotate(-0.5deg);
+    box-shadow: 0 15px 40px var(--shadow);
+  }
+
+  .cuidado-icono {
+    font-size: 2.6rem;
+    display: block;
+    margin-bottom: 10px;
+    animation: balanceo 3s ease-in-out infinite;
+    transform-origin: center;
+  }
+  .cuidado:nth-child(2n) .cuidado-icono { animation-delay: 0.4s; }
+  .cuidado:nth-child(3n) .cuidado-icono { animation-delay: 0.8s; }
+
+  @keyframes balanceo {
+    0%, 100% { transform: rotate(-6deg) scale(1); }
+    50%      { transform: rotate(6deg) scale(1.08); }
+  }
+
+  .cuidado h3 { color: var(--accent); font-size: 1.2rem; margin-bottom: 10px; }
+  .cuidado p { font-size: 0.98rem; line-height: 1.5; opacity: 0.9; }
+  .cuidado ul { list-style: none; margin-top: 10px; padding-left: 0; }
+  .cuidado li {
+    font-size: 0.95rem;
+    padding: 4px 0 4px 20px;
+    position: relative;
+    opacity: 0.9;
+  }
+  .cuidado li::before {
+    content: '🐾';
+    position: absolute;
+    left: 0;
+    font-size: 0.8rem;
+    opacity: 0.7;
+  }
+
+  /* Info personal */
   .info {
     max-width: 700px; margin: 40px auto; background: var(--card);
     padding: 30px; border-radius: 20px;
@@ -202,119 +519,6 @@
   .btn-premio:hover { transform: scale(1.1) rotate(2deg); box-shadow: 0 10px 30px var(--accent); }
   .btn-premio:active { transform: scale(0.95); }
 
-  /* ============================================================
-     🎮 MINI JUEGO — estilos
-     ============================================================ */
-  .juego-section {
-    max-width: 800px;
-    margin: 50px auto;
-    background: var(--card);
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 6px 20px var(--shadow);
-    position: relative;
-    z-index: 1;
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s, transform 0.8s;
-  }
-  .juego-section.visible { opacity: 1; transform: translateY(0); }
-
-  .juego-section h2 {
-    color: var(--accent);
-    text-align: center;
-    font-size: 1.6rem;
-    margin-bottom: 8px;
-  }
-
-  .juego-hint {
-    text-align: center;
-    font-size: 0.95rem;
-    opacity: 0.75;
-    margin-bottom: 18px;
-  }
-
-  .juego-stats {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .stat {
-    background: var(--game-bg);
-    padding: 8px 18px;
-    border-radius: 50px;
-    font-weight: bold;
-    font-size: 1rem;
-    color: var(--accent);
-    border: 2px solid var(--accent);
-    transition: all 0.3s;
-  }
-
-  .juego-wrapper {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 3 / 2;
-    max-height: 500px;
-    background: var(--game-bg);
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: inset 0 0 30px var(--shadow);
-    cursor: none;
-    user-select: none;
-  }
-
-  #juegoCanvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-
-  .juego-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(6px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    z-index: 5;
-    border-radius: 18px;
-    transition: opacity 0.4s;
-    color: white;
-    text-align: center;
-    padding: 20px;
-  }
-  .juego-overlay.hidden { opacity: 0; pointer-events: none; }
-  .juego-overlay h3 {
-    font-size: 2rem;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-  }
-  .juego-overlay p {
-    font-size: 1.1rem;
-    opacity: 0.9;
-  }
-  .btn-juego {
-    padding: 14px 40px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: white;
-    border: none;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-    transition: all 0.3s;
-    font-family: inherit;
-  }
-  .btn-juego:hover { transform: scale(1.1) rotate(-2deg); }
-  .btn-juego:active { transform: scale(0.95); }
-
   footer {
     text-align: center; padding: 40px; opacity: 0.7;
     font-size: 0.9rem; position: relative; z-index: 1;
@@ -353,36 +557,31 @@
     <div class="perrito-caminando">🐕</div>
   </header>
 
+  <!-- 🎨 PERRITOS HECHOS CON CÓDIGO -->
+  <h2 class="seccion-titulo">🎨 Perritos animados con código</h2>
+  <p class="seccion-desc">Hechos 100% con SVG + CSS, sin imágenes externas</p>
+  <section class="perros-code" id="perrosCode"></section>
+
+  <!-- 💡 CURIOSIDADES -->
+  <h2 class="seccion-titulo">💡 ¿Sabías que...?</h2>
+  <p class="seccion-desc">Datos curiosos y fascinantes sobre los perros</p>
+  <section class="curiosidades" id="curiosidades"></section>
+
+  <!-- 📸 GALERÍA -->
+  <h2 class="seccion-titulo">📸 Momentos perrunos</h2>
+  <p class="seccion-desc">GIFs animados de perritos adorables 🐾</p>
   <section class="galeria" id="galeria"></section>
 
+  <!-- 🩺 CUIDADOS -->
+  <h2 class="seccion-titulo">🩺 Cuida a tu mascota</h2>
+  <p class="seccion-desc">Consejos básicos para que tu perrito sea feliz y saludable</p>
+  <section class="cuidados" id="cuidados"></section>
+
+  <!-- 🐕 SOBRE MÍ -->
   <section class="info" id="info">
     <h2>Sobre mí 🐕</h2>
     <ul id="listaInfo"></ul>
     <button class="btn-premio" id="btnPremio">🦴 ¡Dar premio!</button>
-  </section>
-
-  <!-- ============================================================
-       🎮 MINI JUEGO
-       ============================================================ -->
-  <section class="juego-section" id="juegoSection">
-    <h2>🦴 Atrapa los Huesos</h2>
-    <p class="juego-hint">Mueve al perrito con el <strong>mouse</strong> o las <strong>flechas ← →</strong>. ¡Atrapa huesos, evita zapatos!</p>
-
-    <div class="juego-stats">
-      <div class="stat">🏆 Puntos: <span id="puntos">0</span></div>
-      <div class="stat">❤️ Vidas: <span id="vidas">3</span></div>
-      <div class="stat">⚡ Nivel: <span id="nivel">1</span></div>
-    </div>
-
-    <div class="juego-wrapper">
-      <canvas id="juegoCanvas"></canvas>
-
-      <div class="juego-overlay" id="juegoOverlay">
-        <h3 id="overlayTitulo">¡A jugar! 🐕</h3>
-        <p id="overlayTexto">Atrapa los huesos 🦴 y las carnes 🍖. Evita los zapatos 👟.</p>
-        <button class="btn-juego" id="btnJugar">▶ Empezar</button>
-      </div>
-    </div>
   </section>
 
   <footer>Hecho con ❤️ para mi mejor amigo de cuatro patas</footer>
@@ -399,11 +598,27 @@
 
     // ---------- Tipos ----------
     interface MascotaInfo { etiqueta: string; valor: string; }
-    interface MascotaCard { url: string; texto: string; }
+    interface MascotaCard { url: string; texto: string; emojiFallback: string; }
+    interface Cuidado {
+      icono: string;
+      titulo: string;
+      descripcion: string;
+      puntos: string[];
+    }
+    interface Curiosidad {
+      icono: string;
+      titulo: string;
+      texto: string;
+    }
+    interface PerroCode {
+      titulo: string;
+      descripcion: string;
+      svg: string;
+    }
     interface ExplosionOptions { x: number; y: number; simbolos: string[]; cantidad?: number; }
     type Tema = 'claro' | 'oscuro';
 
-    // ---------- Datos ----------
+    // ---------- Datos: sobre mí ----------
     const infoMascota: MascotaInfo[] = [
       { etiqueta: '🐶 Nombre',           valor: 'Firulais' },
       { etiqueta: '🎂 Edad',             valor: '3 años' },
@@ -412,11 +627,143 @@
       { etiqueta: '💤 Hobby',            valor: 'Dormir y dar amor' },
     ];
 
+    // ---------- Datos: galería de GIFs ----------
     const galeriaCards: MascotaCard[] = [
-      { url: 'https://media.giphy.com/media/4Zo41lhzKt6iZ8xff9/giphy.gif', texto: '¡Feliz!' },
-      { url: 'https://media.giphy.com/media/mCRJDo24UvJMA/giphy.gif',      texto: 'Tan tierno 🥺' },
-      { url: 'https://media.giphy.com/media/8ugGp7JJtJNva/giphy.gif',      texto: 'Hora de dormir 😴' },
-      { url: 'https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif', texto: '¡A jugar!' },
+      { url: 'https://media.giphy.com/media/4Zo41lhzKt6iZ8xff9/giphy.gif', texto: '¡Feliz!',             emojiFallback: '🐶' },
+      { url: 'https://media.giphy.com/media/mCRJDo24UvJMA/giphy.gif',      texto: 'Tan tierno 🥺',       emojiFallback: '🐕' },
+      { url: 'https://media.giphy.com/media/8ugGp7JJtJNva/giphy.gif',      texto: 'Hora de dormir 😴',   emojiFallback: '💤' },
+      { url: 'https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif', texto: '¡A jugar!',           emojiFallback: '🎾' },
+      { url: 'https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/giphy.gif', texto: 'Moviendo la colita',  emojiFallback: '🐾' },
+      { url: 'https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif',  texto: '¡Guau guau!',         emojiFallback: '🐕‍🦺' },
+      { url: 'https://media.giphy.com/media/l0HlvtIPzPdt2usKs/giphy.gif',  texto: 'Cachorro curioso',    emojiFallback: '🐶' },
+      { url: 'https://media.giphy.com/media/3o6Zt6ML6BklcajjsA/giphy.gif', texto: '¡Corre, corre!',      emojiFallback: '🏃' },
+      { url: 'https://media.giphy.com/media/dTJ5yMb0MSmPC/giphy.gif',      texto: 'Cariño puro ❤️',      emojiFallback: '❤️' },
+      { url: 'https://media.giphy.com/media/5I1P2bLjjnPcI/giphy.gif',      texto: 'Saltando de alegría', emojiFallback: '🎉' },
+      { url: 'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif', texto: 'Compañero fiel',      emojiFallback: '🦴' },
+      { url: 'https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif',  texto: 'Ojos de ternura',     emojiFallback: '🥺' },
+    ];
+
+    // ---------- Datos: cuidados ----------
+    const cuidados: Cuidado[] = [
+      { icono: '🍖', titulo: 'Alimentación', descripcion: 'Una buena dieta mantiene a tu perrito lleno de energía.',
+        puntos: ['Comida según su edad y tamaño', 'Horarios fijos (2 veces al día)', 'Nunca chocolate, uvas ni cebolla', 'Agua limpia siempre disponible'] },
+      { icono: '💧', titulo: 'Hidratación', descripcion: 'El agua es tan importante como la comida.',
+        puntos: ['Cambia el agua 2 veces al día', 'Lava el bebedero cada día', 'Más agua si hace calor'] },
+      { icono: '🏃', titulo: 'Ejercicio diario', descripcion: 'Un perro cansado es un perro feliz.',
+        puntos: ['Paseos de 30 min a 1 hora', 'Juegos con pelota o frisbee', 'Adapta a su raza y edad'] },
+      { icono: '🛁', titulo: 'Higiene', descripcion: 'La limpieza previene enfermedades.',
+        puntos: ['Baño cada 4-6 semanas', 'Cepilla su pelaje 2-3 veces/semana', 'Corta sus uñas regularmente', 'Limpia orejas y dientes'] },
+      { icono: '💉', titulo: 'Salud y vacunas', descripcion: 'La prevención es la mejor medicina.',
+        puntos: ['Vacunas al día (rabia, parvovirus)', 'Desparasitación interna y externa', 'Visita al veterinario cada 6-12 meses', 'Esterilización según el vet'] },
+      { icono: '❤️', titulo: 'Amor y compañía', descripcion: 'Los perros necesitan afecto para ser felices.',
+        puntos: ['Dedícale tiempo de calidad', 'Acarícialo y háblale con cariño', 'No lo dejes solo por horas', 'Enséñale trucos con premios'] },
+      { icono: '🎾', titulo: 'Juegos y estimulación', descripcion: 'La mente también necesita ejercicio.',
+        puntos: ['Juguetes interactivos y kong', 'Juegos de olfato y búsqueda', 'Socializa con otros perros', 'Cambia sus juguetes'] },
+      { icono: '🛏️', titulo: 'Descanso', descripcion: 'Los perros duermen entre 12 y 14 horas al día.',
+        puntos: ['Dale un lugar tranquilo y cómodo', 'Respeta sus horas de sueño', 'Cama limpia y del tamaño adecuado'] },
+      { icono: '🚑', titulo: 'Emergencias', descripcion: 'Saber actuar a tiempo puede salvar su vida.',
+        puntos: ['Ten el número del veterinario a mano', 'Botiquín básico en casa', 'Señales de alarma: vómitos, decaimiento', 'Nunca automediques'] },
+      { icono: '🌡️', titulo: 'Clima y temperatura', descripcion: 'Protégelo del calor extremo y del frío.',
+        puntos: ['Nunca lo dejes en un auto cerrado', 'Sombra y agua fresca en verano', 'Abrígalo si hace mucho frío', 'Cuida sus patitas del pavimento caliente'] },
+      { icono: '🎓', titulo: 'Educación', descripcion: 'Un perro educado es un perro feliz.',
+        puntos: ['Empieza desde cachorro', 'Refuerzo positivo, nunca castigos', 'Órdenes básicas: sit, ven, quieto', 'Sé constante y paciente'] },
+      { icono: '📅', titulo: 'Rutina', descripcion: 'Los perros aman la previsibilidad.',
+        puntos: ['Horarios fijos para comer y pasear', 'Momentos de juego y descanso', 'Menos estrés = mejor comportamiento'] },
+    ];
+
+    // ---------- Datos: curiosidades ----------
+    const curiosidades: Curiosidad[] = [
+      { icono: '👃', titulo: 'Súper olfato',       texto: 'El olfato de un perro es hasta 40 veces más potente que el nuestro.' },
+      { icono: '👂', titulo: 'Oído fino',          texto: 'Escuchan sonidos 4 veces más lejanos y detectan ultrasonidos.' },
+      { icono: '💤', titulo: 'Sueñan como nosotros', texto: 'Entran en fase REM y sueñan con sus dueños y aventuras.' },
+      { icono: '🎓', titulo: 'Muy inteligentes',   texto: 'Un perro adulto tiene la inteligencia de un niño de 2 a 3 años.' },
+      { icono: '❤️', titulo: 'Sienten empatía',    texto: 'Perciben nuestras emociones y nos consuelan cuando estamos tristes.' },
+      { icono: '👣', titulo: 'Huellas únicas',     texto: 'La nariz de cada perro tiene un patrón único, como nuestra huella.' },
+      { icono: '🌡️', titulo: 'Nariz húmeda',       texto: 'La humedad de su nariz les ayuda a capturar mejor los olores.' },
+      { icono: '🐾', titulo: 'Nacen ciegos',       texto: 'Los cachorros nacen sordos y ciegos, y abren los ojos a las 2 semanas.' },
+      { icono: '🩺', titulo: 'Detectan enfermedades', texto: 'Su olfato puede detectar cáncer, diabetes y otras enfermedades.' },
+      { icono: '🎵', titulo: 'Les gusta la música', texto: 'La música clásica y suave los relaja y reduce su estrés.' },
+      { icono: '🐕', titulo: 'Más de 340 razas',   texto: 'Existen más de 340 razas reconocidas en todo el mundo.' },
+      { icono: '⏱️', titulo: 'Velocidad récord',   texto: 'Un galgo puede correr hasta 70 km/h en distancias cortas.' },
+    ];
+
+    // ---------- Datos: perritos SVG (hechos con código) ----------
+    const perrosCode: PerroCode[] = [
+      {
+        titulo: 'Perrito sentado',
+        descripcion: 'Mueve la cola, parpadea y lame 🐶',
+        svg: `
+          <svg class="perro-svg perro-sentado" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="110" cy="205" rx="65" ry="10" fill="rgba(0,0,0,0.15)"/>
+            <path class="cola" d="M 155 145 Q 195 120 178 75" stroke="#c97a4a" stroke-width="14" stroke-linecap="round" fill="none"/>
+            <ellipse cx="70" cy="185" rx="22" ry="15" fill="#b96a3a"/>
+            <ellipse cx="150" cy="185" rx="22" ry="15" fill="#b96a3a"/>
+            <ellipse cx="110" cy="150" rx="62" ry="45" fill="#d89060"/>
+            <rect x="75" y="165" width="20" height="42" rx="10" fill="#c97a4a"/>
+            <rect x="125" y="165" width="20" height="42" rx="10" fill="#c97a4a"/>
+            <rect x="72" y="115" width="76" height="12" rx="5" fill="#ff7a9c"/>
+            <circle cx="110" cy="128" r="7" fill="#ffd166" stroke="#e0a030" stroke-width="1.5"/>
+            <circle cx="110" cy="80" r="48" fill="#e0a074"/>
+            <ellipse cx="68" cy="55" rx="16" ry="32" fill="#a85a2a" transform="rotate(-25 68 55)"/>
+            <ellipse cx="152" cy="55" rx="16" ry="32" fill="#a85a2a" transform="rotate(25 152 55)"/>
+            <ellipse cx="92" cy="78" rx="16" ry="17" fill="#f5e0c8"/>
+            <ellipse cx="128" cy="78" rx="16" ry="17" fill="#f5e0c8"/>
+            <circle class="ojo" cx="92" cy="78" r="7" fill="#222"/>
+            <circle class="ojo" cx="128" cy="78" r="7" fill="#222"/>
+            <circle cx="94" cy="75" r="2.5" fill="#fff"/>
+            <circle cx="130" cy="75" r="2.5" fill="#fff"/>
+            <ellipse cx="110" cy="102" rx="22" ry="16" fill="#f5e0c8"/>
+            <ellipse cx="110" cy="96" rx="8" ry="6" fill="#222"/>
+            <ellipse cx="108" cy="94" rx="2.5" ry="1.5" fill="#888"/>
+            <path d="M 110 102 Q 110 112 100 112" stroke="#222" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M 110 102 Q 110 112 120 112" stroke="#222" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <ellipse class="lengua" cx="110" cy="114" rx="5" ry="6" fill="#ff6b8a"/>
+          </svg>
+        `,
+      },
+      {
+        titulo: 'Perrito caminando',
+        descripcion: 'Mueve sus patitas al andar 🚶',
+        svg: `
+          <svg class="perro-svg perro-caminando" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="140" cy="185" rx="90" ry="10" fill="rgba(0,0,0,0.15)"/>
+            <path class="cola-caminando" d="M 55 115 Q 30 90 25 55" stroke="#d89060" stroke-width="14" stroke-linecap="round" fill="none"/>
+            <rect class="pata-trasera-1" x="75" y="135" width="14" height="48" rx="6" fill="#b96a3a"/>
+            <rect class="pata-trasera-2" x="95" y="135" width="14" height="48" rx="6" fill="#c97a4a"/>
+            <rect class="pata-delantera-1" x="165" y="135" width="14" height="48" rx="6" fill="#c97a4a"/>
+            <rect class="pata-delantera-2" x="185" y="135" width="14" height="48" rx="6" fill="#b96a3a"/>
+            <ellipse cx="130" cy="115" rx="75" ry="40" fill="#d89060"/>
+            <circle cx="215" cy="85" r="40" fill="#e0a074"/>
+            <ellipse class="oreja-caminando" cx="195" cy="55" rx="13" ry="28" fill="#a85a2a" transform="rotate(-20 195 55)"/>
+            <circle cx="225" cy="80" r="5" fill="#222"/>
+            <circle cx="226" cy="78" r="1.5" fill="#fff"/>
+            <ellipse cx="240" cy="100" rx="16" ry="12" fill="#f5e0c8"/>
+            <ellipse cx="245" cy="95" rx="5" ry="4" fill="#222"/>
+            <ellipse class="lengua-caminando" cx="237" cy="112" rx="4" ry="7" fill="#ff6b8a"/>
+          </svg>
+        `,
+      },
+      {
+        titulo: 'Perrito durmiendo',
+        descripcion: 'Sueña tranquilo con sus Zzz 💤',
+        svg: `
+          <svg class="perro-svg perro-durmiendo" viewBox="0 0 220 180" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="110" cy="165" rx="80" ry="10" fill="rgba(0,0,0,0.15)"/>
+            <path d="M 60 140 Q 25 140 25 110 Q 25 95 45 95" stroke="#d89060" stroke-width="14" stroke-linecap="round" fill="none"/>
+            <ellipse cx="110" cy="130" rx="72" ry="35" fill="#d89060"/>
+            <ellipse cx="150" cy="150" rx="22" ry="12" fill="#c97a4a"/>
+            <ellipse cx="160" cy="115" rx="38" ry="32" fill="#e0a074"/>
+            <ellipse cx="145" cy="93" rx="13" ry="24" fill="#a85a2a" transform="rotate(-30 145 93)"/>
+            <path d="M 150 110 Q 158 118 166 110" stroke="#222" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M 175 108 Q 183 116 191 108" stroke="#222" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <ellipse cx="190" cy="125" rx="14" ry="11" fill="#f5e0c8"/>
+            <ellipse cx="195" cy="120" rx="5" ry="4" fill="#222"/>
+            <text class="zeta zeta-1" x="175" y="70" font-size="22" fill="#ff9ec4" font-weight="bold">Z</text>
+            <text class="zeta zeta-2" x="198" y="45" font-size="17" fill="#ff9ec4" font-weight="bold">Z</text>
+            <text class="zeta zeta-3" x="215" y="25" font-size="13" fill="#ff9ec4" font-weight="bold">Z</text>
+          </svg>
+        `,
+      },
     ];
 
     // ---------- Utilidades ----------
@@ -475,18 +822,18 @@
     }
 
     // ============================================================
-    // 🐾 Huellas
+    // 🐾 Huellas flotantes
     // ============================================================
     class HuellasFondo {
       private container: HTMLElement;
-      private readonly emojis = ['🐾', '🦴', '🐶', '❤️', '🐕'];
+      private readonly emojis = ['🐾', '🦴', '🐶', '❤️', '🐕', '🎾'];
 
       constructor(id: string) {
         const el = document.getElementById(id);
         if (!el) throw new Error(`No se encontró #${id}`);
         this.container = el;
-        for (let i = 0; i < 5; i++) setTimeout(() => this.crear(), i * 400);
-        setInterval(() => this.crear(), 1500);
+        for (let i = 0; i < 6; i++) setTimeout(() => this.crear(), i * 350);
+        setInterval(() => this.crear(), 1400);
       }
 
       private crear(): void {
@@ -503,19 +850,105 @@
     }
 
     // ============================================================
-    // 📜 Render
+    // 🎨 Render: perritos SVG
+    // ============================================================
+    function renderizarPerrosCode(): void {
+      const cont = $<HTMLElement>('#perrosCode');
+      if (!cont) return;
+
+      perrosCode.forEach(({ titulo, descripcion, svg }) => {
+        const card = document.createElement('div');
+        card.className = 'perro-card';
+        card.innerHTML = `
+          ${svg}
+          <h3>${titulo}</h3>
+          <p>${descripcion}</p>
+        `;
+        cont.appendChild(card);
+      });
+    }
+
+    // ============================================================
+    // 💡 Render: curiosidades
+    // ============================================================
+    function renderizarCuriosidades(): void {
+      const cont = $<HTMLElement>('#curiosidades');
+      if (!cont) return;
+
+      curiosidades.forEach(({ icono, titulo, texto }) => {
+        const div = document.createElement('div');
+        div.className = 'curiosidad';
+        div.innerHTML = `
+          <span class="curiosidad-icono">${icono}</span>
+          <div class="curiosidad-texto">
+            <strong>${titulo}</strong>
+            ${texto}
+          </div>
+        `;
+        cont.appendChild(div);
+      });
+    }
+
+    // ============================================================
+    // 📜 Render: galería
     // ============================================================
     function renderizarGaleria(): void {
       const g = $<HTMLElement>('#galeria');
       if (!g) return;
-      galeriaCards.forEach(({ url, texto }) => {
+
+      galeriaCards.forEach(({ url, texto, emojiFallback }) => {
         const card = document.createElement('div');
         card.className = 'card';
-        card.innerHTML = `<img src="${url}" alt="${texto}" loading="lazy"><p>${texto}</p>`;
+
+        const mediaWrap = document.createElement('div');
+        mediaWrap.className = 'media-wrap';
+
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = texto;
+        img.loading = 'lazy';
+        img.addEventListener('error', () => card.classList.add('error'));
+
+        const fallback = document.createElement('div');
+        fallback.className = 'fallback';
+        fallback.textContent = emojiFallback;
+
+        mediaWrap.appendChild(img);
+        mediaWrap.appendChild(fallback);
+
+        const p = document.createElement('p');
+        p.textContent = texto;
+
+        card.appendChild(mediaWrap);
+        card.appendChild(p);
         g.appendChild(card);
       });
     }
 
+    // ============================================================
+    // 📜 Render: cuidados
+    // ============================================================
+    function renderizarCuidados(): void {
+      const cont = $<HTMLElement>('#cuidados');
+      if (!cont) return;
+
+      cuidados.forEach(({ icono, titulo, descripcion, puntos }) => {
+        const card = document.createElement('div');
+        card.className = 'cuidado';
+        const ul = puntos.map(p => `<li>${p}</li>`).join('');
+        card.innerHTML = `
+          <span class="cuidado-icono">${icono}</span>
+          <h3>${titulo}</h3>
+          <p>${descripcion}</p>
+          <ul>${ul}</ul>
+        `;
+        cont.appendChild(card);
+      });
+    }
+
+    // ============================================================
+    // 📜 Render: info personal
+    // ============================================================
     function renderizarInfo(): void {
       const ul = $<HTMLUListElement>('#listaInfo');
       if (!ul) return;
@@ -526,13 +959,28 @@
       });
     }
 
+    // ============================================================
+    // 👁️ Animaciones al hacer scroll
+    // ============================================================
     function activarScrollAnimaciones(): void {
-      const obs = new IntersectionObserver((entradas) => {
-        entradas.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); });
-      }, { threshold: 0.15 });
-      document.querySelectorAll('.card, .info, .juego-section').forEach((el) => obs.observe(el));
+      const obs = new IntersectionObserver(
+        (entradas) => {
+          entradas.forEach((e, i) => {
+            if (e.isIntersecting) {
+              setTimeout(() => e.target.classList.add('visible'), i * 60);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+
+      document.querySelectorAll('.perro-card, .curiosidad, .card, .cuidado, .info')
+        .forEach((el) => obs.observe(el));
     }
 
+    // ============================================================
+    // 🦴 Botón "Dar premio"
+    // ============================================================
     function activarBotonPremio(): void {
       const btn = $<HTMLButtonElement>('#btnPremio');
       if (!btn) return;
@@ -548,417 +996,39 @@
       });
     }
 
+    // ============================================================
+    // 🎊 Clic global
+    // ============================================================
     function activarClicGlobal(): void {
       document.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
-        if (target.closest('button') || target.closest('.juego-wrapper')) return;
+        if (target.closest('button')) return;
         efectoExplosion({ x: e.clientX, y: e.clientY, simbolos: ['🐾', '❤️', '✨'], cantidad: 4 });
       });
     }
 
+    // ============================================================
+    // 📸 Título rotativo
+    // ============================================================
     function activarTituloRotativo(): void {
-      const t = ['🐾 El Rincón de mi Mascota', '🐶 ¡Guau guau!', '❤️ Te amo mascota', '🦴 Dame un premio'];
+      const t = [
+        '🐾 El Rincón de mi Mascota',
+        '🐶 ¡Guau guau!',
+        '❤️ Cuida a tu perrito',
+        '🦴 Dame un premio',
+      ];
       let i = 0;
       setInterval(() => { i = (i + 1) % t.length; document.title = t[i]; }, 3000);
-    }
-
-    // ============================================================
-    // 🎮 MINI JUEGO — Atrapa los Huesos
-    // ============================================================
-    type EstadoJuego = 'inicio' | 'jugando' | 'gameover';
-
-    interface Item {
-      x: number;
-      y: number;
-      velocidad: number;
-      tipo: 'hueso' | 'carne' | 'zapato';
-      emoji: string;
-      puntos: number;
-      tamaño: number;
-      rotacion: number;
-      velRotacion: number;
-    }
-
-    class JuegoAtrapaHuesos {
-      private canvas: HTMLCanvasElement;
-      private ctx: CanvasRenderingContext2D;
-      private overlay: HTMLElement;
-      private overlayTitulo: HTMLElement;
-      private overlayTexto: HTMLElement;
-      private btnJugar: HTMLButtonElement;
-      private puntosEl: HTMLElement;
-      private vidasEl: HTMLElement;
-      private nivelEl: HTMLElement;
-
-      // Estado
-      private estado: EstadoJuego = 'inicio';
-      private puntos: number = 0;
-      private vidas: number = 3;
-      private nivel: number = 1;
-      private items: Item[] = [];
-      private tiempoUltimoSpawn: number = 0;
-      private tiempoSpawnActual: number = 900;
-      private ultimoFrame: number = 0;
-      private rafId: number | null = null;
-
-      // Jugador (perrito canasta)
-      private jugadorX: number = 0;
-      private jugadorY: number = 0;
-      private jugadorAncho: number = 90;
-      private jugadorAlto: number = 70;
-      private targetX: number = 0;
-      private velocidadJugador: number = 0.25;
-
-      // Teclado
-      private teclas: Record<string, boolean> = {};
-
-      // Ajuste de tamaño
-      private ancho: number = 0;
-      private alto: number = 0;
-
-      constructor() {
-        const canvas = $<HTMLCanvasElement>('#juegoCanvas');
-        const overlay = $<HTMLElement>('#juegoOverlay');
-        const overlayTitulo = $<HTMLElement>('#overlayTitulo');
-        const overlayTexto = $<HTMLElement>('#overlayTexto');
-        const btnJugar = $<HTMLButtonElement>('#btnJugar');
-        const puntosEl = $<HTMLElement>('#puntos');
-        const vidasEl = $<HTMLElement>('#vidas');
-        const nivelEl = $<HTMLElement>('#nivel');
-
-        if (!canvas || !overlay || !overlayTitulo || !overlayTexto || !btnJugar
-            || !puntosEl || !vidasEl || !nivelEl) {
-          throw new Error('Faltan elementos del juego en el DOM');
-        }
-
-        const ctx = canvas.getContext('2d');
-        if (!ctx) throw new Error('No se pudo obtener el contexto 2D');
-
-        this.canvas = canvas;
-        this.ctx = ctx;
-        this.overlay = overlay;
-        this.overlayTitulo = overlayTitulo;
-        this.overlayTexto = overlayTexto;
-        this.btnJugar = btnJugar;
-        this.puntosEl = puntosEl;
-        this.vidasEl = vidasEl;
-        this.nivelEl = nivelEl;
-
-        this.init();
-      }
-
-      private init(): void {
-        this.ajustarTamaño();
-        window.addEventListener('resize', () => this.ajustarTamaño());
-
-        // Movimiento con mouse
-        this.canvas.addEventListener('mousemove', (e) => {
-          const rect = this.canvas.getBoundingClientRect();
-          const escala = this.ancho / rect.width;
-          this.targetX = (e.clientX - rect.left) * escala;
-        });
-
-        // Movimiento táctil
-        this.canvas.addEventListener('touchmove', (e) => {
-          e.preventDefault();
-          const rect = this.canvas.getBoundingClientRect();
-          const t = e.touches[0];
-          const escala = this.ancho / rect.width;
-          this.targetX = (t.clientX - rect.left) * escala;
-        }, { passive: false });
-
-        // Teclado
-        document.addEventListener('keydown', (e) => {
-          if (['ArrowLeft', 'ArrowRight'].includes(e.key)) e.preventDefault();
-          this.teclas[e.key] = true;
-        });
-        document.addEventListener('keyup', (e) => {
-          this.teclas[e.key] = false;
-        });
-
-        // Botón
-        this.btnJugar.addEventListener('click', () => this.empezar());
-
-        // Loop inicial (para mostrar al perrito quieto)
-        this.jugadorX = this.ancho / 2;
-        this.targetX = this.jugadorX;
-        this.jugadorY = this.alto - this.jugadorAlto - 10;
-        this.loop(0);
-      }
-
-      private ajustarTamaño(): void {
-        const rect = this.canvas.getBoundingClientRect();
-        const dpr = window.devicePixelRatio || 1;
-        this.ancho = rect.width;
-        this.alto = rect.height;
-        this.canvas.width = rect.width * dpr;
-        this.canvas.height = rect.height * dpr;
-        this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        this.jugadorY = this.alto - this.jugadorAlto - 10;
-      }
-
-      private empezar(): void {
-        this.estado = 'jugando';
-        this.puntos = 0;
-        this.vidas = 3;
-        this.nivel = 1;
-        this.items = [];
-        this.tiempoSpawnActual = 900;
-        this.tiempoUltimoSpawn = performance.now();
-        this.jugadorX = this.ancho / 2;
-        this.targetX = this.jugadorX;
-        this.actualizarStats();
-        this.overlay.classList.add('hidden');
-      }
-
-      private terminar(): void {
-        this.estado = 'gameover';
-        this.overlayTitulo.textContent = `¡${this.puntos} puntos! 🎉`;
-        this.overlayTexto.textContent = this.puntos >= 30
-          ? '¡Wow, eres un crack! 🏆'
-          : this.puntos >= 15
-          ? '¡Buen trabajo! 🐕'
-          : '¡Sigue practicando! 🦴';
-        this.btnJugar.textContent = '🔄 Jugar otra vez';
-        this.overlay.classList.remove('hidden');
-
-        // Explosión en el centro del juego
-        const rect = this.canvas.getBoundingClientRect();
-        efectoExplosion({
-          x: rect.left + rect.width / 2,
-          y: rect.top + rect.height / 2,
-          simbolos: ['🎉', '🏆', '🐕', '✨'],
-          cantidad: 14,
-        });
-      }
-
-      private actualizarStats(): void {
-        this.puntosEl.textContent = String(this.puntos);
-        this.vidasEl.textContent = String(this.vidas);
-        this.nivelEl.textContent = String(this.nivel);
-      }
-
-      private spawn(): void {
-        const r = Math.random();
-        let tipo: Item['tipo'];
-        let emoji: string;
-        let puntos: number;
-
-        if (r < 0.70) {
-          tipo = 'hueso'; emoji = '🦴'; puntos = 1;
-        } else if (r < 0.88) {
-          tipo = 'carne'; emoji = '🍖'; puntos = 3;
-        } else {
-          tipo = 'zapato'; emoji = '👟'; puntos = 0;
-        }
-
-        const tamaño = tipo === 'carne' ? 42 : 38;
-        this.items.push({
-          x: random(20, this.ancho - 20),
-          y: -50,
-          velocidad: random(2.2, 3.4) + this.nivel * 0.35,
-          tipo, emoji, puntos, tamaño,
-          rotacion: random(-0.3, 0.3),
-          velRotacion: random(-0.03, 0.03),
-        });
-      }
-
-      private actualizar(dt: number): void {
-        if (this.estado !== 'jugando') return;
-
-        // Movimiento del jugador
-        if (this.teclas['ArrowLeft'] || this.teclas['a'] || this.teclas['A']) {
-          this.targetX -= 8;
-        }
-        if (this.teclas['ArrowRight'] || this.teclas['d'] || this.teclas['D']) {
-          this.targetX += 8;
-        }
-        this.targetX = Math.max(this.jugadorAncho / 2,
-                        Math.min(this.ancho - this.jugadorAncho / 2, this.targetX));
-        this.jugadorX += (this.targetX - this.jugadorX) * this.velocidadJugador;
-
-        // Spawn
-        const ahora = performance.now();
-        if (ahora - this.tiempoUltimoSpawn > this.tiempoSpawnActual) {
-          this.spawn();
-          this.tiempoUltimoSpawn = ahora;
-        }
-
-        // Mover items + colisiones
-        const jugadorLeft = this.jugadorX - this.jugadorAncho / 2;
-        const jugadorRight = this.jugadorX + this.jugadorAncho / 2;
-        const jugadorTop = this.jugadorY;
-        const jugadorBottom = this.jugadorY + this.jugadorAlto;
-
-        for (let i = this.items.length - 1; i >= 0; i--) {
-          const it = this.items[i];
-          it.y += it.velocidad;
-          it.rotacion += it.velRotacion;
-
-          // Colisión con la canasta (zona de atrapado)
-          const hit = (
-            it.y + it.tamaño / 2 >= jugadorTop &&
-            it.y - it.tamaño / 2 <= jugadorBottom &&
-            it.x >= jugadorLeft &&
-            it.x <= jugadorRight
-          );
-
-          if (hit) {
-            if (it.tipo === 'zapato') {
-              this.vidas -= 1;
-              this.actualizarStats();
-              this.mostrarFeedback('💔', it.x, it.y, '#ff4444');
-              if (this.vidas <= 0) {
-                this.items.splice(i, 1);
-                this.terminar();
-                return;
-              }
-            } else {
-              this.puntos += it.puntos;
-              this.actualizarStats();
-              this.mostrarFeedback(
-                it.tipo === 'carne' ? '+3' : '+1',
-                it.x, it.y,
-                it.tipo === 'carne' ? '#ffb347' : '#ff7a9c'
-              );
-
-              // Subir nivel cada 15 puntos
-              if (this.puntos > 0 && Math.floor(this.puntos / 15) + 1 > this.nivel) {
-                this.nivel += 1;
-                this.tiempoSpawnActual = Math.max(320, 900 - this.nivel * 70);
-                this.actualizarStats();
-              }
-            }
-            this.items.splice(i, 1);
-            continue;
-          }
-
-          // Fuera de pantalla (item perdido)
-          if (it.y - it.tamaño > this.alto) {
-            if (it.tipo !== 'zapato') {
-              // Opcional: perder vida por dejar caer hueso. Lo dejamos sin castigo.
-            }
-            this.items.splice(i, 1);
-          }
-        }
-      }
-
-      private feedbacks: { x: number; y: number; texto: string; color: string; vida: number }[] = [];
-
-      private mostrarFeedback(texto: string, x: number, y: number, color: string): void {
-        this.feedbacks.push({ x, y, texto, color, vida: 1 });
-      }
-
-      private dibujar(): void {
-        const ctx = this.ctx;
-        ctx.clearRect(0, 0, this.ancho, this.alto);
-
-        // Suelo decorativo
-        ctx.fillStyle = 'rgba(255,122,156,0.08)';
-        ctx.fillRect(0, this.alto - 20, this.ancho, 20);
-
-        // Items
-        for (const it of this.items) {
-          ctx.save();
-          ctx.translate(it.x, it.y);
-          ctx.rotate(it.rotacion);
-          ctx.font = `${it.tamaño}px serif`;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText(it.emoji, 0, 0);
-          ctx.restore();
-        }
-
-        // Jugador (perrito + canasta)
-        this.dibujarJugador();
-
-        // Feedbacks flotantes
-        for (let i = this.feedbacks.length - 1; i >= 0; i--) {
-          const fb = this.feedbacks[i];
-          fb.vida -= 0.02;
-          fb.y -= 1.5;
-          if (fb.vida <= 0) { this.feedbacks.splice(i, 1); continue; }
-          ctx.save();
-          ctx.globalAlpha = fb.vida;
-          ctx.fillStyle = fb.color;
-          ctx.font = 'bold 26px "Comic Sans MS", sans-serif';
-          ctx.textAlign = 'center';
-          ctx.fillText(fb.texto, fb.x, fb.y);
-          ctx.restore();
-        }
-      }
-
-      private dibujarJugador(): void {
-        const ctx = this.ctx;
-        const x = this.jugadorX;
-        const y = this.jugadorY;
-
-        // Canasta
-        ctx.save();
-        ctx.fillStyle = '#c97a4a';
-        ctx.beginPath();
-        ctx.roundRect(x - this.jugadorAncho / 2, y + 30, this.jugadorAncho, this.jugadorAlto - 30, 10);
-        ctx.fill();
-
-        // Líneas de la canasta
-        ctx.strokeStyle = '#a05a2c';
-        ctx.lineWidth = 2;
-        for (let i = 1; i < 5; i++) {
-          const lx = x - this.jugadorAncho / 2 + (this.jugadorAncho / 5) * i;
-          ctx.beginPath();
-          ctx.moveTo(lx, y + 32);
-          ctx.lineTo(lx, y + this.jugadorAlto);
-          ctx.stroke();
-        }
-
-        // Perrito arriba de la canasta
-        ctx.font = '46px serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        const wag = Math.sin(performance.now() / 150) * 0.15;
-        ctx.save();
-        ctx.translate(x, y + 12);
-        ctx.rotate(wag);
-        ctx.fillText('🐕', 0, 0);
-        ctx.restore();
-
-        ctx.restore();
-      }
-
-      private loop = (t: number): void => {
-        const dt = t - this.ultimoFrame;
-        this.ultimoFrame = t;
-
-        this.actualizar(dt);
-        this.dibujar();
-
-        this.rafId = requestAnimationFrame(this.loop);
-      };
-    }
-
-    // Polyfill para roundRect en navegadores antiguos
-    if (!(CanvasRenderingContext2D.prototype as any).roundRect) {
-      (CanvasRenderingContext2D.prototype as any).roundRect = function (
-        x: number, y: number, w: number, h: number, r: number
-      ) {
-        if (w < 2 * r) r = w / 2;
-        if (h < 2 * r) r = h / 2;
-        this.beginPath();
-        this.moveTo(x + r, y);
-        this.arcTo(x + w, y, x + w, y + h, r);
-        this.arcTo(x + w, y + h, x, y + h, r);
-        this.arcTo(x, y + h, x, y, r);
-        this.arcTo(x, y, x + w, y, r);
-        this.closePath();
-        return this;
-      };
     }
 
     // ============================================================
     // 🚀 Init
     // ============================================================
     document.addEventListener('DOMContentLoaded', () => {
+      renderizarPerrosCode();
+      renderizarCuriosidades();
       renderizarGaleria();
+      renderizarCuidados();
       renderizarInfo();
 
       const themeBtn = $<HTMLButtonElement>('#themeBtn');
@@ -971,10 +1041,7 @@
       activarClicGlobal();
       activarTituloRotativo();
 
-      // Iniciar juego
-      new JuegoAtrapaHuesos();
-
-      console.log('%c🐾 ¡Sitio + Juego cargados!', 'color:#ff7a9c;font-size:16px;font-weight:bold;');
+      console.log('%c🐾 ¡Sitio de mascota cargado!', 'color:#ff7a9c;font-size:16px;font-weight:bold;');
     });
   </script>
 </body>
