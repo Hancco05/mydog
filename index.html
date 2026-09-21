@@ -6,7 +6,7 @@
 <title>🐾 El Rincón de mi Mascota</title>
 
 <!-- ============================================================
-     🎨 CSS (todo el estilo y animaciones)
+     🎨 CSS
      ============================================================ -->
 <style>
   :root {
@@ -17,6 +17,7 @@
     --accent2: #ffb347;
     --shadow: rgba(255, 122, 156, 0.25);
     --huella: rgba(255, 122, 156, 0.15);
+    --game-bg: #ffeef4;
   }
 
   body.dark {
@@ -27,6 +28,7 @@
     --accent2: #ffd166;
     --shadow: rgba(255, 158, 196, 0.3);
     --huella: rgba(255, 158, 196, 0.1);
+    --game-bg: #1f1f3a;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -45,25 +47,19 @@
 
   @keyframes gradientShift {
     0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+    50%      { background-position: 100% 50%; }
   }
 
-  /* Huellas flotantes */
   .huellas {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 0; overflow: hidden;
   }
-
   .huella {
     position: absolute;
     font-size: 2rem;
     color: var(--huella);
     animation: flotar linear infinite;
   }
-
   @keyframes flotar {
     0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
     10%  { opacity: 1; }
@@ -91,20 +87,13 @@
   }
   .theme-toggle:hover { transform: scale(1.15) rotate(-5deg); }
   .theme-toggle:active { transform: scale(0.9); }
-
   @keyframes pulso {
     0%, 100% { box-shadow: 0 4px 20px var(--shadow); }
     50%      { box-shadow: 0 4px 35px var(--accent); }
   }
 
   /* Header */
-  header {
-    text-align: center;
-    padding: 40px 20px 20px;
-    position: relative;
-    z-index: 1;
-  }
-
+  header { text-align: center; padding: 40px 20px 20px; position: relative; z-index: 1; }
   h1 {
     font-size: clamp(1.8rem, 5vw, 3rem);
     color: var(--accent);
@@ -112,26 +101,15 @@
     animation: rebote 2s ease-in-out infinite;
     display: inline-block;
   }
-
   @keyframes rebote {
     0%, 100% { transform: translateY(0) rotate(-2deg); }
     50%      { transform: translateY(-12px) rotate(2deg); }
   }
-
-  .subtitle {
-    margin-top: 15px;
-    font-size: 1.1rem;
-    opacity: 0.85;
-    animation: fadeInUp 1.2s ease;
-  }
-
+  .subtitle { margin-top: 15px; font-size: 1.1rem; opacity: 0.85; animation: fadeInUp 1.2s ease; }
   .perrito-caminando {
-    font-size: 3rem;
-    display: inline-block;
-    margin-top: 15px;
+    font-size: 3rem; display: inline-block; margin-top: 15px;
     animation: caminar 6s linear infinite;
   }
-
   @keyframes caminar {
     0%   { transform: translateX(-150px) scaleX(1); }
     48%  { transform: translateX(150px) scaleX(1); }
@@ -147,10 +125,8 @@
     gap: 25px;
     max-width: 1000px;
     margin: 40px auto;
-    position: relative;
-    z-index: 1;
+    position: relative; z-index: 1;
   }
-
   .card {
     background: var(--card);
     border-radius: 20px;
@@ -170,66 +146,37 @@
     box-shadow: 0 15px 40px var(--shadow);
   }
   .card img {
-    width: 100%;
-    border-radius: 15px;
-    height: 200px;
-    object-fit: cover;
-    transition: transform 0.5s;
+    width: 100%; border-radius: 15px; height: 200px;
+    object-fit: cover; transition: transform 0.5s;
   }
   .card:hover img { transform: scale(1.08); }
   .card p {
-    margin-top: 12px;
-    font-weight: bold;
-    color: var(--accent);
-    font-size: 1.1rem;
-    transition: letter-spacing 0.3s;
+    margin-top: 12px; font-weight: bold; color: var(--accent);
+    font-size: 1.1rem; transition: letter-spacing 0.3s;
   }
   .card:hover p { letter-spacing: 2px; }
-
   .card::after {
-    content: '🐾';
-    position: absolute;
-    top: 10px; right: 10px;
-    font-size: 1.5rem;
-    opacity: 0;
-    transition: all 0.3s;
+    content: '🐾'; position: absolute; top: 10px; right: 10px;
+    font-size: 1.5rem; opacity: 0; transition: all 0.3s;
   }
-  .card:hover::after {
-    opacity: 1;
-    animation: girar 1s linear infinite;
-  }
-  @keyframes girar {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-  }
+  .card:hover::after { opacity: 1; animation: girar 1s linear infinite; }
+  @keyframes girar { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
   /* Info */
   .info {
-    max-width: 700px;
-    margin: 40px auto;
-    background: var(--card);
-    padding: 30px;
-    border-radius: 20px;
+    max-width: 700px; margin: 40px auto; background: var(--card);
+    padding: 30px; border-radius: 20px;
     box-shadow: 0 6px 20px var(--shadow);
-    position: relative;
-    z-index: 1;
-    opacity: 0;
-    transform: translateY(40px);
+    position: relative; z-index: 1;
+    opacity: 0; transform: translateY(40px);
     transition: opacity 0.8s, transform 0.8s;
   }
   .info.visible { opacity: 1; transform: translateY(0); }
-  .info h2 {
-    color: var(--accent);
-    margin-bottom: 20px;
-    text-align: center;
-    font-size: 1.6rem;
-  }
+  .info h2 { color: var(--accent); margin-bottom: 20px; text-align: center; font-size: 1.6rem; }
   .info ul { list-style: none; }
   .info li {
-    padding: 10px 0;
-    font-size: 1.1rem;
-    opacity: 0;
-    transform: translateX(-30px);
+    padding: 10px 0; font-size: 1.1rem;
+    opacity: 0; transform: translateX(-30px);
     transition: all 0.5s;
     border-bottom: 1px dashed var(--shadow);
   }
@@ -241,15 +188,119 @@
   .info.visible li:nth-child(5) { transition-delay: 0.5s; }
   .info li:hover {
     transform: translateX(10px) scale(1.03);
-    color: var(--accent);
-    padding-left: 10px;
+    color: var(--accent); padding-left: 10px;
   }
 
-  /* Botón premio */
   .btn-premio {
+    display: block; margin: 30px auto 10px; padding: 15px 35px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white; border: none; border-radius: 50px;
+    font-size: 1.1rem; font-weight: bold; cursor: pointer;
+    box-shadow: 0 6px 20px var(--shadow);
+    transition: all 0.3s; font-family: inherit;
+  }
+  .btn-premio:hover { transform: scale(1.1) rotate(2deg); box-shadow: 0 10px 30px var(--accent); }
+  .btn-premio:active { transform: scale(0.95); }
+
+  /* ============================================================
+     🎮 MINI JUEGO — estilos
+     ============================================================ */
+  .juego-section {
+    max-width: 800px;
+    margin: 50px auto;
+    background: var(--card);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px var(--shadow);
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s, transform 0.8s;
+  }
+  .juego-section.visible { opacity: 1; transform: translateY(0); }
+
+  .juego-section h2 {
+    color: var(--accent);
+    text-align: center;
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+  }
+
+  .juego-hint {
+    text-align: center;
+    font-size: 0.95rem;
+    opacity: 0.75;
+    margin-bottom: 18px;
+  }
+
+  .juego-stats {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .stat {
+    background: var(--game-bg);
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    transition: all 0.3s;
+  }
+
+  .juego-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    max-height: 500px;
+    background: var(--game-bg);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: inset 0 0 30px var(--shadow);
+    cursor: none;
+    user-select: none;
+  }
+
+  #juegoCanvas {
+    width: 100%;
+    height: 100%;
     display: block;
-    margin: 30px auto 10px;
-    padding: 15px 35px;
+  }
+
+  .juego-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    z-index: 5;
+    border-radius: 18px;
+    transition: opacity 0.4s;
+    color: white;
+    text-align: center;
+    padding: 20px;
+  }
+  .juego-overlay.hidden { opacity: 0; pointer-events: none; }
+  .juego-overlay h3 {
+    font-size: 2rem;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+  }
+  .juego-overlay p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+  .btn-juego {
+    padding: 14px 40px;
     background: linear-gradient(135deg, var(--accent), var(--accent2));
     color: white;
     border: none;
@@ -257,23 +308,16 @@
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 6px 20px var(--shadow);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     transition: all 0.3s;
     font-family: inherit;
   }
-  .btn-premio:hover {
-    transform: scale(1.1) rotate(2deg);
-    box-shadow: 0 10px 30px var(--accent);
-  }
-  .btn-premio:active { transform: scale(0.95); }
+  .btn-juego:hover { transform: scale(1.1) rotate(-2deg); }
+  .btn-juego:active { transform: scale(0.95); }
 
   footer {
-    text-align: center;
-    padding: 40px;
-    opacity: 0.7;
-    font-size: 0.9rem;
-    position: relative;
-    z-index: 1;
+    text-align: center; padding: 40px; opacity: 0.7;
+    font-size: 0.9rem; position: relative; z-index: 1;
   }
 
   @keyframes fadeInUp {
@@ -281,7 +325,6 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Emojis que saltan */
   .emoji-pop {
     position: fixed;
     font-size: 2rem;
@@ -318,39 +361,49 @@
     <button class="btn-premio" id="btnPremio">🦴 ¡Dar premio!</button>
   </section>
 
+  <!-- ============================================================
+       🎮 MINI JUEGO
+       ============================================================ -->
+  <section class="juego-section" id="juegoSection">
+    <h2>🦴 Atrapa los Huesos</h2>
+    <p class="juego-hint">Mueve al perrito con el <strong>mouse</strong> o las <strong>flechas ← →</strong>. ¡Atrapa huesos, evita zapatos!</p>
+
+    <div class="juego-stats">
+      <div class="stat">🏆 Puntos: <span id="puntos">0</span></div>
+      <div class="stat">❤️ Vidas: <span id="vidas">3</span></div>
+      <div class="stat">⚡ Nivel: <span id="nivel">1</span></div>
+    </div>
+
+    <div class="juego-wrapper">
+      <canvas id="juegoCanvas"></canvas>
+
+      <div class="juego-overlay" id="juegoOverlay">
+        <h3 id="overlayTitulo">¡A jugar! 🐕</h3>
+        <p id="overlayTexto">Atrapa los huesos 🦴 y las carnes 🍖. Evita los zapatos 👟.</p>
+        <button class="btn-juego" id="btnJugar">▶ Empezar</button>
+      </div>
+    </div>
+  </section>
+
   <footer>Hecho con ❤️ para mi mejor amigo de cuatro patas</footer>
 
   <!-- ============================================================
-       🧠 TypeScript compilado en el navegador con Babel Standalone
+       🧠 TypeScript compilado por Babel
        ============================================================ -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <script type="text/babel" data-presets="typescript" data-type="module">
     /* ============================================================
-       🐾 Sitio Web para Mascota — TypeScript en un solo archivo
+       🐾 Sitio Web para Mascota — TypeScript
        ============================================================ */
 
-    // ---------- Tipos e interfaces ----------
-    interface MascotaInfo {
-      etiqueta: string;
-      valor: string;
-    }
-
-    interface MascotaCard {
-      url: string;
-      texto: string;
-    }
-
-    interface ExplosionOptions {
-      x: number;
-      y: number;
-      simbolos: string[];
-      cantidad?: number;
-    }
-
+    // ---------- Tipos ----------
+    interface MascotaInfo { etiqueta: string; valor: string; }
+    interface MascotaCard { url: string; texto: string; }
+    interface ExplosionOptions { x: number; y: number; simbolos: string[]; cantidad?: number; }
     type Tema = 'claro' | 'oscuro';
 
-    // ---------- Datos de la mascota ----------
+    // ---------- Datos ----------
     const infoMascota: MascotaInfo[] = [
       { etiqueta: '🐶 Nombre',           valor: 'Firulais' },
       { etiqueta: '🎂 Edad',             valor: '3 años' },
@@ -366,48 +419,33 @@
       { url: 'https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif', texto: '¡A jugar!' },
     ];
 
-    // ---------- Utilidades tipadas ----------
-    const $ = <T extends HTMLElement>(selector: string): T | null =>
-      document.querySelector<T>(selector);
-
-    const random = (min: number, max: number): number =>
-      Math.random() * (max - min) + min;
-
-    const randomItem = <T,>(arr: T[]): T =>
-      arr[Math.floor(Math.random() * arr.length)];
+    // ---------- Utilidades ----------
+    const $ = <T extends HTMLElement>(sel: string): T | null => document.querySelector<T>(sel);
+    const random = (min: number, max: number): number => Math.random() * (max - min) + min;
+    const randomItem = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 
     // ============================================================
-    // 🌙 Gestión de Tema (claro / oscuro)
+    // 🌙 Tema
     // ============================================================
     class ThemeManager {
-      private readonly key: string = 'tema';
+      private readonly key = 'tema';
       private readonly body: HTMLElement = document.body;
       private readonly btn: HTMLButtonElement;
 
-      constructor(button: HTMLButtonElement) {
-        this.btn = button;
-        this.init();
-        this.btn.addEventListener('click', () => this.toggle());
-      }
-
-      private init(): void {
+      constructor(btn: HTMLButtonElement) {
+        this.btn = btn;
         const guardado = localStorage.getItem(this.key) as Tema | null;
         this.aplicar(guardado === 'oscuro' ? 'oscuro' : 'claro');
+        this.btn.addEventListener('click', () => this.toggle());
       }
 
       private toggle(): void {
         const nuevo: Tema = this.body.classList.contains('dark') ? 'claro' : 'oscuro';
         this.aplicar(nuevo);
         localStorage.setItem(this.key, nuevo);
-
-        const emojis = nuevo === 'oscuro'
-          ? ['🌙', '⭐', '✨']
-          : ['☀️', '🌞', '✨'];
-
         efectoExplosion({
-          x: window.innerWidth - 80,
-          y: 50,
-          simbolos: emojis,
+          x: window.innerWidth - 80, y: 50,
+          simbolos: nuevo === 'oscuro' ? ['🌙', '⭐', '✨'] : ['☀️', '🌞', '✨'],
           cantidad: 8,
         });
       }
@@ -420,7 +458,7 @@
     }
 
     // ============================================================
-    // 🎉 Explosión de emojis
+    // 🎉 Explosión
     // ============================================================
     function efectoExplosion({ x, y, simbolos, cantidad = 6 }: ExplosionOptions): void {
       for (let i = 0; i < cantidad; i++) {
@@ -437,17 +475,18 @@
     }
 
     // ============================================================
-    // 🐾 Huellas flotantes de fondo
+    // 🐾 Huellas
     // ============================================================
     class HuellasFondo {
       private container: HTMLElement;
-      private readonly emojis: string[] = ['🐾', '🦴', '🐶', '❤️', '🐕'];
+      private readonly emojis = ['🐾', '🦴', '🐶', '❤️', '🐕'];
 
-      constructor(containerId: string) {
-        const el = document.getElementById(containerId);
-        if (!el) throw new Error(`No se encontró #${containerId}`);
+      constructor(id: string) {
+        const el = document.getElementById(id);
+        if (!el) throw new Error(`No se encontró #${id}`);
         this.container = el;
-        this.iniciar();
+        for (let i = 0; i < 5; i++) setTimeout(() => this.crear(), i * 400);
+        setInterval(() => this.crear(), 1500);
       }
 
       private crear(): void {
@@ -461,37 +500,25 @@
         this.container.appendChild(h);
         setTimeout(() => h.remove(), 18000);
       }
-
-      private iniciar(): void {
-        for (let i = 0; i < 5; i++) {
-          setTimeout(() => this.crear(), i * 400);
-        }
-        setInterval(() => this.crear(), 1500);
-      }
     }
 
     // ============================================================
-    // 📜 Renderizado dinámico
+    // 📜 Render
     // ============================================================
     function renderizarGaleria(): void {
-      const galeria = $<HTMLElement>('#galeria');
-      if (!galeria) return;
-
+      const g = $<HTMLElement>('#galeria');
+      if (!g) return;
       galeriaCards.forEach(({ url, texto }) => {
         const card = document.createElement('div');
         card.className = 'card';
-        card.innerHTML = `
-          <img src="${url}" alt="${texto}" loading="lazy">
-          <p>${texto}</p>
-        `;
-        galeria.appendChild(card);
+        card.innerHTML = `<img src="${url}" alt="${texto}" loading="lazy"><p>${texto}</p>`;
+        g.appendChild(card);
       });
     }
 
     function renderizarInfo(): void {
       const ul = $<HTMLUListElement>('#listaInfo');
       if (!ul) return;
-
       infoMascota.forEach(({ etiqueta, valor }) => {
         const li = document.createElement('li');
         li.innerHTML = `<strong>${etiqueta}:</strong> ${valor}`;
@@ -499,79 +526,436 @@
       });
     }
 
-    // ============================================================
-    // 👁️ Animaciones al hacer scroll
-    // ============================================================
     function activarScrollAnimaciones(): void {
-      const observador = new IntersectionObserver(
-        (entradas) => {
-          entradas.forEach((e) => {
-            if (e.isIntersecting) e.target.classList.add('visible');
-          });
-        },
-        { threshold: 0.15 }
-      );
-
-      document.querySelectorAll('.card, .info').forEach((el) => observador.observe(el));
+      const obs = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('.card, .info, .juego-section').forEach((el) => obs.observe(el));
     }
 
-    // ============================================================
-    // 🦴 Botón "Dar premio"
-    // ============================================================
     function activarBotonPremio(): void {
       const btn = $<HTMLButtonElement>('#btnPremio');
       if (!btn) return;
-
-      const textoOriginal = btn.textContent ?? '🦴 ¡Dar premio!';
-
+      const original = btn.textContent ?? '🦴 ¡Dar premio!';
       btn.addEventListener('click', () => {
         const rect = btn.getBoundingClientRect();
         efectoExplosion({
-          x: rect.left + rect.width / 2,
-          y: rect.top,
-          simbolos: ['🦴', '🐕', '❤️', '🎉', '🐾'],
-          cantidad: 12,
+          x: rect.left + rect.width / 2, y: rect.top,
+          simbolos: ['🦴', '🐕', '❤️', '🎉', '🐾'], cantidad: 12,
         });
         btn.textContent = '😋 ¡Ñam ñam!';
-        setTimeout(() => (btn.textContent = textoOriginal), 1500);
+        setTimeout(() => (btn.textContent = original), 1500);
       });
     }
 
-    // ============================================================
-    // 🎊 Clic global = explosión
-    // ============================================================
     function activarClicGlobal(): void {
       document.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
-        if (target.closest('button')) return;
-        efectoExplosion({
-          x: e.clientX,
-          y: e.clientY,
-          simbolos: ['🐾', '❤️', '✨'],
-          cantidad: 4,
-        });
+        if (target.closest('button') || target.closest('.juego-wrapper')) return;
+        efectoExplosion({ x: e.clientX, y: e.clientY, simbolos: ['🐾', '❤️', '✨'], cantidad: 4 });
       });
     }
 
-    // ============================================================
-    // 📸 Título de pestaña rotativo
-    // ============================================================
     function activarTituloRotativo(): void {
-      const titulos: string[] = [
-        '🐾 El Rincón de mi Mascota',
-        '🐶 ¡Guau guau!',
-        '❤️ Te amo mascota',
-        '🦴 Dame un premio',
-      ];
-      let idx = 0;
-      setInterval(() => {
-        idx = (idx + 1) % titulos.length;
-        document.title = titulos[idx];
-      }, 3000);
+      const t = ['🐾 El Rincón de mi Mascota', '🐶 ¡Guau guau!', '❤️ Te amo mascota', '🦴 Dame un premio'];
+      let i = 0;
+      setInterval(() => { i = (i + 1) % t.length; document.title = t[i]; }, 3000);
     }
 
     // ============================================================
-    // 🚀 Inicialización
+    // 🎮 MINI JUEGO — Atrapa los Huesos
+    // ============================================================
+    type EstadoJuego = 'inicio' | 'jugando' | 'gameover';
+
+    interface Item {
+      x: number;
+      y: number;
+      velocidad: number;
+      tipo: 'hueso' | 'carne' | 'zapato';
+      emoji: string;
+      puntos: number;
+      tamaño: number;
+      rotacion: number;
+      velRotacion: number;
+    }
+
+    class JuegoAtrapaHuesos {
+      private canvas: HTMLCanvasElement;
+      private ctx: CanvasRenderingContext2D;
+      private overlay: HTMLElement;
+      private overlayTitulo: HTMLElement;
+      private overlayTexto: HTMLElement;
+      private btnJugar: HTMLButtonElement;
+      private puntosEl: HTMLElement;
+      private vidasEl: HTMLElement;
+      private nivelEl: HTMLElement;
+
+      // Estado
+      private estado: EstadoJuego = 'inicio';
+      private puntos: number = 0;
+      private vidas: number = 3;
+      private nivel: number = 1;
+      private items: Item[] = [];
+      private tiempoUltimoSpawn: number = 0;
+      private tiempoSpawnActual: number = 900;
+      private ultimoFrame: number = 0;
+      private rafId: number | null = null;
+
+      // Jugador (perrito canasta)
+      private jugadorX: number = 0;
+      private jugadorY: number = 0;
+      private jugadorAncho: number = 90;
+      private jugadorAlto: number = 70;
+      private targetX: number = 0;
+      private velocidadJugador: number = 0.25;
+
+      // Teclado
+      private teclas: Record<string, boolean> = {};
+
+      // Ajuste de tamaño
+      private ancho: number = 0;
+      private alto: number = 0;
+
+      constructor() {
+        const canvas = $<HTMLCanvasElement>('#juegoCanvas');
+        const overlay = $<HTMLElement>('#juegoOverlay');
+        const overlayTitulo = $<HTMLElement>('#overlayTitulo');
+        const overlayTexto = $<HTMLElement>('#overlayTexto');
+        const btnJugar = $<HTMLButtonElement>('#btnJugar');
+        const puntosEl = $<HTMLElement>('#puntos');
+        const vidasEl = $<HTMLElement>('#vidas');
+        const nivelEl = $<HTMLElement>('#nivel');
+
+        if (!canvas || !overlay || !overlayTitulo || !overlayTexto || !btnJugar
+            || !puntosEl || !vidasEl || !nivelEl) {
+          throw new Error('Faltan elementos del juego en el DOM');
+        }
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) throw new Error('No se pudo obtener el contexto 2D');
+
+        this.canvas = canvas;
+        this.ctx = ctx;
+        this.overlay = overlay;
+        this.overlayTitulo = overlayTitulo;
+        this.overlayTexto = overlayTexto;
+        this.btnJugar = btnJugar;
+        this.puntosEl = puntosEl;
+        this.vidasEl = vidasEl;
+        this.nivelEl = nivelEl;
+
+        this.init();
+      }
+
+      private init(): void {
+        this.ajustarTamaño();
+        window.addEventListener('resize', () => this.ajustarTamaño());
+
+        // Movimiento con mouse
+        this.canvas.addEventListener('mousemove', (e) => {
+          const rect = this.canvas.getBoundingClientRect();
+          const escala = this.ancho / rect.width;
+          this.targetX = (e.clientX - rect.left) * escala;
+        });
+
+        // Movimiento táctil
+        this.canvas.addEventListener('touchmove', (e) => {
+          e.preventDefault();
+          const rect = this.canvas.getBoundingClientRect();
+          const t = e.touches[0];
+          const escala = this.ancho / rect.width;
+          this.targetX = (t.clientX - rect.left) * escala;
+        }, { passive: false });
+
+        // Teclado
+        document.addEventListener('keydown', (e) => {
+          if (['ArrowLeft', 'ArrowRight'].includes(e.key)) e.preventDefault();
+          this.teclas[e.key] = true;
+        });
+        document.addEventListener('keyup', (e) => {
+          this.teclas[e.key] = false;
+        });
+
+        // Botón
+        this.btnJugar.addEventListener('click', () => this.empezar());
+
+        // Loop inicial (para mostrar al perrito quieto)
+        this.jugadorX = this.ancho / 2;
+        this.targetX = this.jugadorX;
+        this.jugadorY = this.alto - this.jugadorAlto - 10;
+        this.loop(0);
+      }
+
+      private ajustarTamaño(): void {
+        const rect = this.canvas.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        this.ancho = rect.width;
+        this.alto = rect.height;
+        this.canvas.width = rect.width * dpr;
+        this.canvas.height = rect.height * dpr;
+        this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        this.jugadorY = this.alto - this.jugadorAlto - 10;
+      }
+
+      private empezar(): void {
+        this.estado = 'jugando';
+        this.puntos = 0;
+        this.vidas = 3;
+        this.nivel = 1;
+        this.items = [];
+        this.tiempoSpawnActual = 900;
+        this.tiempoUltimoSpawn = performance.now();
+        this.jugadorX = this.ancho / 2;
+        this.targetX = this.jugadorX;
+        this.actualizarStats();
+        this.overlay.classList.add('hidden');
+      }
+
+      private terminar(): void {
+        this.estado = 'gameover';
+        this.overlayTitulo.textContent = `¡${this.puntos} puntos! 🎉`;
+        this.overlayTexto.textContent = this.puntos >= 30
+          ? '¡Wow, eres un crack! 🏆'
+          : this.puntos >= 15
+          ? '¡Buen trabajo! 🐕'
+          : '¡Sigue practicando! 🦴';
+        this.btnJugar.textContent = '🔄 Jugar otra vez';
+        this.overlay.classList.remove('hidden');
+
+        // Explosión en el centro del juego
+        const rect = this.canvas.getBoundingClientRect();
+        efectoExplosion({
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2,
+          simbolos: ['🎉', '🏆', '🐕', '✨'],
+          cantidad: 14,
+        });
+      }
+
+      private actualizarStats(): void {
+        this.puntosEl.textContent = String(this.puntos);
+        this.vidasEl.textContent = String(this.vidas);
+        this.nivelEl.textContent = String(this.nivel);
+      }
+
+      private spawn(): void {
+        const r = Math.random();
+        let tipo: Item['tipo'];
+        let emoji: string;
+        let puntos: number;
+
+        if (r < 0.70) {
+          tipo = 'hueso'; emoji = '🦴'; puntos = 1;
+        } else if (r < 0.88) {
+          tipo = 'carne'; emoji = '🍖'; puntos = 3;
+        } else {
+          tipo = 'zapato'; emoji = '👟'; puntos = 0;
+        }
+
+        const tamaño = tipo === 'carne' ? 42 : 38;
+        this.items.push({
+          x: random(20, this.ancho - 20),
+          y: -50,
+          velocidad: random(2.2, 3.4) + this.nivel * 0.35,
+          tipo, emoji, puntos, tamaño,
+          rotacion: random(-0.3, 0.3),
+          velRotacion: random(-0.03, 0.03),
+        });
+      }
+
+      private actualizar(dt: number): void {
+        if (this.estado !== 'jugando') return;
+
+        // Movimiento del jugador
+        if (this.teclas['ArrowLeft'] || this.teclas['a'] || this.teclas['A']) {
+          this.targetX -= 8;
+        }
+        if (this.teclas['ArrowRight'] || this.teclas['d'] || this.teclas['D']) {
+          this.targetX += 8;
+        }
+        this.targetX = Math.max(this.jugadorAncho / 2,
+                        Math.min(this.ancho - this.jugadorAncho / 2, this.targetX));
+        this.jugadorX += (this.targetX - this.jugadorX) * this.velocidadJugador;
+
+        // Spawn
+        const ahora = performance.now();
+        if (ahora - this.tiempoUltimoSpawn > this.tiempoSpawnActual) {
+          this.spawn();
+          this.tiempoUltimoSpawn = ahora;
+        }
+
+        // Mover items + colisiones
+        const jugadorLeft = this.jugadorX - this.jugadorAncho / 2;
+        const jugadorRight = this.jugadorX + this.jugadorAncho / 2;
+        const jugadorTop = this.jugadorY;
+        const jugadorBottom = this.jugadorY + this.jugadorAlto;
+
+        for (let i = this.items.length - 1; i >= 0; i--) {
+          const it = this.items[i];
+          it.y += it.velocidad;
+          it.rotacion += it.velRotacion;
+
+          // Colisión con la canasta (zona de atrapado)
+          const hit = (
+            it.y + it.tamaño / 2 >= jugadorTop &&
+            it.y - it.tamaño / 2 <= jugadorBottom &&
+            it.x >= jugadorLeft &&
+            it.x <= jugadorRight
+          );
+
+          if (hit) {
+            if (it.tipo === 'zapato') {
+              this.vidas -= 1;
+              this.actualizarStats();
+              this.mostrarFeedback('💔', it.x, it.y, '#ff4444');
+              if (this.vidas <= 0) {
+                this.items.splice(i, 1);
+                this.terminar();
+                return;
+              }
+            } else {
+              this.puntos += it.puntos;
+              this.actualizarStats();
+              this.mostrarFeedback(
+                it.tipo === 'carne' ? '+3' : '+1',
+                it.x, it.y,
+                it.tipo === 'carne' ? '#ffb347' : '#ff7a9c'
+              );
+
+              // Subir nivel cada 15 puntos
+              if (this.puntos > 0 && Math.floor(this.puntos / 15) + 1 > this.nivel) {
+                this.nivel += 1;
+                this.tiempoSpawnActual = Math.max(320, 900 - this.nivel * 70);
+                this.actualizarStats();
+              }
+            }
+            this.items.splice(i, 1);
+            continue;
+          }
+
+          // Fuera de pantalla (item perdido)
+          if (it.y - it.tamaño > this.alto) {
+            if (it.tipo !== 'zapato') {
+              // Opcional: perder vida por dejar caer hueso. Lo dejamos sin castigo.
+            }
+            this.items.splice(i, 1);
+          }
+        }
+      }
+
+      private feedbacks: { x: number; y: number; texto: string; color: string; vida: number }[] = [];
+
+      private mostrarFeedback(texto: string, x: number, y: number, color: string): void {
+        this.feedbacks.push({ x, y, texto, color, vida: 1 });
+      }
+
+      private dibujar(): void {
+        const ctx = this.ctx;
+        ctx.clearRect(0, 0, this.ancho, this.alto);
+
+        // Suelo decorativo
+        ctx.fillStyle = 'rgba(255,122,156,0.08)';
+        ctx.fillRect(0, this.alto - 20, this.ancho, 20);
+
+        // Items
+        for (const it of this.items) {
+          ctx.save();
+          ctx.translate(it.x, it.y);
+          ctx.rotate(it.rotacion);
+          ctx.font = `${it.tamaño}px serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(it.emoji, 0, 0);
+          ctx.restore();
+        }
+
+        // Jugador (perrito + canasta)
+        this.dibujarJugador();
+
+        // Feedbacks flotantes
+        for (let i = this.feedbacks.length - 1; i >= 0; i--) {
+          const fb = this.feedbacks[i];
+          fb.vida -= 0.02;
+          fb.y -= 1.5;
+          if (fb.vida <= 0) { this.feedbacks.splice(i, 1); continue; }
+          ctx.save();
+          ctx.globalAlpha = fb.vida;
+          ctx.fillStyle = fb.color;
+          ctx.font = 'bold 26px "Comic Sans MS", sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(fb.texto, fb.x, fb.y);
+          ctx.restore();
+        }
+      }
+
+      private dibujarJugador(): void {
+        const ctx = this.ctx;
+        const x = this.jugadorX;
+        const y = this.jugadorY;
+
+        // Canasta
+        ctx.save();
+        ctx.fillStyle = '#c97a4a';
+        ctx.beginPath();
+        ctx.roundRect(x - this.jugadorAncho / 2, y + 30, this.jugadorAncho, this.jugadorAlto - 30, 10);
+        ctx.fill();
+
+        // Líneas de la canasta
+        ctx.strokeStyle = '#a05a2c';
+        ctx.lineWidth = 2;
+        for (let i = 1; i < 5; i++) {
+          const lx = x - this.jugadorAncho / 2 + (this.jugadorAncho / 5) * i;
+          ctx.beginPath();
+          ctx.moveTo(lx, y + 32);
+          ctx.lineTo(lx, y + this.jugadorAlto);
+          ctx.stroke();
+        }
+
+        // Perrito arriba de la canasta
+        ctx.font = '46px serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        const wag = Math.sin(performance.now() / 150) * 0.15;
+        ctx.save();
+        ctx.translate(x, y + 12);
+        ctx.rotate(wag);
+        ctx.fillText('🐕', 0, 0);
+        ctx.restore();
+
+        ctx.restore();
+      }
+
+      private loop = (t: number): void => {
+        const dt = t - this.ultimoFrame;
+        this.ultimoFrame = t;
+
+        this.actualizar(dt);
+        this.dibujar();
+
+        this.rafId = requestAnimationFrame(this.loop);
+      };
+    }
+
+    // Polyfill para roundRect en navegadores antiguos
+    if (!(CanvasRenderingContext2D.prototype as any).roundRect) {
+      (CanvasRenderingContext2D.prototype as any).roundRect = function (
+        x: number, y: number, w: number, h: number, r: number
+      ) {
+        if (w < 2 * r) r = w / 2;
+        if (h < 2 * r) r = h / 2;
+        this.beginPath();
+        this.moveTo(x + r, y);
+        this.arcTo(x + w, y, x + w, y + h, r);
+        this.arcTo(x + w, y + h, x, y + h, r);
+        this.arcTo(x, y + h, x, y, r);
+        this.arcTo(x, y, x + w, y, r);
+        this.closePath();
+        return this;
+      };
+    }
+
+    // ============================================================
+    // 🚀 Init
     // ============================================================
     document.addEventListener('DOMContentLoaded', () => {
       renderizarGaleria();
@@ -587,7 +971,10 @@
       activarClicGlobal();
       activarTituloRotativo();
 
-      console.log('%c🐾 ¡Sitio de mascota cargado!', 'color:#ff7a9c;font-size:16px;font-weight:bold;');
+      // Iniciar juego
+      new JuegoAtrapaHuesos();
+
+      console.log('%c🐾 ¡Sitio + Juego cargados!', 'color:#ff7a9c;font-size:16px;font-weight:bold;');
     });
   </script>
 </body>
