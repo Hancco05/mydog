@@ -1,12 +1,594 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mydog</title>
-    <h1>mi perrito123456</h1>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐾 El Rincón de mi Mascota</title>
+
+<!-- ============================================================
+     🎨 CSS (todo el estilo y animaciones)
+     ============================================================ -->
+<style>
+  :root {
+    --bg: linear-gradient(135deg, #fff5f7 0%, #ffe0e9 100%);
+    --text: #333;
+    --card: #ffffff;
+    --accent: #ff7a9c;
+    --accent2: #ffb347;
+    --shadow: rgba(255, 122, 156, 0.25);
+    --huella: rgba(255, 122, 156, 0.15);
+  }
+
+  body.dark {
+    --bg: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    --text: #f1f1f1;
+    --card: #25253f;
+    --accent: #ff9ec4;
+    --accent2: #ffd166;
+    --shadow: rgba(255, 158, 196, 0.3);
+    --huella: rgba(255, 158, 196, 0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
+    background: var(--bg);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    color: var(--text);
+    min-height: 100vh;
+    padding: 20px;
+    overflow-x: hidden;
+    transition: color 0.6s;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* Huellas flotantes */
+  .huellas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .huella {
+    position: absolute;
+    font-size: 2rem;
+    color: var(--huella);
+    animation: flotar linear infinite;
+  }
+
+  @keyframes flotar {
+    0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+  }
+
+  /* Botón tema */
+  .theme-toggle {
+    position: fixed;
+    top: 20px; right: 20px;
+    background: var(--card);
+    border: 2px solid var(--accent);
+    color: var(--text);
+    border-radius: 50px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 20px var(--shadow);
+    z-index: 100;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    animation: pulso 2s infinite;
+    font-family: inherit;
+  }
+  .theme-toggle:hover { transform: scale(1.15) rotate(-5deg); }
+  .theme-toggle:active { transform: scale(0.9); }
+
+  @keyframes pulso {
+    0%, 100% { box-shadow: 0 4px 20px var(--shadow); }
+    50%      { box-shadow: 0 4px 35px var(--accent); }
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    padding: 40px 20px 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  h1 {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    color: var(--accent);
+    text-shadow: 3px 3px 0 var(--shadow);
+    animation: rebote 2s ease-in-out infinite;
+    display: inline-block;
+  }
+
+  @keyframes rebote {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50%      { transform: translateY(-12px) rotate(2deg); }
+  }
+
+  .subtitle {
+    margin-top: 15px;
+    font-size: 1.1rem;
+    opacity: 0.85;
+    animation: fadeInUp 1.2s ease;
+  }
+
+  .perrito-caminando {
+    font-size: 3rem;
+    display: inline-block;
+    margin-top: 15px;
+    animation: caminar 6s linear infinite;
+  }
+
+  @keyframes caminar {
+    0%   { transform: translateX(-150px) scaleX(1); }
+    48%  { transform: translateX(150px) scaleX(1); }
+    50%  { transform: translateX(150px) scaleX(-1); }
+    98%  { transform: translateX(-150px) scaleX(-1); }
+    100% { transform: translateX(-150px) scaleX(1); }
+  }
+
+  /* Galería */
+  .galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    max-width: 1000px;
+    margin: 40px auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 6px 20px var(--shadow);
+    overflow: hidden;
+    position: relative;
+    opacity: 0;
+    transform: translateY(60px) scale(0.9);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+  }
+  .card.visible { opacity: 1; transform: translateY(0) scale(1); }
+  .card:hover {
+    transform: translateY(-10px) scale(1.04) rotate(-1deg);
+    box-shadow: 0 15px 40px var(--shadow);
+  }
+  .card img {
+    width: 100%;
+    border-radius: 15px;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+  .card:hover img { transform: scale(1.08); }
+  .card p {
+    margin-top: 12px;
+    font-weight: bold;
+    color: var(--accent);
+    font-size: 1.1rem;
+    transition: letter-spacing 0.3s;
+  }
+  .card:hover p { letter-spacing: 2px; }
+
+  .card::after {
+    content: '🐾';
+    position: absolute;
+    top: 10px; right: 10px;
+    font-size: 1.5rem;
+    opacity: 0;
+    transition: all 0.3s;
+  }
+  .card:hover::after {
+    opacity: 1;
+    animation: girar 1s linear infinite;
+  }
+  @keyframes girar {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  /* Info */
+  .info {
+    max-width: 700px;
+    margin: 40px auto;
+    background: var(--card);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px var(--shadow);
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s, transform 0.8s;
+  }
+  .info.visible { opacity: 1; transform: translateY(0); }
+  .info h2 {
+    color: var(--accent);
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.6rem;
+  }
+  .info ul { list-style: none; }
+  .info li {
+    padding: 10px 0;
+    font-size: 1.1rem;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.5s;
+    border-bottom: 1px dashed var(--shadow);
+  }
+  .info.visible li { opacity: 1; transform: translateX(0); }
+  .info.visible li:nth-child(1) { transition-delay: 0.1s; }
+  .info.visible li:nth-child(2) { transition-delay: 0.2s; }
+  .info.visible li:nth-child(3) { transition-delay: 0.3s; }
+  .info.visible li:nth-child(4) { transition-delay: 0.4s; }
+  .info.visible li:nth-child(5) { transition-delay: 0.5s; }
+  .info li:hover {
+    transform: translateX(10px) scale(1.03);
+    color: var(--accent);
+    padding-left: 10px;
+  }
+
+  /* Botón premio */
+  .btn-premio {
+    display: block;
+    margin: 30px auto 10px;
+    padding: 15px 35px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 6px 20px var(--shadow);
+    transition: all 0.3s;
+    font-family: inherit;
+  }
+  .btn-premio:hover {
+    transform: scale(1.1) rotate(2deg);
+    box-shadow: 0 10px 30px var(--accent);
+  }
+  .btn-premio:active { transform: scale(0.95); }
+
+  footer {
+    text-align: center;
+    padding: 40px;
+    opacity: 0.7;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Emojis que saltan */
+  .emoji-pop {
+    position: fixed;
+    font-size: 2rem;
+    pointer-events: none;
+    z-index: 999;
+    animation: pop 1s ease-out forwards;
+    transform: translate(-50%, -50%);
+  }
+  @keyframes pop {
+    0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+    100% { transform: translate(-50%, -200%) scale(1.5) rotate(30deg); opacity: 0; }
+  }
+</style>
 </head>
 <body>
-    
+
+  <div class="huellas" id="huellas"></div>
+
+  <button class="theme-toggle" id="themeBtn" aria-label="Cambiar tema">
+    🌙 Modo oscuro
+  </button>
+
+  <header>
+    <h1 id="titulo">🐾 El Rincón de mi Mascota</h1>
+    <p class="subtitle">Un espacio dedicado a mi mejor amigo peludo</p>
+    <div class="perrito-caminando">🐕</div>
+  </header>
+
+  <section class="galeria" id="galeria"></section>
+
+  <section class="info" id="info">
+    <h2>Sobre mí 🐕</h2>
+    <ul id="listaInfo"></ul>
+    <button class="btn-premio" id="btnPremio">🦴 ¡Dar premio!</button>
+  </section>
+
+  <footer>Hecho con ❤️ para mi mejor amigo de cuatro patas</footer>
+
+  <!-- ============================================================
+       🧠 TypeScript compilado en el navegador con Babel Standalone
+       ============================================================ -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel" data-presets="typescript" data-type="module">
+    /* ============================================================
+       🐾 Sitio Web para Mascota — TypeScript en un solo archivo
+       ============================================================ */
+
+    // ---------- Tipos e interfaces ----------
+    interface MascotaInfo {
+      etiqueta: string;
+      valor: string;
+    }
+
+    interface MascotaCard {
+      url: string;
+      texto: string;
+    }
+
+    interface ExplosionOptions {
+      x: number;
+      y: number;
+      simbolos: string[];
+      cantidad?: number;
+    }
+
+    type Tema = 'claro' | 'oscuro';
+
+    // ---------- Datos de la mascota ----------
+    const infoMascota: MascotaInfo[] = [
+      { etiqueta: '🐶 Nombre',           valor: 'Firulais' },
+      { etiqueta: '🎂 Edad',             valor: '3 años' },
+      { etiqueta: '🍖 Comida favorita',  valor: 'Croquetas de pollo' },
+      { etiqueta: '🎾 Juguete favorito', valor: 'Pelota roja' },
+      { etiqueta: '💤 Hobby',            valor: 'Dormir y dar amor' },
+    ];
+
+    const galeriaCards: MascotaCard[] = [
+      { url: 'https://media.giphy.com/media/4Zo41lhzKt6iZ8xff9/giphy.gif', texto: '¡Feliz!' },
+      { url: 'https://media.giphy.com/media/mCRJDo24UvJMA/giphy.gif',      texto: 'Tan tierno 🥺' },
+      { url: 'https://media.giphy.com/media/8ugGp7JJtJNva/giphy.gif',      texto: 'Hora de dormir 😴' },
+      { url: 'https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif', texto: '¡A jugar!' },
+    ];
+
+    // ---------- Utilidades tipadas ----------
+    const $ = <T extends HTMLElement>(selector: string): T | null =>
+      document.querySelector<T>(selector);
+
+    const random = (min: number, max: number): number =>
+      Math.random() * (max - min) + min;
+
+    const randomItem = <T,>(arr: T[]): T =>
+      arr[Math.floor(Math.random() * arr.length)];
+
+    // ============================================================
+    // 🌙 Gestión de Tema (claro / oscuro)
+    // ============================================================
+    class ThemeManager {
+      private readonly key: string = 'tema';
+      private readonly body: HTMLElement = document.body;
+      private readonly btn: HTMLButtonElement;
+
+      constructor(button: HTMLButtonElement) {
+        this.btn = button;
+        this.init();
+        this.btn.addEventListener('click', () => this.toggle());
+      }
+
+      private init(): void {
+        const guardado = localStorage.getItem(this.key) as Tema | null;
+        this.aplicar(guardado === 'oscuro' ? 'oscuro' : 'claro');
+      }
+
+      private toggle(): void {
+        const nuevo: Tema = this.body.classList.contains('dark') ? 'claro' : 'oscuro';
+        this.aplicar(nuevo);
+        localStorage.setItem(this.key, nuevo);
+
+        const emojis = nuevo === 'oscuro'
+          ? ['🌙', '⭐', '✨']
+          : ['☀️', '🌞', '✨'];
+
+        efectoExplosion({
+          x: window.innerWidth - 80,
+          y: 50,
+          simbolos: emojis,
+          cantidad: 8,
+        });
+      }
+
+      private aplicar(tema: Tema): void {
+        const esOscuro = tema === 'oscuro';
+        this.body.classList.toggle('dark', esOscuro);
+        this.btn.textContent = esOscuro ? '☀️ Modo diurno' : '🌙 Modo oscuro';
+      }
+    }
+
+    // ============================================================
+    // 🎉 Explosión de emojis
+    // ============================================================
+    function efectoExplosion({ x, y, simbolos, cantidad = 6 }: ExplosionOptions): void {
+      for (let i = 0; i < cantidad; i++) {
+        const span = document.createElement('span');
+        span.className = 'emoji-pop';
+        span.textContent = randomItem(simbolos);
+        span.style.left = `${x}px`;
+        span.style.top = `${y}px`;
+        span.style.animationDelay = `${i * 0.05}s`;
+        span.style.fontSize = `${random(1.5, 3)}rem`;
+        document.body.appendChild(span);
+        setTimeout(() => span.remove(), 1200);
+      }
+    }
+
+    // ============================================================
+    // 🐾 Huellas flotantes de fondo
+    // ============================================================
+    class HuellasFondo {
+      private container: HTMLElement;
+      private readonly emojis: string[] = ['🐾', '🦴', '🐶', '❤️', '🐕'];
+
+      constructor(containerId: string) {
+        const el = document.getElementById(containerId);
+        if (!el) throw new Error(`No se encontró #${containerId}`);
+        this.container = el;
+        this.iniciar();
+      }
+
+      private crear(): void {
+        const h = document.createElement('div');
+        h.className = 'huella';
+        h.textContent = randomItem(this.emojis);
+        h.style.left = `${Math.random() * 100}%`;
+        h.style.fontSize = `${random(1, 2.5)}rem`;
+        h.style.animationDuration = `${random(8, 16)}s`;
+        h.style.animationDelay = `${Math.random() * 2}s`;
+        this.container.appendChild(h);
+        setTimeout(() => h.remove(), 18000);
+      }
+
+      private iniciar(): void {
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => this.crear(), i * 400);
+        }
+        setInterval(() => this.crear(), 1500);
+      }
+    }
+
+    // ============================================================
+    // 📜 Renderizado dinámico
+    // ============================================================
+    function renderizarGaleria(): void {
+      const galeria = $<HTMLElement>('#galeria');
+      if (!galeria) return;
+
+      galeriaCards.forEach(({ url, texto }) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${url}" alt="${texto}" loading="lazy">
+          <p>${texto}</p>
+        `;
+        galeria.appendChild(card);
+      });
+    }
+
+    function renderizarInfo(): void {
+      const ul = $<HTMLUListElement>('#listaInfo');
+      if (!ul) return;
+
+      infoMascota.forEach(({ etiqueta, valor }) => {
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${etiqueta}:</strong> ${valor}`;
+        ul.appendChild(li);
+      });
+    }
+
+    // ============================================================
+    // 👁️ Animaciones al hacer scroll
+    // ============================================================
+    function activarScrollAnimaciones(): void {
+      const observador = new IntersectionObserver(
+        (entradas) => {
+          entradas.forEach((e) => {
+            if (e.isIntersecting) e.target.classList.add('visible');
+          });
+        },
+        { threshold: 0.15 }
+      );
+
+      document.querySelectorAll('.card, .info').forEach((el) => observador.observe(el));
+    }
+
+    // ============================================================
+    // 🦴 Botón "Dar premio"
+    // ============================================================
+    function activarBotonPremio(): void {
+      const btn = $<HTMLButtonElement>('#btnPremio');
+      if (!btn) return;
+
+      const textoOriginal = btn.textContent ?? '🦴 ¡Dar premio!';
+
+      btn.addEventListener('click', () => {
+        const rect = btn.getBoundingClientRect();
+        efectoExplosion({
+          x: rect.left + rect.width / 2,
+          y: rect.top,
+          simbolos: ['🦴', '🐕', '❤️', '🎉', '🐾'],
+          cantidad: 12,
+        });
+        btn.textContent = '😋 ¡Ñam ñam!';
+        setTimeout(() => (btn.textContent = textoOriginal), 1500);
+      });
+    }
+
+    // ============================================================
+    // 🎊 Clic global = explosión
+    // ============================================================
+    function activarClicGlobal(): void {
+      document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (target.closest('button')) return;
+        efectoExplosion({
+          x: e.clientX,
+          y: e.clientY,
+          simbolos: ['🐾', '❤️', '✨'],
+          cantidad: 4,
+        });
+      });
+    }
+
+    // ============================================================
+    // 📸 Título de pestaña rotativo
+    // ============================================================
+    function activarTituloRotativo(): void {
+      const titulos: string[] = [
+        '🐾 El Rincón de mi Mascota',
+        '🐶 ¡Guau guau!',
+        '❤️ Te amo mascota',
+        '🦴 Dame un premio',
+      ];
+      let idx = 0;
+      setInterval(() => {
+        idx = (idx + 1) % titulos.length;
+        document.title = titulos[idx];
+      }, 3000);
+    }
+
+    // ============================================================
+    // 🚀 Inicialización
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      renderizarGaleria();
+      renderizarInfo();
+
+      const themeBtn = $<HTMLButtonElement>('#themeBtn');
+      if (themeBtn) new ThemeManager(themeBtn);
+
+      new HuellasFondo('huellas');
+
+      activarScrollAnimaciones();
+      activarBotonPremio();
+      activarClicGlobal();
+      activarTituloRotativo();
+
+      console.log('%c🐾 ¡Sitio de mascota cargado!', 'color:#ff7a9c;font-size:16px;font-weight:bold;');
+    });
+  </script>
 </body>
 </html>
