@@ -21,6 +21,7 @@
     --cielo: #bde5f7;
     --pasto: #a8e6a3;
     --suelo: #e8d5b7;
+    --game-bg: #ffeef4;
   }
 
   body.dark {
@@ -35,6 +36,7 @@
     --cielo: #1f2d4a;
     --pasto: #2d4a2d;
     --suelo: #3a2f4a;
+    --game-bg: #1f1f3a;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -100,11 +102,7 @@
   }
 
   /* Header */
-  header {
-    text-align: center;
-    padding: 40px 20px 10px;
-    position: relative; z-index: 1;
-  }
+  header { text-align: center; padding: 40px 20px 10px; position: relative; z-index: 1; }
   h1 {
     font-size: clamp(2rem, 6vw, 3.5rem);
     color: var(--accent);
@@ -138,7 +136,7 @@
   }
 
   /* ============================================================
-     🎬 ESCENARIO PRINCIPAL — perrito caminando por el paisaje
+     🎬 ESCENARIO
      ============================================================ */
   .escenario {
     max-width: 1000px;
@@ -152,7 +150,6 @@
     background: var(--cielo);
     transition: background 0.6s;
   }
-
   .sol {
     position: absolute;
     top: 25px; right: 40px;
@@ -166,7 +163,6 @@
     0%, 100% { transform: scale(1); box-shadow: 0 0 30px #ffb347; }
     50%      { transform: scale(1.15); box-shadow: 0 0 50px #ffb347; }
   }
-
   .nube {
     position: absolute;
     background: white;
@@ -179,26 +175,16 @@
     background: white;
     border-radius: 50%;
   }
-  .nube-1 {
-    top: 40px; left: -120px;
-    width: 90px; height: 30px;
-    animation: nubeMover 25s linear infinite;
-  }
+  .nube-1 { top: 40px; left: -120px; width: 90px; height: 30px; animation: nubeMover 25s linear infinite; }
   .nube-1::before { width: 45px; height: 45px; top: -22px; left: 15px; }
   .nube-1::after  { width: 35px; height: 35px; top: -15px; left: 45px; }
-  .nube-2 {
-    top: 80px; left: -120px;
-    width: 70px; height: 25px;
-    animation: nubeMover 35s linear infinite 5s;
-  }
+  .nube-2 { top: 80px; left: -120px; width: 70px; height: 25px; animation: nubeMover 35s linear infinite 5s; }
   .nube-2::before { width: 38px; height: 38px; top: -18px; left: 12px; }
   .nube-2::after  { width: 30px; height: 30px; top: -12px; left: 38px; }
-
   @keyframes nubeMover {
     from { transform: translateX(0); }
     to   { transform: translateX(1120px); }
   }
-
   .pasto {
     position: absolute;
     bottom: 0; left: 0;
@@ -206,7 +192,6 @@
     background: var(--pasto);
     transition: background 0.6s;
   }
-
   .arbol {
     position: absolute;
     bottom: 70px;
@@ -221,7 +206,7 @@
     50%      { transform: rotate(2deg); }
   }
 
-  /* Perrito corriendo por el escenario */
+  /* Perrito corriendo */
   .perrito-runner {
     position: absolute;
     bottom: 25px;
@@ -229,7 +214,6 @@
     width: 110px;
     animation: correrEscenario 12s linear infinite;
   }
-
   @keyframes correrEscenario {
     0%   { transform: translateX(0) scaleX(1); }
     47%  { transform: translateX(1000px) scaleX(1); }
@@ -237,7 +221,6 @@
     97%  { transform: translateX(0) scaleX(-1); }
     100% { transform: translateX(0) scaleX(1); }
   }
-
   .perrito-runner .pata {
     transform-box: fill-box;
     transform-origin: top center;
@@ -250,7 +233,6 @@
     0%, 100% { transform: rotate(-25deg); }
     50%      { transform: rotate(25deg); }
   }
-
   .perrito-runner .cola-runner {
     transform-box: fill-box;
     transform-origin: bottom left;
@@ -260,7 +242,6 @@
     from { transform: rotate(-15deg); }
     to   { transform: rotate(25deg); }
   }
-
   .perrito-runner .oreja-runner {
     transform-box: fill-box;
     transform-origin: top center;
@@ -272,7 +253,7 @@
   }
 
   /* ============================================================
-     🐕 GALERÍA DE PERRITOS SVG
+     🐕 GALERÍA DE PERRITOS
      ============================================================ */
   .perros-grid {
     max-width: 1200px;
@@ -282,7 +263,6 @@
     gap: 25px;
     position: relative; z-index: 1;
   }
-
   .perro-card {
     background: var(--card);
     border-radius: 24px;
@@ -301,177 +281,234 @@
     transform: translateY(-10px) scale(1.03) rotate(-1deg);
     box-shadow: 0 20px 45px var(--shadow);
   }
-  .perro-card::before {
-    content: '';
-    position: absolute;
-    top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background: radial-gradient(circle, var(--accent) 0%, transparent 55%);
-    opacity: 0;
-    transition: opacity 0.5s;
-    pointer-events: none;
-  }
-  .perro-card:hover::before { opacity: 0.1; }
-
   .perro-card .svg-wrap {
     height: 190px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 12px;
-    position: relative;
   }
-
-  .perro-card svg {
-    width: 100%;
-    height: 100%;
-    max-width: 220px;
-  }
-
-  .perro-card h3 {
-    color: var(--accent);
-    font-size: 1.25rem;
-    margin-bottom: 6px;
-  }
+  .perro-card svg { width: 100%; height: 100%; max-width: 220px; }
+  .perro-card h3 { color: var(--accent); font-size: 1.25rem; margin-bottom: 6px; }
   .perro-card .raza {
     font-size: 0.85rem;
     opacity: 0.65;
     margin-bottom: 10px;
     font-style: italic;
   }
-  .perro-card p {
-    font-size: 0.95rem;
-    opacity: 0.85;
-    line-height: 1.4;
-  }
+  .perro-card p { font-size: 0.95rem; opacity: 0.85; line-height: 1.4; }
 
-  /* --- Perro salchicha --- */
-  .perro-salchicha .cola-s {
-    transform-box: fill-box;
-    transform-origin: bottom left;
-    animation: colaAgitar 0.4s ease-in-out infinite alternate;
-  }
-  .perro-salchicha .ojo-s {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: parpadeo 4s infinite;
-  }
+  /* Salchicha */
+  .perro-salchicha .cola-s { transform-box: fill-box; transform-origin: bottom left; animation: colaAgitar 0.4s ease-in-out infinite alternate; }
+  .perro-salchicha .ojo-s { transform-box: fill-box; transform-origin: center; animation: parpadeo 4s infinite; }
   @keyframes parpadeo {
     0%, 44%, 50%, 100% { transform: scaleY(1); }
     47%                { transform: scaleY(0.1); }
   }
-  .perro-salchicha .oreja-s {
-    transform-box: fill-box;
-    transform-origin: top center;
-    animation: orejaSuave 2s ease-in-out infinite alternate;
-  }
+  .perro-salchicha .oreja-s { transform-box: fill-box; transform-origin: top center; animation: orejaSuave 2s ease-in-out infinite alternate; }
   @keyframes orejaSuave {
     from { transform: rotate(-5deg); }
     to   { transform: rotate(8deg); }
   }
-  .perro-salchicha .lengua-s {
-    transform-box: fill-box;
-    transform-origin: top center;
-    animation: lenguitaLamer 1.5s ease-in-out infinite;
-  }
+  .perro-salchicha .lengua-s { transform-box: fill-box; transform-origin: top center; animation: lenguitaLamer 1.5s ease-in-out infinite; }
   @keyframes lenguitaLamer {
     0%, 100% { transform: scaleY(1); }
     50%      { transform: scaleY(1.5); }
   }
 
-  /* --- Perro pastor alemán --- */
-  .perro-pastor .cola-p {
-    transform-box: fill-box;
-    transform-origin: bottom left;
-    animation: colaAgitar 0.5s ease-in-out infinite alternate;
-  }
-  .perro-pastor .oreja-p {
-    transform-box: fill-box;
-    transform-origin: top center;
-    animation: orejaPunta 1.5s ease-in-out infinite alternate;
-  }
+  /* Pastor */
+  .perro-pastor .cola-p { transform-box: fill-box; transform-origin: bottom left; animation: colaAgitar 0.5s ease-in-out infinite alternate; }
+  .perro-pastor .oreja-p { transform-box: fill-box; transform-origin: top center; animation: orejaPunta 1.5s ease-in-out infinite alternate; }
   @keyframes orejaPunta {
     from { transform: rotate(0deg); }
     to   { transform: rotate(10deg); }
   }
-  .perro-pastor .ojo-p {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: parpadeo 5s infinite;
-  }
+  .perro-pastor .ojo-p { transform-box: fill-box; transform-origin: center; animation: parpadeo 5s infinite; }
 
-  /* --- Perro husky --- */
-  .perro-husky .cola-h {
-    transform-box: fill-box;
-    transform-origin: bottom left;
-    animation: colaHusky 0.6s ease-in-out infinite alternate;
-  }
+  /* Husky */
+  .perro-husky .cola-h { transform-box: fill-box; transform-origin: bottom left; animation: colaHusky 0.6s ease-in-out infinite alternate; }
   @keyframes colaHusky {
     from { transform: rotate(-35deg); }
     to   { transform: rotate(15deg); }
   }
-  .perro-husky .ojo-h {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: parpadeo 3.5s infinite;
-  }
-  .perro-husky .lengua-h {
-    transform-box: fill-box;
-    transform-origin: top center;
-    animation: lenguitaLamer 1.2s ease-in-out infinite;
-  }
+  .perro-husky .ojo-h { transform-box: fill-box; transform-origin: center; animation: parpadeo 3.5s infinite; }
+  .perro-husky .lengua-h { transform-box: fill-box; transform-origin: top center; animation: lenguitaLamer 1.2s ease-in-out infinite; }
 
-  /* --- Perro bulldog --- */
-  .perro-bulldog .respira {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: respirar 1.8s ease-in-out infinite;
-  }
+  /* Bulldog */
+  .perro-bulldog .respira { transform-box: fill-box; transform-origin: center; animation: respirar 1.8s ease-in-out infinite; }
   @keyframes respirar {
     0%, 100% { transform: scale(1); }
     50%      { transform: scale(1.05); }
   }
-  .perro-bulldog .ojo-b {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: parpadeo 6s infinite;
-  }
+  .perro-bulldog .ojo-b { transform-box: fill-box; transform-origin: center; animation: parpadeo 6s infinite; }
 
-  /* --- Cachorro --- */
-  .perro-cachorro .cola-c {
-    transform-box: fill-box;
-    transform-origin: bottom left;
-    animation: colaAgitar 0.25s ease-in-out infinite alternate;
-  }
-  .perro-cachorro .cuerpo-c {
-    transform-box: fill-box;
-    transform-origin: bottom center;
-    animation: saltitoCachorro 1.2s ease-in-out infinite;
-  }
+  /* Cachorro */
+  .perro-cachorro .cola-c { transform-box: fill-box; transform-origin: bottom left; animation: colaAgitar 0.25s ease-in-out infinite alternate; }
+  .perro-cachorro .cuerpo-c { transform-box: fill-box; transform-origin: bottom center; animation: saltitoCachorro 1.2s ease-in-out infinite; }
   @keyframes saltitoCachorro {
     0%, 100% { transform: translateY(0); }
     50%      { transform: translateY(-12px); }
   }
-  .perro-cachorro .ojo-c {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: parpadeo 3s infinite;
-  }
+  .perro-cachorro .ojo-c { transform-box: fill-box; transform-origin: center; animation: parpadeo 3s infinite; }
 
-  /* --- Perro galgo --- */
-  .perro-galgo .cola-g {
-    transform-box: fill-box;
-    transform-origin: bottom left;
-    animation: colaAgitar 0.4s ease-in-out infinite alternate;
-  }
-  .perro-galgo .pata-g {
-    transform-box: fill-box;
-    transform-origin: top center;
-    animation: pataCorrer 0.5s ease-in-out infinite;
-  }
+  /* Galgo */
+  .perro-galgo .cola-g { transform-box: fill-box; transform-origin: bottom left; animation: colaAgitar 0.4s ease-in-out infinite alternate; }
+  .perro-galgo .pata-g { transform-box: fill-box; transform-origin: top center; animation: pataCorrer 0.5s ease-in-out infinite; }
   .perro-galgo .pata-g2 { animation-delay: 0.12s; }
   .perro-galgo .pata-g3 { animation-delay: 0.24s; }
   .perro-galgo .pata-g4 { animation-delay: 0.36s; }
+
+  /* ============================================================
+     🧬 CIENCIA
+     ============================================================ */
+  .taxonomia { max-width: 800px; margin: 20px auto 40px; position: relative; z-index: 1; }
+  .taxonomia-card {
+    background: var(--card);
+    padding: 28px;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px var(--shadow);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .taxonomia-card.visible { opacity: 1; transform: translateY(0); }
+  .taxonomia-card h3 {
+    color: var(--accent);
+    font-size: 1.35rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .taxonomia-lista { display: flex; flex-direction: column; gap: 8px; }
+  .taxonomia-fila {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    background: var(--game-bg);
+    border-radius: 12px;
+    border-left: 4px solid var(--accent);
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.5s;
+    font-size: 0.95rem;
+  }
+  .taxonomia-card.visible .taxonomia-fila { opacity: 1; transform: translateX(0); }
+  .taxonomia-card.visible .taxonomia-fila:nth-child(1) { transition-delay: 0.05s; }
+  .taxonomia-card.visible .taxonomia-fila:nth-child(2) { transition-delay: 0.10s; }
+  .taxonomia-card.visible .taxonomia-fila:nth-child(3) { transition-delay: 0.15s; }
+  .taxonomia-card.visible .taxonomia-fila:nth-child(4) { transition-delay: 0.20s; }
+  .taxonomia-card.visible .taxonomia-fila:nth-child(5) { transition-delay: 0.25s; }
+  .taxonomia-card.visible .taxonomia-fila:nth-child(6) { transition-delay: 0.30s; }
+  .taxonomia-card.visible .taxonomia-fila:nth-child(7) { transition-delay: 0.35s; }
+  .taxonomia-card.visible .taxonomia-fila:nth-child(8) { transition-delay: 0.40s; }
+  .taxonomia-fila .nivel {
+    font-weight: bold;
+    color: var(--accent);
+    min-width: 110px;
+    font-size: 0.9rem;
+  }
+  .taxonomia-fila .valor {
+    text-align: right;
+    font-style: italic;
+    opacity: 0.9;
+    flex: 1;
+  }
+
+  .bio-grid {
+    max-width: 1100px;
+    margin: 20px auto 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .bio-card {
+    background: var(--card);
+    padding: 22px;
+    border-radius: 18px;
+    box-shadow: 0 6px 20px var(--shadow);
+    opacity: 0;
+    transform: translateY(50px) scale(0.95);
+    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .bio-card.visible { opacity: 1; transform: translateY(0) scale(1); }
+  .bio-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 15px 40px var(--shadow);
+  }
+  .bio-icono {
+    font-size: 2.4rem;
+    display: block;
+    margin-bottom: 10px;
+    animation: balanceo 3s ease-in-out infinite;
+  }
+  .bio-card h4 { color: var(--accent); font-size: 1.1rem; margin-bottom: 8px; }
+  .bio-card p { font-size: 0.95rem; line-height: 1.5; opacity: 0.9; }
+
+  .comparativa { max-width: 1000px; margin: 20px auto 40px; position: relative; z-index: 1; }
+  .comparativa-titulo {
+    text-align: center;
+    color: var(--accent);
+    font-size: 1.35rem;
+    margin-bottom: 20px;
+  }
+  .comparativa-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  .comp-item {
+    background: var(--card);
+    padding: 18px 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px var(--shadow);
+    border-left: 5px solid var(--accent);
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .comp-item.visible { opacity: 1; transform: translateX(0); }
+  .comp-item:hover { transform: translateX(6px) scale(1.02); }
+  .comp-item h4 { color: var(--accent); font-size: 1rem; margin-bottom: 6px; }
+  .comp-item p { font-size: 0.92rem; line-height: 1.45; opacity: 0.9; }
+
+  .sentidos { max-width: 1100px; margin: 20px auto 40px; position: relative; z-index: 1; }
+  .sentidos-titulo {
+    text-align: center;
+    color: var(--accent);
+    font-size: 1.35rem;
+    margin-bottom: 20px;
+  }
+  .sentidos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .sentido-card {
+    background: var(--card);
+    padding: 22px;
+    border-radius: 18px;
+    box-shadow: 0 6px 20px var(--shadow);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .sentido-card.visible { opacity: 1; transform: translateY(0); }
+  .sentido-card:hover { transform: translateY(-6px) scale(1.02); }
+  .sentido-icono {
+    font-size: 2.2rem;
+    flex-shrink: 0;
+    animation: bounceEmoji 2.5s ease-in-out infinite;
+  }
+  .sentido-info h4 { color: var(--accent); font-size: 1rem; margin-bottom: 6px; }
+  .sentido-info p { font-size: 0.9rem; line-height: 1.45; opacity: 0.9; }
 
   /* ============================================================
      💡 CURIOSIDADES
@@ -543,7 +580,6 @@
     display: block;
     margin-bottom: 10px;
     animation: balanceo 3s ease-in-out infinite;
-    transform-origin: center;
   }
   .cuidado:nth-child(2n) .cuidado-icono { animation-delay: 0.4s; }
   .cuidado:nth-child(3n) .cuidado-icono { animation-delay: 0.8s; }
@@ -568,7 +604,6 @@
     opacity: 0.7;
   }
 
-  /* Footer */
   footer {
     text-align: center;
     padding: 40px 20px;
@@ -577,7 +612,6 @@
     position: relative; z-index: 1;
   }
 
-  /* Emojis pop */
   .emoji-pop {
     position: fixed;
     font-size: 2rem;
@@ -590,13 +624,11 @@
     0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
     100% { transform: translate(-50%, -200%) scale(1.5) rotate(30deg); opacity: 0; }
   }
-
   @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Responsive */
   @media (max-width: 600px) {
     .escenario { height: 200px; }
     .sol { width: 45px; height: 45px; top: 15px; right: 25px; }
@@ -614,21 +646,18 @@
 </head>
 <body>
 
-  <!-- Huellas flotantes de fondo -->
   <div class="huellas" id="huellas"></div>
 
-  <!-- Botón de tema -->
   <button class="theme-toggle" id="themeBtn" aria-label="Cambiar tema">
     🌙 Modo oscuro
   </button>
 
-  <!-- Header -->
   <header>
     <h1>🐶 Mundo Perruno</h1>
     <p class="subtitle">Un sitio dedicado a los mejores amigos del hombre</p>
   </header>
 
-  <!-- 🎬 ESCENARIO ANIMADO -->
+  <!-- 🎬 ESCENARIO -->
   <section class="escenario" id="escenario">
     <div class="sol"></div>
     <div class="nube nube-1"></div>
@@ -637,40 +666,22 @@
     <div class="arbol arbol-2">🌲</div>
     <div class="pasto"></div>
 
-    <!-- Perrito corriendo por el escenario (SVG animado) -->
     <svg class="perrito-runner" viewBox="0 0 260 180" xmlns="http://www.w3.org/2000/svg">
-      <!-- Sombra -->
       <ellipse cx="140" cy="165" rx="80" ry="8" fill="rgba(0,0,0,0.2)"/>
-
-      <!-- Cola -->
       <path class="cola-runner" d="M 55 110 Q 25 80 30 45" stroke="#d89060" stroke-width="14" stroke-linecap="round" fill="none"/>
-
-      <!-- Patas -->
       <rect class="pata pata-1" x="75" y="125" width="13" height="45" rx="6" fill="#b96a3a"/>
       <rect class="pata pata-2" x="95" y="125" width="13" height="45" rx="6" fill="#c97a4a"/>
       <rect class="pata pata-3" x="165" y="125" width="13" height="45" rx="6" fill="#c97a4a"/>
       <rect class="pata pata-4" x="185" y="125" width="13" height="45" rx="6" fill="#b96a3a"/>
-
-      <!-- Cuerpo -->
       <ellipse cx="135" cy="105" rx="75" ry="40" fill="#d89060"/>
-
-      <!-- Cabeza -->
       <circle cx="215" cy="80" r="40" fill="#e0a074"/>
-
-      <!-- Oreja -->
       <ellipse class="oreja-runner" cx="200" cy="50" rx="13" ry="28" fill="#a85a2a" transform="rotate(-20 200 50)"/>
-
-      <!-- Ojos -->
       <circle cx="225" cy="75" r="5" fill="#222"/>
       <circle cx="226" cy="73" r="1.7" fill="#fff"/>
       <circle cx="205" cy="75" r="4.5" fill="#222"/>
       <circle cx="206" cy="73" r="1.5" fill="#fff"/>
-
-      <!-- Hocico -->
       <ellipse cx="242" cy="98" rx="16" ry="12" fill="#f5e0c8"/>
       <ellipse cx="247" cy="93" rx="5" ry="4" fill="#222"/>
-
-      <!-- Lengua -->
       <ellipse cx="238" cy="112" rx="4" ry="7" fill="#ff6b8a"/>
     </svg>
   </section>
@@ -679,6 +690,29 @@
   <h2 class="seccion-titulo">🐕 Nuestros perritos</h2>
   <p class="seccion-desc">Todos dibujados y animados con código (SVG + CSS)</p>
   <section class="perros-grid" id="perrosGrid"></section>
+
+  <!-- 🧬 INFORMACIÓN CIENTÍFICA -->
+  <h2 class="seccion-titulo">🧬 El perro en la ciencia</h2>
+  <p class="seccion-desc">Clasificación, evolución y datos biológicos fascinantes</p>
+
+  <section class="taxonomia">
+    <div class="taxonomia-card" id="taxonomiaCard">
+      <h3>📊 Clasificación Taxonómica</h3>
+      <div class="taxonomia-lista" id="taxonomiaLista"></div>
+    </div>
+  </section>
+
+  <section class="bio-grid" id="bioGrid"></section>
+
+  <section class="comparativa">
+    <h3 class="comparativa-titulo">🐺 Perro vs Lobo: diferencias clave</h3>
+    <div class="comparativa-grid" id="comparativaGrid"></div>
+  </section>
+
+  <section class="sentidos">
+    <h3 class="sentidos-titulo">👃 Los sentidos del perro</h3>
+    <div class="sentidos-grid" id="sentidosGrid"></div>
+  </section>
 
   <!-- 💡 CURIOSIDADES -->
   <h2 class="seccion-titulo">💡 ¿Sabías que...?</h2>
@@ -692,9 +726,6 @@
 
   <footer>Hecho con ❤️ para todos los perritos del mundo 🐾</footer>
 
-  <!-- ============================================================
-       🧠 TypeScript
-       ============================================================ -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <script type="text/babel" data-presets="typescript" data-type="module">
@@ -705,13 +736,11 @@
     // ---------- Tipos ----------
     interface Curiosidad { icono: string; titulo: string; texto: string; }
     interface Cuidado { icono: string; titulo: string; descripcion: string; puntos: string[]; }
-    interface PerroSVG {
-      titulo: string;
-      raza: string;
-      descripcion: string;
-      clase: string;
-      svg: string;
-    }
+    interface PerroSVG { titulo: string; raza: string; descripcion: string; clase: string; svg: string; }
+    interface TaxonomiaFila { nivel: string; valor: string; }
+    interface BioDato { icono: string; titulo: string; texto: string; }
+    interface Comparativa { titulo: string; texto: string; }
+    interface Sentido { icono: string; titulo: string; texto: string; }
     interface ExplosionOptions { x: number; y: number; simbolos: string[]; cantidad?: number; }
     type Tema = 'claro' | 'oscuro';
 
@@ -725,27 +754,19 @@
         svg: `
           <svg viewBox="0 0 260 140" xmlns="http://www.w3.org/2000/svg">
             <ellipse cx="130" cy="125" rx="90" ry="8" fill="rgba(0,0,0,0.15)"/>
-            <!-- Cola -->
             <path class="cola-s" d="M 45 65 Q 20 50 25 30" stroke="#b96a3a" stroke-width="9" stroke-linecap="round" fill="none"/>
-            <!-- Cuerpo largo -->
             <rect x="50" y="60" width="150" height="42" rx="21" fill="#c97a4a"/>
-            <!-- Patas -->
             <rect x="65" y="95" width="16" height="25" rx="7" fill="#a85a2a"/>
             <rect x="160" y="95" width="16" height="25" rx="7" fill="#a85a2a"/>
-            <!-- Cabeza -->
             <ellipse cx="215" cy="70" rx="32" ry="30" fill="#d89060"/>
-            <!-- Oreja larga -->
             <ellipse class="oreja-s" cx="200" cy="60" rx="10" ry="22" fill="#a85a2a" transform="rotate(-15 200 60)"/>
             <ellipse class="oreja-s" cx="228" cy="60" rx="10" ry="22" fill="#a85a2a" transform="rotate(15 228 60)"/>
-            <!-- Ojos -->
             <circle class="ojo-s" cx="207" cy="66" r="4.5" fill="#222"/>
             <circle class="ojo-s" cx="223" cy="66" r="4.5" fill="#222"/>
             <circle cx="208" cy="64.5" r="1.5" fill="#fff"/>
             <circle cx="224" cy="64.5" r="1.5" fill="#fff"/>
-            <!-- Hocico -->
             <ellipse cx="215" cy="84" rx="12" ry="9" fill="#f5e0c8"/>
             <ellipse cx="215" cy="80" rx="4" ry="3" fill="#222"/>
-            <!-- Lengua -->
             <ellipse class="lengua-s" cx="215" cy="92" rx="4" ry="6" fill="#ff6b8a"/>
           </svg>
         `,
@@ -758,27 +779,18 @@
         svg: `
           <svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
             <ellipse cx="120" cy="185" rx="75" ry="8" fill="rgba(0,0,0,0.15)"/>
-            <!-- Cola -->
             <path class="cola-p" d="M 55 135 Q 30 110 35 75" stroke="#8b5a2b" stroke-width="12" stroke-linecap="round" fill="none"/>
-            <!-- Patas traseras -->
             <rect x="60" y="145" width="18" height="42" rx="8" fill="#6b4318"/>
             <rect x="85" y="145" width="18" height="42" rx="8" fill="#8b5a2b"/>
-            <!-- Cuerpo -->
             <ellipse cx="120" cy="130" rx="65" ry="42" fill="#a0522d"/>
-            <!-- Vientre claro -->
             <ellipse cx="120" cy="145" rx="45" ry="22" fill="#d4a574"/>
-            <!-- Patas delanteras -->
             <rect x="140" y="145" width="18" height="42" rx="8" fill="#8b5a2b"/>
             <rect x="163" y="145" width="18" height="42" rx="8" fill="#6b4318"/>
-            <!-- Cabeza -->
             <circle cx="180" cy="85" r="38" fill="#a0522d"/>
-            <!-- Hocico -->
             <ellipse cx="205" cy="100" rx="18" ry="14" fill="#6b4318"/>
             <ellipse cx="205" cy="94" rx="6" ry="4.5" fill="#222"/>
-            <!-- Orejas puntiagudas -->
             <path class="oreja-p" d="M 155 55 L 165 20 L 185 55 Z" fill="#6b4318"/>
             <path class="oreja-p" d="M 175 55 L 195 22 L 205 55 Z" fill="#6b4318"/>
-            <!-- Ojos -->
             <circle class="ojo-p" cx="170" cy="82" r="5" fill="#222"/>
             <circle class="ojo-p" cx="192" cy="82" r="5" fill="#222"/>
             <circle cx="171" cy="80" r="1.7" fill="#fff"/>
@@ -794,33 +806,23 @@
         svg: `
           <svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
             <ellipse cx="120" cy="185" rx="75" ry="8" fill="rgba(0,0,0,0.15)"/>
-            <!-- Cola esponjosa -->
             <path class="cola-h" d="M 55 130 Q 20 100 25 60" stroke="#8ca4be" stroke-width="20" stroke-linecap="round" fill="none"/>
-            <!-- Patas -->
             <rect x="60" y="145" width="18" height="42" rx="8" fill="#6e7f96"/>
             <rect x="85" y="145" width="18" height="42" rx="8" fill="#8ca4be"/>
             <rect x="140" y="145" width="18" height="42" rx="8" fill="#8ca4be"/>
             <rect x="163" y="145" width="18" height="42" rx="8" fill="#6e7f96"/>
-            <!-- Cuerpo -->
             <ellipse cx="120" cy="130" rx="65" ry="42" fill="#8ca4be"/>
-            <!-- Pecho blanco -->
             <ellipse cx="120" cy="150" rx="40" ry="22" fill="#f0f4f8"/>
-            <!-- Cabeza -->
             <circle cx="180" cy="85" r="40" fill="#a8bed4"/>
-            <!-- Máscara facial blanca -->
             <ellipse cx="180" cy="95" rx="26" ry="24" fill="#f0f4f8"/>
             <ellipse cx="180" cy="100" rx="20" ry="14" fill="#fff"/>
-            <!-- Orejas triangulares -->
             <path d="M 152 55 L 160 18 L 180 52 Z" fill="#6e7f96"/>
             <path d="M 178 52 L 198 20 L 208 55 Z" fill="#6e7f96"/>
-            <!-- Ojos azules -->
             <circle class="ojo-h" cx="170" cy="82" r="6" fill="#1e88e5"/>
             <circle class="ojo-h" cx="192" cy="82" r="6" fill="#1e88e5"/>
             <circle cx="171.5" cy="80" r="2" fill="#fff"/>
             <circle cx="193.5" cy="80" r="2" fill="#fff"/>
-            <!-- Nariz -->
             <ellipse cx="180" cy="102" rx="5" ry="4" fill="#222"/>
-            <!-- Lengua -->
             <ellipse class="lengua-h" cx="180" cy="115" rx="5" ry="7" fill="#ff6b8a"/>
           </svg>
         `,
@@ -833,24 +835,17 @@
         svg: `
           <svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
             <ellipse cx="120" cy="165" rx="75" ry="8" fill="rgba(0,0,0,0.15)"/>
-            <!-- Cuerpo regordete -->
             <ellipse class="respira" cx="120" cy="125" rx="75" ry="45" fill="#c9a48a"/>
-            <!-- Patas cortas -->
             <rect x="60" y="150" width="20" height="18" rx="8" fill="#a88870"/>
             <rect x="160" y="150" width="20" height="18" rx="8" fill="#a88870"/>
-            <!-- Cabeza grande -->
             <ellipse class="respira" cx="120" cy="80" rx="55" ry="50" fill="#d8b89a"/>
-            <!-- Orejas de murciélago -->
             <path d="M 70 45 L 68 12 Q 90 20 100 45 Z" fill="#8b6b52"/>
             <path d="M 170 45 L 172 12 Q 150 20 140 45 Z" fill="#8b6b52"/>
-            <!-- Mancha ojo -->
             <circle cx="95" cy="75" r="14" fill="#8b6b52"/>
-            <!-- Ojos -->
             <circle class="ojo-b" cx="95" cy="75" r="5" fill="#222"/>
             <circle class="ojo-b" cx="145" cy="75" r="5" fill="#222"/>
             <circle cx="96.5" cy="73" r="1.7" fill="#fff"/>
             <circle cx="146.5" cy="73" r="1.7" fill="#fff"/>
-            <!-- Hocico achatado -->
             <ellipse cx="120" cy="100" rx="28" ry="18" fill="#a88870"/>
             <ellipse cx="120" cy="92" rx="6" ry="4.5" fill="#222"/>
             <path d="M 120 96 Q 120 105 108 105" stroke="#222" stroke-width="2" fill="none" stroke-linecap="round"/>
@@ -866,28 +861,20 @@
         svg: `
           <svg viewBox="0 0 220 180" xmlns="http://www.w3.org/2000/svg">
             <ellipse cx="110" cy="165" rx="65" ry="8" fill="rgba(0,0,0,0.15)"/>
-            <!-- Cola -->
             <path class="cola-c" d="M 60 120 Q 30 105 35 80" stroke="#e8b86a" stroke-width="12" stroke-linecap="round" fill="none"/>
-            <!-- Cuerpo -->
             <g class="cuerpo-c">
               <ellipse cx="110" cy="125" rx="60" ry="38" fill="#f0c980"/>
-              <!-- Patas cortas -->
               <rect x="65" y="145" width="18" height="25" rx="8" fill="#e8b86a"/>
               <rect x="140" y="145" width="18" height="25" rx="8" fill="#e8b86a"/>
-              <!-- Cabeza grande -->
               <circle cx="160" cy="85" r="42" fill="#f5d497"/>
-              <!-- Orejas caídas -->
               <ellipse cx="130" cy="90" rx="14" ry="28" fill="#e8b86a" transform="rotate(-25 130 90)"/>
               <ellipse cx="190" cy="90" rx="14" ry="28" fill="#e8b86a" transform="rotate(25 190 90)"/>
-              <!-- Ojos brillantes -->
               <circle class="ojo-c" cx="148" cy="80" r="6" fill="#222"/>
               <circle class="ojo-c" cx="172" cy="80" r="6" fill="#222"/>
               <circle cx="150" cy="77" r="2.3" fill="#fff"/>
               <circle cx="174" cy="77" r="2.3" fill="#fff"/>
-              <!-- Hocico -->
               <ellipse cx="160" cy="102" rx="18" ry="13" fill="#f5e0c8"/>
               <ellipse cx="160" cy="97" rx="5" ry="4" fill="#222"/>
-              <!-- Lengua juguetona -->
               <path d="M 155 108 Q 160 120 165 108 Z" fill="#ff6b8a"/>
             </g>
           </svg>
@@ -901,46 +888,80 @@
         svg: `
           <svg viewBox="0 0 260 180" xmlns="http://www.w3.org/2000/svg">
             <ellipse cx="130" cy="165" rx="90" ry="8" fill="rgba(0,0,0,0.15)"/>
-            <!-- Cola fina -->
             <path class="cola-g" d="M 55 110 Q 25 85 30 55" stroke="#8a6a4a" stroke-width="10" stroke-linecap="round" fill="none"/>
-            <!-- Patas largas -->
             <rect class="pata-g pata-g1" x="70" y="120" width="12" height="50" rx="6" fill="#6b4f30"/>
             <rect class="pata-g pata-g2" x="90" y="120" width="12" height="50" rx="6" fill="#8a6a4a"/>
             <rect class="pata-g pata-g3" x="170" y="120" width="12" height="50" rx="6" fill="#8a6a4a"/>
             <rect class="pata-g pata-g4" x="190" y="120" width="12" height="50" rx="6" fill="#6b4f30"/>
-            <!-- Cuerpo esbelto -->
             <ellipse cx="130" cy="100" rx="80" ry="32" fill="#a08060"/>
-            <!-- Cuello largo -->
             <path d="M 185 90 Q 205 70 220 70" stroke="#a08060" stroke-width="22" fill="none" stroke-linecap="round"/>
-            <!-- Cabeza estrecha -->
             <ellipse cx="230" cy="68" rx="25" ry="16" fill="#b89878"/>
-            <!-- Hocico alargado -->
             <ellipse cx="248" cy="70" rx="12" ry="7" fill="#8a6a4a"/>
             <ellipse cx="254" cy="68" rx="3.5" ry="2.5" fill="#222"/>
-            <!-- Ojos -->
             <circle cx="235" cy="63" r="3.5" fill="#222"/>
             <circle cx="236" cy="62" r="1.2" fill="#fff"/>
-            <!-- Orejas pequeñas -->
             <path d="M 222 52 L 218 38 L 232 48 Z" fill="#6b4f30"/>
           </svg>
         `,
       },
     ];
 
+    // ---------- Datos: Taxonomía ----------
+    const taxonomia: TaxonomiaFila[] = [
+      { nivel: 'Reino',      valor: 'Animalia' },
+      { nivel: 'Filo',       valor: 'Chordata' },
+      { nivel: 'Clase',      valor: 'Mammalia' },
+      { nivel: 'Orden',      valor: 'Carnivora' },
+      { nivel: 'Familia',    valor: 'Canidae' },
+      { nivel: 'Género',     valor: 'Canis' },
+      { nivel: 'Especie',    valor: 'Canis lupus' },
+      { nivel: 'Subespecie', valor: 'Canis lupus familiaris' },
+    ];
+
+    // ---------- Datos: Biología ----------
+    const bioDatos: BioDato[] = [
+      { icono: '🧬', titulo: 'Especie única',        texto: 'Todos los perros, desde un chihuahua hasta un gran danés, pertenecen a una sola especie: Canis lupus familiaris.' },
+      { icono: '⏳', titulo: 'Origen antiguo',       texto: 'La domesticación comenzó hace entre 18,800 y 32,100 años, durante el Paleolítico Superior.' },
+      { icono: '🐺', titulo: 'Descendiente del lobo', texto: 'El lobo gris es su antecesor directo. Los estudios genéticos confirman que comparten casi el mismo ADN.' },
+      { icono: '🧠', titulo: 'Cerebro más pequeño',  texto: 'Los perros tienen cerebros un 10% más pequeños que los lobos, al no necesitar cazar para sobrevivir.' },
+      { icono: '🦷', titulo: 'Dientes reducidos',     texto: 'Su cráneo es un 20% menor y sus dientes más pequeños que los de un lobo de tamaño similar.' },
+      { icono: '🐾', titulo: 'Glándulas en las patas', texto: 'Tienen glándulas sudoríparas en las almohadillas, algo que los lobos no poseen.' },
+      { icono: '💤', titulo: 'Esperanza de vida',     texto: 'Las razas pequeñas viven hasta 15-16 años; las grandes la mitad. El perro más longevo vivió 29 años.' },
+      { icono: '🌍', titulo: '+340 razas',            texto: 'La Federación Cinológica Internacional reconoce aproximadamente 340-360 razas de perros.' },
+    ];
+
+    // ---------- Datos: Comparativa ----------
+    const comparativas: Comparativa[] = [
+      { titulo: 'Tamaño del cráneo',      texto: 'El perro tiene un cráneo ~20% más pequeño que un lobo de tamaño similar.' },
+      { titulo: 'Tamaño del cerebro',     texto: 'El cerebro del perro es ~10% más pequeño y requiere menos calorías.' },
+      { titulo: 'Cola',                    texto: 'La cola del perro tiende a curvarse hacia arriba; la del lobo no.' },
+      { titulo: 'Glándulas sudoríparas',  texto: 'El perro las tiene en las almohadillas de las patas; el lobo no.' },
+      { titulo: 'Ciclo reproductivo',     texto: 'La perra tiene ~2 celos al año; la loba solo uno, en primavera.' },
+      { titulo: 'Madurez sexual',          texto: 'El perro madura a los 6-9 meses; el lobo a los 2 años.' },
+    ];
+
+    // ---------- Datos: Sentidos ----------
+    const sentidos: Sentido[] = [
+      { icono: '👃', titulo: 'Olfato', texto: 'Tiene ~220 millones de células olfativas, frente a 5 millones del humano. Su área olfatoria es 40 veces mayor.' },
+      { icono: '👂', titulo: 'Oído',   texto: 'Escucha sonidos 4 veces más lejanos que un humano y detecta ultrasonidos.' },
+      { icono: '👀', titulo: 'Vista',  texto: 'No distinguen bien los colores, pero detectan mejor el movimiento y ven en penumbra.' },
+      { icono: '👅', titulo: 'Gusto',  texto: 'Tienen menos papilas gustativas que los humanos, pero detectan sabores dulces, salados y amargos.' },
+    ];
+
     // ---------- Datos: Curiosidades ----------
     const curiosidades: Curiosidad[] = [
-      { icono: '👃', titulo: 'Súper olfato',            texto: 'El olfato de un perro es hasta 40 veces más potente que el nuestro.' },
-      { icono: '👂', titulo: 'Oído fino',               texto: 'Escuchan sonidos 4 veces más lejanos y detectan ultrasonidos.' },
-      { icono: '💤', titulo: 'Sueñan como nosotros',    texto: 'Entran en fase REM y sueñan con sus dueños y aventuras.' },
-      { icono: '🎓', titulo: 'Muy inteligentes',        texto: 'Un perro adulto tiene la inteligencia de un niño de 2 a 3 años.' },
-      { icono: '❤️', titulo: 'Sienten empatía',         texto: 'Perciben nuestras emociones y nos consuelan cuando estamos tristes.' },
-      { icono: '👣', titulo: 'Huellas únicas',          texto: 'La nariz de cada perro tiene un patrón único, como nuestra huella.' },
-      { icono: '🐾', titulo: 'Nacen ciegos',            texto: 'Los cachorros nacen sordos y ciegos, abren los ojos a las 2 semanas.' },
-      { icono: '🩺', titulo: 'Detectan enfermedades',   texto: 'Su olfato puede detectar cáncer, diabetes y otras enfermedades.' },
-      { icono: '🐕', titulo: 'Más de 340 razas',        texto: 'Existen más de 340 razas reconocidas en todo el mundo.' },
-      { icono: '⏱️', titulo: 'Velocidad récord',        texto: 'Un galgo puede correr hasta 70 km/h en distancias cortas.' },
-      { icono: '🎵', titulo: 'Les gusta la música',     texto: 'La música clásica y suave los relaja y reduce su estrés.' },
-      { icono: '😴', titulo: 'Duermen mucho',           texto: 'Los perros adultos duermen entre 12 y 14 horas al día.' },
+      { icono: '👃', titulo: 'Súper olfato',         texto: 'El olfato de un perro es hasta 40 veces más potente que el nuestro.' },
+      { icono: '👂', titulo: 'Oído fino',            texto: 'Escuchan sonidos 4 veces más lejanos y detectan ultrasonidos.' },
+      { icono: '💤', titulo: 'Sueñan como nosotros', texto: 'Entran en fase REM y sueñan con sus dueños y aventuras.' },
+      { icono: '🎓', titulo: 'Muy inteligentes',     texto: 'Un perro adulto tiene la inteligencia de un niño de 2 a 3 años.' },
+      { icono: '❤️', titulo: 'Sienten empatía',      texto: 'Perciben nuestras emociones y nos consuelan cuando estamos tristes.' },
+      { icono: '👣', titulo: 'Huellas únicas',       texto: 'La nariz de cada perro tiene un patrón único, como nuestra huella.' },
+      { icono: '🐾', titulo: 'Nacen ciegos',         texto: 'Los cachorros nacen sordos y ciegos, abren los ojos a las 2 semanas.' },
+      { icono: '🩺', titulo: 'Detectan enfermedades', texto: 'Su olfato puede detectar cáncer, diabetes y otras enfermedades.' },
+      { icono: '🐕', titulo: 'Más de 340 razas',     texto: 'Existen más de 340 razas reconocidas en todo el mundo.' },
+      { icono: '⏱️', titulo: 'Velocidad récord',     texto: 'Un galgo puede correr hasta 70 km/h en distancias cortas.' },
+      { icono: '🎵', titulo: 'Les gusta la música',  texto: 'La música clásica y suave los relaja y reduce su estrés.' },
+      { icono: '😴', titulo: 'Duermen mucho',        texto: 'Los perros adultos duermen entre 12 y 14 horas al día.' },
     ];
 
     // ---------- Datos: Cuidados ----------
@@ -1002,7 +1023,7 @@
     }
 
     // ============================================================
-    // 🎉 Explosión de emojis
+    // 🎉 Explosión
     // ============================================================
     function efectoExplosion({ x, y, simbolos, cantidad = 6 }: ExplosionOptions): void {
       for (let i = 0; i < cantidad; i++) {
@@ -1019,7 +1040,7 @@
     }
 
     // ============================================================
-    // 🐾 Huellas flotantes
+    // 🐾 Huellas
     // ============================================================
     class HuellasFondo {
       private container: HTMLElement;
@@ -1052,7 +1073,6 @@
     function renderizarPerros(): void {
       const grid = $<HTMLElement>('#perrosGrid');
       if (!grid) return;
-
       perros.forEach(({ titulo, raza, descripcion, clase, svg }) => {
         const card = document.createElement('div');
         card.className = `perro-card ${clase}`;
@@ -1067,12 +1087,77 @@
     }
 
     // ============================================================
+    // 🧬 Render: taxonomía
+    // ============================================================
+    function renderizarTaxonomia(): void {
+      const cont = $<HTMLElement>('#taxonomiaLista');
+      if (!cont) return;
+      taxonomia.forEach(({ nivel, valor }) => {
+        const fila = document.createElement('div');
+        fila.className = 'taxonomia-fila';
+        fila.innerHTML = `<span class="nivel">${nivel}</span><span class="valor">${valor}</span>`;
+        cont.appendChild(fila);
+      });
+    }
+
+    // ============================================================
+    // 🧬 Render: bio
+    // ============================================================
+    function renderizarBio(): void {
+      const cont = $<HTMLElement>('#bioGrid');
+      if (!cont) return;
+      bioDatos.forEach(({ icono, titulo, texto }) => {
+        const card = document.createElement('div');
+        card.className = 'bio-card';
+        card.innerHTML = `
+          <span class="bio-icono">${icono}</span>
+          <h4>${titulo}</h4>
+          <p>${texto}</p>
+        `;
+        cont.appendChild(card);
+      });
+    }
+
+    // ============================================================
+    // 🐺 Render: comparativa
+    // ============================================================
+    function renderizarComparativa(): void {
+      const cont = $<HTMLElement>('#comparativaGrid');
+      if (!cont) return;
+      comparativas.forEach(({ titulo, texto }) => {
+        const div = document.createElement('div');
+        div.className = 'comp-item';
+        div.innerHTML = `<h4>${titulo}</h4><p>${texto}</p>`;
+        cont.appendChild(div);
+      });
+    }
+
+    // ============================================================
+    // 👃 Render: sentidos
+    // ============================================================
+    function renderizarSentidos(): void {
+      const cont = $<HTMLElement>('#sentidosGrid');
+      if (!cont) return;
+      sentidos.forEach(({ icono, titulo, texto }) => {
+        const card = document.createElement('div');
+        card.className = 'sentido-card';
+        card.innerHTML = `
+          <span class="sentido-icono">${icono}</span>
+          <div class="sentido-info">
+            <h4>${titulo}</h4>
+            <p>${texto}</p>
+          </div>
+        `;
+        cont.appendChild(card);
+      });
+    }
+
+    // ============================================================
     // 💡 Render: curiosidades
     // ============================================================
     function renderizarCuriosidades(): void {
       const cont = $<HTMLElement>('#curiosidades');
       if (!cont) return;
-
       curiosidades.forEach(({ icono, titulo, texto }) => {
         const div = document.createElement('div');
         div.className = 'curiosidad';
@@ -1093,7 +1178,6 @@
     function renderizarCuidados(): void {
       const cont = $<HTMLElement>('#cuidados');
       if (!cont) return;
-
       cuidados.forEach(({ icono, titulo, descripcion, puntos }) => {
         const card = document.createElement('div');
         card.className = 'cuidado';
@@ -1109,7 +1193,7 @@
     }
 
     // ============================================================
-    // 👁️ Animaciones al hacer scroll
+    // 👁️ Scroll animaciones
     // ============================================================
     function activarScrollAnimaciones(): void {
       const obs = new IntersectionObserver(
@@ -1123,12 +1207,13 @@
         { threshold: 0.12 }
       );
 
-      document.querySelectorAll('.perro-card, .curiosidad, .cuidado')
-        .forEach((el) => obs.observe(el));
+      document.querySelectorAll(
+        '.perro-card, .curiosidad, .cuidado, .taxonomia-card, .bio-card, .comp-item, .sentido-card'
+      ).forEach((el) => obs.observe(el));
     }
 
     // ============================================================
-    // 🐾 Perrito que sigue al mouse (opcional, se activa con doble clic)
+    // 🐕 Perrito que sigue al mouse (doble clic para activar)
     // ============================================================
     class PerritoSeguidor {
       private el: HTMLDivElement;
@@ -1198,7 +1283,7 @@
     }
 
     // ============================================================
-    // 🎊 Clic global = explosión
+    // 🎊 Clic global
     // ============================================================
     function activarClicGlobal(): void {
       document.addEventListener('click', (e) => {
@@ -1217,6 +1302,10 @@
     // ============================================================
     document.addEventListener('DOMContentLoaded', () => {
       renderizarPerros();
+      renderizarTaxonomia();
+      renderizarBio();
+      renderizarComparativa();
+      renderizarSentidos();
       renderizarCuriosidades();
       renderizarCuidados();
 
@@ -1231,7 +1320,7 @@
       activarTituloRotativo();
 
       console.log(
-        '%c🐶 ¡Mundo Perruno cargado!%c\nHaz DOBLE CLIC para activar un perrito que sigue tu mouse 🐕',
+        '%c🐶 ¡Mundo Perruno cargado!%c\nDoble clic para activar el perrito que sigue tu mouse 🐕',
         'color:#ff7a9c;font-size:18px;font-weight:bold;',
         'color:#7bc8a4;font-size:13px;'
       );
