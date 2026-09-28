@@ -131,8 +131,66 @@
   }
   .seccion-desc {
     text-align: center; opacity: 0.8;
-    margin-bottom: 30px; font-size: 1rem;
+    margin-bottom: 20px; font-size: 1rem;
     position: relative; z-index: 1;
+  }
+
+  /* 📝 Tarjeta de información debajo de títulos */
+  .seccion-info {
+    max-width: 820px;
+    margin: 0 auto 35px;
+    padding: 20px 26px;
+    background: var(--card);
+    border-radius: 16px;
+    border-left: 5px solid var(--accent);
+    box-shadow: 0 4px 15px var(--shadow);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    z-index: 1;
+  }
+  .seccion-info.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .seccion-info p { margin-bottom: 10px; opacity: 0.95; }
+  .seccion-info p:last-child { margin-bottom: 0; }
+  .seccion-info strong { color: var(--accent); }
+  .seccion-info em { color: var(--accent2); font-style: italic; }
+  .seccion-info code {
+    background: var(--game-bg);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-family: 'Consolas', monospace;
+    font-size: 0.9rem;
+    color: var(--accent);
+    font-weight: bold;
+  }
+  .seccion-info ul { list-style: none; margin: 10px 0; padding-left: 0; }
+  .seccion-info li {
+    padding: 4px 0 4px 22px;
+    position: relative;
+    opacity: 0.95;
+  }
+  .seccion-info li::before {
+    content: '🐾';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+  .seccion-info .dato-clave {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-right: 6px;
   }
 
   /* ============================================================
@@ -298,7 +356,7 @@
   }
   .perro-card p { font-size: 0.95rem; opacity: 0.85; line-height: 1.4; }
 
-  /* Salchicha */
+  /* Animaciones de perritos */
   .perro-salchicha .cola-s { transform-box: fill-box; transform-origin: bottom left; animation: colaAgitar 0.4s ease-in-out infinite alternate; }
   .perro-salchicha .ojo-s { transform-box: fill-box; transform-origin: center; animation: parpadeo 4s infinite; }
   @keyframes parpadeo {
@@ -316,7 +374,6 @@
     50%      { transform: scaleY(1.5); }
   }
 
-  /* Pastor */
   .perro-pastor .cola-p { transform-box: fill-box; transform-origin: bottom left; animation: colaAgitar 0.5s ease-in-out infinite alternate; }
   .perro-pastor .oreja-p { transform-box: fill-box; transform-origin: top center; animation: orejaPunta 1.5s ease-in-out infinite alternate; }
   @keyframes orejaPunta {
@@ -325,7 +382,6 @@
   }
   .perro-pastor .ojo-p { transform-box: fill-box; transform-origin: center; animation: parpadeo 5s infinite; }
 
-  /* Husky */
   .perro-husky .cola-h { transform-box: fill-box; transform-origin: bottom left; animation: colaHusky 0.6s ease-in-out infinite alternate; }
   @keyframes colaHusky {
     from { transform: rotate(-35deg); }
@@ -334,7 +390,6 @@
   .perro-husky .ojo-h { transform-box: fill-box; transform-origin: center; animation: parpadeo 3.5s infinite; }
   .perro-husky .lengua-h { transform-box: fill-box; transform-origin: top center; animation: lenguitaLamer 1.2s ease-in-out infinite; }
 
-  /* Bulldog */
   .perro-bulldog .respira { transform-box: fill-box; transform-origin: center; animation: respirar 1.8s ease-in-out infinite; }
   @keyframes respirar {
     0%, 100% { transform: scale(1); }
@@ -342,7 +397,6 @@
   }
   .perro-bulldog .ojo-b { transform-box: fill-box; transform-origin: center; animation: parpadeo 6s infinite; }
 
-  /* Cachorro */
   .perro-cachorro .cola-c { transform-box: fill-box; transform-origin: bottom left; animation: colaAgitar 0.25s ease-in-out infinite alternate; }
   .perro-cachorro .cuerpo-c { transform-box: fill-box; transform-origin: bottom center; animation: saltitoCachorro 1.2s ease-in-out infinite; }
   @keyframes saltitoCachorro {
@@ -351,7 +405,6 @@
   }
   .perro-cachorro .ojo-c { transform-box: fill-box; transform-origin: center; animation: parpadeo 3s infinite; }
 
-  /* Galgo */
   .perro-galgo .cola-g { transform-box: fill-box; transform-origin: bottom left; animation: colaAgitar 0.4s ease-in-out infinite alternate; }
   .perro-galgo .pata-g { transform-box: fill-box; transform-origin: top center; animation: pataCorrer 0.5s ease-in-out infinite; }
   .perro-galgo .pata-g2 { animation-delay: 0.12s; }
@@ -689,39 +742,153 @@
   <!-- 🐕 GALERÍA DE PERRITOS -->
   <h2 class="seccion-titulo">🐕 Nuestros perritos</h2>
   <p class="seccion-desc">Todos dibujados y animados con código (SVG + CSS)</p>
+  <div class="seccion-info">
+    <p>
+      <span class="dato-clave">6 razas</span>
+      Aquí encontrarás una pequeña muestra de la diversidad canina. Cada perrito está creado con <strong>SVG (gráficos vectoriales)</strong> y animado con <strong>CSS</strong>, sin usar ni una sola imagen externa.
+    </p>
+    <p>
+      Los perros pertenecen todos a la misma especie, <em>Canis lupus familiaris</em>, pero se han desarrollado <strong>más de 340 razas</strong> a lo largo de miles de años mediante selección artificial. Cada raza tiene características únicas de tamaño, pelaje, temperamento y necesidades.
+    </p>
+    <p>Algunas razas que verás aquí:</p>
+    <ul>
+      <li><strong>Dachshund (salchicha)</strong>: criado para cazar tejones, con cuerpo alargado y patas cortas.</li>
+      <li><strong>Pastor Alemán</strong>: usado como perro policía y de rescate por su inteligencia.</li>
+      <li><strong>Husky Siberiano</strong>: tirador de trineos en climas extremos, con ojos azules característicos.</li>
+      <li><strong>Bulldog Francés</strong>: compañero de sofá, tranquilo y muy cariñoso.</li>
+      <li><strong>Cachorro Golden Retriever</strong>: la raza familiar por excelencia, dócil y juguetona.</li>
+      <li><strong>Galgo (Greyhound)</strong>: el perro más rápido del mundo, alcanza hasta <strong>70 km/h</strong>.</li>
+    </ul>
+  </div>
   <section class="perros-grid" id="perrosGrid"></section>
 
   <!-- 🧬 INFORMACIÓN CIENTÍFICA -->
   <h2 class="seccion-titulo">🧬 El perro en la ciencia</h2>
   <p class="seccion-desc">Clasificación, evolución y datos biológicos fascinantes</p>
+  <div class="seccion-info">
+    <p>
+      El perro doméstico es un <strong>mamífero carnívoro</strong> de la familia <em>Canidae</em>. Su nombre científico completo es <code>Canis lupus familiaris</code>, lo que lo clasifica como una <strong>subespecie del lobo gris</strong>.
+    </p>
+    <p>
+      La <strong>domesticación</strong> ocurrió hace entre <span class="dato-clave">18,800 y 32,100 años</span> durante el Paleolítico Superior, probablemente cuando lobos menos agresivos se acercaron a campamentos humanos buscando restos de comida. Con el tiempo, esa relación se volvió simbiótica: los humanos obtenían protección y compañía, y los perros alimento y refugio.
+    </p>
+    <p>
+      A pesar de las enormes diferencias físicas (un chihuahua pesa 2 kg y un gran danés hasta 90 kg), <strong>todos los perros siguen siendo la misma especie</strong> y pueden reproducirse entre sí.
+    </p>
+  </div>
 
   <section class="taxonomia">
     <div class="taxonomia-card" id="taxonomiaCard">
       <h3>📊 Clasificación Taxonómica</h3>
+      <div class="seccion-info" style="margin-bottom:20px; border-left: 4px solid var(--accent2);">
+        <p>
+          La <strong>taxonomía</strong> es la ciencia que clasifica a los seres vivos. Cada nivel nos dice cómo se relaciona el perro con otros animales:
+        </p>
+        <ul>
+          <li><strong>Reino Animalia</strong>: es un animal, no una planta ni un hongo.</li>
+          <li><strong>Filo Chordata</strong>: tiene columna vertebral (es vertebrado).</li>
+          <li><strong>Clase Mammalia</strong>: es mamífero, tiene pelo y produce leche.</li>
+          <li><strong>Orden Carnivora</strong>: su dieta ancestral es la carne.</li>
+          <li><strong>Familia Canidae</strong>: comparte grupo con lobos, zorros y coyotes.</li>
+          <li><strong>Género Canis</strong>: junto al lobo gris, el lobo rojo y el coyote.</li>
+          <li><strong>Especie Canis lupus</strong>: es la misma especie que el lobo gris.</li>
+          <li><strong>Subespecie Canis lupus familiaris</strong>: la versión domesticada.</li>
+        </ul>
+      </div>
       <div class="taxonomia-lista" id="taxonomiaLista"></div>
     </div>
   </section>
 
+  <h3 class="comparativa-titulo" style="margin-top:40px;">📈 Biología y evolución</h3>
+  <div class="seccion-info">
+    <p>
+      Los perros son <strong>omnívoros oportunistas</strong>: aunque descienden de carnívoros, su dieta se ha adaptado a incluir vegetales, granos y carbohidratos gracias a la convivencia con humanos. De hecho, tienen <strong>más genes para digerir almidón</strong> que los lobos.
+    </p>
+    <p>
+      Su cuerpo ha evolucionado para ser <strong>más pequeño y menos muscular</strong> que el del lobo, ya que no necesitan cazar. Pero han ganado en otras áreas:
+    </p>
+    <ul>
+      <li>Mayor capacidad de <strong>interpretar emociones humanas</strong>.</li>
+      <li>Mejor tolerancia a <strong>dietas variadas</strong>.</li>
+      <li>Mayor <strong>diversidad de tamaños y formas</strong> (único en mamíferos).</li>
+    </ul>
+    <p>
+      El perro más longevo registrado fue <strong>Bluey</strong>, un pastor australiano que vivió <span class="dato-clave">29 años y 5 meses</span>. La esperanza de vida promedio es de 10 a 15 años.
+    </p>
+  </div>
+
   <section class="bio-grid" id="bioGrid"></section>
 
-  <section class="comparativa">
-    <h3 class="comparativa-titulo">🐺 Perro vs Lobo: diferencias clave</h3>
-    <div class="comparativa-grid" id="comparativaGrid"></div>
-  </section>
+  <h3 class="comparativa-titulo" style="margin-top:40px;">🐺 Perro vs Lobo: diferencias clave</h3>
+  <div class="seccion-info">
+    <p>
+      Aunque comparten el <strong>99.9% del ADN</strong>, perros y lobos tienen diferencias notables resultado de miles de años de domesticación. Estas son las más importantes:
+    </p>
+    <p>
+      Las diferencias no son solo físicas: los perros son <strong>más dóciles</strong>, <strong>menos territoriales</strong> y tienen una <strong>ventana de socialización más larga</strong> que los lobos. También ladran mucho más (los lobos casi no ladran en la edad adulta).
+    </p>
+  </div>
+  <div class="comparativa-grid" id="comparativaGrid"></div>
 
-  <section class="sentidos">
-    <h3 class="sentidos-titulo">👃 Los sentidos del perro</h3>
-    <div class="sentidos-grid" id="sentidosGrid"></div>
-  </section>
+  <h3 class="sentidos-titulo" style="margin-top:40px;">👃 Los sentidos del perro</h3>
+  <div class="seccion-info">
+    <p>
+      Los perros perciben el mundo de una forma muy distinta a la nuestra. Mientras nosotros somos criaturas <strong>visuales</strong>, ellos son criaturas <strong>olfativas</strong>.
+    </p>
+    <p>
+      Su sentido más desarrollado es el <strong>olfato</strong>: pueden detectar olores a concentraciones <span class="dato-clave">100,000 veces más bajas</span> que un humano. Esto les permite encontrar drogas, explosivos, personas desaparecidas e incluso <strong>enfermedades como el cáncer o la diabetes</strong>.
+    </p>
+    <p>
+      El <strong>oído</strong> también es superior: escuchan frecuencias de hasta <strong>65,000 Hz</strong> (los humanos hasta 20,000 Hz), por eso detectan silbatos ultrasónicos y sonidos lejanos.
+    </p>
+    <p>
+      La <strong>vista</strong> es su sentido más débil. No distinguen bien los colores (ven principalmente azul y amarillo), pero detectan mejor el movimiento y ven excelentemente en penumbra.
+    </p>
+  </div>
+  <div class="sentidos-grid" id="sentidosGrid"></div>
 
   <!-- 💡 CURIOSIDADES -->
   <h2 class="seccion-titulo">💡 ¿Sabías que...?</h2>
   <p class="seccion-desc">Datos curiosos y fascinantes sobre los perros</p>
+  <div class="seccion-info">
+    <p>
+      Los perros son uno de los animales más estudiados del planeta. Estas son algunas de las curiosidades más sorprendentes que la ciencia ha descubierto:
+    </p>
+    <p>
+      <strong>¿Sueñan?</strong> Sí. Durante la fase <em>REM</em> del sueño, los perros mueven las patas y emiten pequeños sonidos, señal de que están soñando. Estudios sugieren que sueñan con sus dueños y sus actividades diarias.
+    </p>
+    <p>
+      <strong>¿Nos entienden?</strong> Investigaciones con resonancia magnética muestran que los perros procesan las palabras humanas de forma similar a nosotros y reaccionan al tono de voz con emoción.
+    </p>
+    <p>
+      <strong>¿Cuánto huelen?</strong> Su nariz tiene hasta <span class="dato-clave">300 millones</span> de receptores olfativos, contra 6 millones de los humanos.
+    </p>
+  </div>
   <section class="curiosidades" id="curiosidades"></section>
 
   <!-- 🩺 CUIDADOS -->
   <h2 class="seccion-titulo">🩺 Cuidados básicos</h2>
   <p class="seccion-desc">Consejos para que tu perrito sea feliz y saludable</p>
+  <div class="seccion-info">
+    <p>
+      Adoptar un perro es un <strong>compromiso de 10 a 15 años</strong>. Estos cuidados son esenciales para garantizar una vida larga, sana y feliz:
+    </p>
+    <p>
+      <strong>🍖 Alimentación:</strong> dale comida de calidad adaptada a su edad, tamaño y nivel de actividad. Un perro adulto come 2 veces al día; un cachorro, 3 o 4. <em>Nunca</em> le des chocolate, uvas, cebolla, ajo o aguacate: son tóxicos para ellos.
+    </p>
+    <p>
+      <strong>🏃 Ejercicio:</strong> la cantidad depende de la raza. Un border collie necesita 2 horas diarias; un bulldog, 30 minutos. El ejercicio previene la obesidad, la ansiedad y los problemas de comportamiento.
+    </p>
+    <p>
+      <strong>💉 Salud:</strong> mantén sus vacunas al día (rabia, parvovirus, moquillo), desparasítalo cada 3-6 meses y visítalo al veterinario al menos una vez al año. La <strong>esterilización</strong> previene enfermedades y camadas no deseadas.
+    </p>
+    <p>
+      <strong>❤️ Amor:</strong> los perros son seres sociales. Necesitan compañía, juego y afecto diario. La soledad prolongada puede causarles ansiedad por separación, depresión y problemas de comportamiento.
+    </p>
+    <p>
+      <strong>🚑 Emergencias:</strong> ten siempre el número de un veterinario 24 horas. Señales de alarma: vómitos repetidos, diarrea con sangre, decaimiento extremo, dificultad para respirar o convulsiones.
+    </p>
+  </div>
   <section class="cuidados" id="cuidados"></section>
 
   <footer>Hecho con ❤️ para todos los perritos del mundo 🐾</footer>
@@ -1208,12 +1375,12 @@
       );
 
       document.querySelectorAll(
-        '.perro-card, .curiosidad, .cuidado, .taxonomia-card, .bio-card, .comp-item, .sentido-card'
+        '.perro-card, .curiosidad, .cuidado, .taxonomia-card, .bio-card, .comp-item, .sentido-card, .seccion-info'
       ).forEach((el) => obs.observe(el));
     }
 
     // ============================================================
-    // 🐕 Perrito que sigue al mouse (doble clic para activar)
+    // 🐕 Perrito que sigue al mouse
     // ============================================================
     class PerritoSeguidor {
       private el: HTMLDivElement;
