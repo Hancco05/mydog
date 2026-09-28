@@ -86,10 +86,17 @@
     100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
   }
 
-  /* Botón tema */
-  .theme-toggle {
+  /* Controles de tema */
+  .theme-controls {
     position: fixed;
     top: 15px; right: 15px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    z-index: 100;
+  }
+
+  .theme-toggle {
     background: var(--card);
     border: 2px solid var(--accent);
     color: var(--text);
@@ -99,12 +106,57 @@
     font-size: 0.95rem;
     font-weight: bold;
     box-shadow: 0 4px 20px var(--shadow);
-    z-index: 100;
     transition: all 0.3s;
     font-family: inherit;
   }
   .theme-toggle:hover { transform: scale(1.08); }
   .theme-toggle:active { transform: scale(0.95); }
+
+  .theme-mode-btn {
+    background: var(--card);
+    border: 2px solid var(--accent);
+    color: var(--text);
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 20px var(--shadow);
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+  }
+  .theme-mode-btn:hover { transform: scale(1.1) rotate(10deg); }
+  .theme-mode-btn:active { transform: scale(0.9); }
+  .theme-mode-btn[data-activo="true"] {
+    background: var(--accent);
+    color: #fff;
+  }
+  body.dark .theme-mode-btn[data-activo="true"] {
+    color: #1a1a2e;
+  }
+
+  /* Tooltip en botones */
+  .theme-mode-btn::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: var(--card);
+    color: var(--text);
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    box-shadow: 0 4px 12px var(--shadow);
+    border: 1px solid var(--accent);
+  }
+  .theme-mode-btn:hover::after { opacity: 1; }
 
   /* Header */
   header { text-align: center; padding: 15px 20px 5px; position: relative; z-index: 1; }
@@ -807,10 +859,39 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  /* Notificación toast del cambio de modo */
+  .toast-modo {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--card);
+    color: var(--text);
+    padding: 12px 24px;
+    border-radius: 50px;
+    border: 2px solid var(--accent);
+    box-shadow: 0 8px 25px var(--shadow);
+    font-weight: bold;
+    font-size: 0.95rem;
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .toast-modo.mostrar {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
   @media (max-width: 750px) {
     .hero-ciencia { grid-template-columns: 1fr; gap: 18px; }
     .hero-stats { grid-template-columns: 1fr 1fr; }
     .dato-destacado { flex-direction: column; text-align: center; }
+    .theme-controls { flex-direction: column; gap: 6px; }
+    .theme-toggle { font-size: 0.85rem; padding: 8px 14px; }
+    .theme-mode-btn { width: 38px; height: 38px; font-size: 1rem; }
   }
 
   @media (max-width: 600px) {
@@ -832,9 +913,15 @@
 
   <div class="huellas" id="huellas"></div>
 
-  <button class="theme-toggle" id="themeBtn" aria-label="Cambiar tema">
-    🌙 Modo oscuro
-  </button>
+  <!-- 🌗 CONTROLES DE TEMA -->
+  <div class="theme-controls">
+    <button class="theme-toggle" id="themeBtn" aria-label="Cambiar tema">
+      🌙 Modo oscuro
+    </button>
+    <button class="theme-mode-btn" id="btnAuto" data-tooltip="Auto (sistema + hora)" aria-label="Modo automático">
+      🔄
+    </button>
+  </div>
 
   <header>
     <h1>🐶 Mundo Perruno</h1>
@@ -890,7 +977,6 @@
   <h2 class="seccion-titulo">🧬 El perro en la ciencia</h2>
   <p class="seccion-desc">Clasificación, evolución y datos biológicos</p>
 
-  <!-- HERO CIENTÍFICO -->
   <section class="hero-ciencia">
     <div class="hero-perro">
       <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
@@ -934,26 +1020,13 @@
     </div>
 
     <div class="hero-stats">
-      <div class="hero-stat">
-        <span class="hero-stat-num">32,100</span>
-        <span class="hero-stat-label">años de domesticación</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-num">340+</span>
-        <span class="hero-stat-label">razas registradas</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-num">99.9%</span>
-        <span class="hero-stat-label">ADN compartido con el lobo</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-num">1</span>
-        <span class="hero-stat-label">sola especie: Canis lupus familiaris</span>
-      </div>
+      <div class="hero-stat"><span class="hero-stat-num">32,100</span><span class="hero-stat-label">años de domesticación</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">340+</span><span class="hero-stat-label">razas registradas</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">99.9%</span><span class="hero-stat-label">ADN compartido con el lobo</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">1</span><span class="hero-stat-label">sola especie: Canis lupus familiaris</span></div>
     </div>
   </section>
 
-  <!-- FICHA CIENTÍFICA -->
   <section class="ficha-cientifica">
     <h3 class="ficha-titulo">📋 Ficha científica</h3>
     <div class="ficha-grid">
@@ -972,7 +1045,6 @@
     </div>
   </section>
 
-  <!-- DATO DESTACADO -->
   <section class="dato-destacado">
     <span class="dato-destacado-icono">🐕</span>
     <div class="dato-destacado-texto">
@@ -986,7 +1058,6 @@
     <p>La <strong>domesticación</strong> ocurrió hace <span class="dato-clave">18,800-32,100 años</span> cuando lobos menos agresivos se acercaron a campamentos humanos buscando comida.</p>
   </div>
 
-  <!-- TAXONOMÍA -->
   <section class="taxonomia">
     <div class="taxonomia-card">
       <h3>📊 Clasificación Taxonómica</h3>
@@ -997,7 +1068,6 @@
     </div>
   </section>
 
-  <!-- BIOLOGÍA -->
   <h3 class="comparativa-titulo">📈 Biología y evolución</h3>
   <div class="seccion-info">
     <p>Los perros son <strong>omnívoros oportunistas</strong>: su dieta se ha adaptado a vegetales y carbohidratos. Tienen <strong>más genes para digerir almidón</strong> que los lobos.</p>
@@ -1005,21 +1075,18 @@
   </div>
   <section class="bio-grid" id="bioGrid"></section>
 
-  <!-- PERRO VS LOBO -->
   <h3 class="comparativa-titulo">🐺 Perro vs Lobo: diferencias clave</h3>
   <div class="seccion-info">
     <p>Aunque comparten el <strong>99.9% del ADN</strong>, perros y lobos tienen diferencias notables tras miles de años de domesticación.</p>
   </div>
   <div class="comparativa-grid" id="comparativaGrid"></div>
 
-  <!-- SENTIDOS -->
   <h3 class="sentidos-titulo">👃 Los sentidos del perro</h3>
   <div class="seccion-info">
     <p>Los perros son criaturas <strong>olfativas</strong>. Su olfato detecta concentraciones <span class="dato-clave">100,000 veces más bajas</span> que un humano. El oído alcanza los <strong>65,000 Hz</strong>, y la vista, aunque débil en colores, es excelente en penumbra.</p>
   </div>
   <div class="sentidos-grid" id="sentidosGrid"></div>
 
-  <!-- CURIOSIDADES -->
   <h2 class="seccion-titulo">💡 ¿Sabías que...?</h2>
   <p class="seccion-desc">Datos curiosos sobre los perros</p>
   <div class="seccion-info">
@@ -1027,7 +1094,6 @@
   </div>
   <section class="curiosidades" id="curiosidades"></section>
 
-  <!-- CUIDADOS -->
   <h2 class="seccion-titulo">🩺 Cuidados básicos</h2>
   <p class="seccion-desc">Consejos para un perrito feliz y saludable</p>
   <div class="seccion-info">
@@ -1036,6 +1102,12 @@
   <section class="cuidados" id="cuidados"></section>
 
   <footer>Hecho con ❤️ para todos los perritos del mundo 🐾</footer>
+
+  <!-- Toast de notificación -->
+  <div class="toast-modo" id="toastModo">
+    <span id="toastIcono">🌙</span>
+    <span id="toastTexto">Modo oscuro activado</span>
+  </div>
 
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
@@ -1049,6 +1121,7 @@
     interface Sentido { icono: string; titulo: string; texto: string; }
     interface ExplosionOptions { x: number; y: number; simbolos: string[]; cantidad?: number; }
     type Tema = 'claro' | 'oscuro';
+    type FuenteTema = 'manual' | 'sistema' | 'hora';
 
     const perros: PerroSVG[] = [
       {
@@ -1287,33 +1360,163 @@
     const random = (min: number, max: number): number => Math.random() * (max - min) + min;
     const randomItem = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 
+    /* ============================================================
+       🌗 ThemeManager con auto-detección (sistema + hora)
+       ============================================================ */
     class ThemeManager {
       private readonly key = 'tema';
+      private readonly keyManual = 'tema-manual';
       private readonly body: HTMLElement = document.body;
       private readonly btn: HTMLButtonElement;
+      private readonly btnAuto: HTMLButtonElement;
+      private readonly toast: HTMLElement;
+      private readonly toastIcono: HTMLElement;
+      private readonly toastTexto: HTMLElement;
+      private usandoAuto: boolean = true;
+      private mediaQuery: MediaQueryList;
 
-      constructor(btn: HTMLButtonElement) {
+      constructor(
+        btn: HTMLButtonElement,
+        btnAuto: HTMLButtonElement,
+        toast: HTMLElement,
+        toastIcono: HTMLElement,
+        toastTexto: HTMLElement,
+      ) {
         this.btn = btn;
-        const guardado = localStorage.getItem(this.key) as Tema | null;
-        this.aplicar(guardado === 'oscuro' ? 'oscuro' : 'claro');
-        this.btn.addEventListener('click', () => this.toggle());
-      }
+        this.btnAuto = btnAuto;
+        this.toast = toast;
+        this.toastIcono = toastIcono;
+        this.toastTexto = toastTexto;
+        this.mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-      private toggle(): void {
-        const nuevo: Tema = this.body.classList.contains('dark') ? 'claro' : 'oscuro';
-        this.aplicar(nuevo);
-        localStorage.setItem(this.key, nuevo);
-        efectoExplosion({
-          x: window.innerWidth - 80, y: 50,
-          simbolos: nuevo === 'oscuro' ? ['🌙', '⭐', '✨'] : ['☀️', '🌞', '✨'],
-          cantidad: 8,
+        // Detectar si el usuario ya eligió manualmente antes
+        const manualGuardado = localStorage.getItem(this.keyManual);
+        this.usandoAuto = manualGuardado !== 'false';
+
+        this.inicializar();
+
+        // Eventos
+        this.btn.addEventListener('click', () => this.toggleManual());
+        this.btnAuto.addEventListener('click', () => this.toggleAuto());
+
+        // Escuchar cambios del sistema operativo
+        this.mediaQuery.addEventListener('change', () => {
+          if (this.usandoAuto) this.aplicarAuto(false);
         });
+
+        // Atajo de teclado: Ctrl + D
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'd' && e.ctrlKey) {
+            e.preventDefault();
+            this.toggleManual();
+          }
+        });
+
+        // Revisar la hora cada 5 minutos
+        setInterval(() => {
+          if (this.usandoAuto) this.aplicarAuto(false);
+        }, 5 * 60 * 1000);
       }
 
-      private aplicar(tema: Tema): void {
+      /* --------- Inicialización --------- */
+      private inicializar(): void {
+        if (this.usandoAuto) {
+          this.aplicarAuto(true);
+        } else {
+          const guardado = localStorage.getItem(this.key) as Tema | null;
+          this.aplicar(guardado === 'oscuro' ? 'oscuro' : 'claro', false);
+        }
+        this.actualizarBotonAuto();
+      }
+
+      /* --------- Cambio manual --------- */
+      private toggleManual(): void {
+        const nuevo: Tema = this.body.classList.contains('dark') ? 'claro' : 'oscuro';
+        this.aplicar(nuevo, true);
+        localStorage.setItem(this.key, nuevo);
+      }
+
+      /* --------- Toggle entre auto y manual --------- */
+      private toggleAuto(): void {
+        this.usandoAuto = !this.usandoAuto;
+        localStorage.setItem(this.keyManual, this.usandoAuto ? 'true' : 'false');
+
+        if (this.usandoAuto) {
+          this.aplicarAuto(true);
+        }
+        this.actualizarBotonAuto();
+      }
+
+      /* --------- Aplicar según sistema + hora --------- */
+      private aplicarAuto(mostrarToast: boolean): void {
+        const hora = new Date().getHours();
+        const esNoche = hora >= 19 || hora < 7;
+        const prefiereOscuroSistema = this.mediaQuery.matches;
+
+        // Regla: si es de noche → oscuro. Si es de día → sigue la preferencia del sistema
+        let tema: Tema;
+        if (esNoche) {
+          tema = 'oscuro';
+        } else if (prefiereOscuroSistema && hora >= 17) {
+          tema = 'oscuro';
+        } else {
+          tema = 'claro';
+        }
+
+        this.aplicar(tema, mostrarToast);
+      }
+
+      /* --------- Aplicar tema --------- */
+      private aplicar(tema: Tema, mostrarToast: boolean): void {
         const esOscuro = tema === 'oscuro';
+        const cambio = this.body.classList.contains('dark') !== esOscuro;
         this.body.classList.toggle('dark', esOscuro);
         this.btn.textContent = esOscuro ? '☀️ Modo diurno' : '🌙 Modo oscuro';
+
+        if (cambio && mostrarToast) {
+          this.mostrarToast(tema);
+          efectoExplosion({
+            x: window.innerWidth - 80, y: 50,
+            simbolos: esOscuro ? ['🌙', '⭐', '✨'] : ['☀️', '🌞', '✨'],
+            cantidad: 8,
+          });
+        }
+      }
+
+      /* --------- Actualizar botón auto --------- */
+      private actualizarBotonAuto(): void {
+        this.btnAuto.dataset.activo = this.usandoAuto ? 'true' : 'false';
+        this.btnAuto.dataset.tooltip = this.usandoAuto
+          ? 'Auto activo (sistema + hora)'
+          : 'Auto desactivado';
+      }
+
+      /* --------- Toast --------- */
+      private mostrarToast(tema: Tema): void {
+        const hora = new Date().getHours();
+        const esNoche = hora >= 19 || hora < 7;
+        let mensaje: string;
+        let icono: string;
+
+        if (this.usandoAuto) {
+          if (esNoche) {
+            icono = '🌙';
+            mensaje = 'Modo nocturno automático (es de noche)';
+          } else {
+            icono = tema === 'oscuro' ? '🌙' : '☀️';
+            mensaje = tema === 'oscuro'
+              ? 'Modo oscuro (preferencia del sistema)'
+              : 'Modo claro (día)';
+          }
+        } else {
+          icono = tema === 'oscuro' ? '🌙' : '☀️';
+          mensaje = tema === 'oscuro' ? 'Modo nocturno activado' : 'Modo diurno activado';
+        }
+
+        this.toastIcono.textContent = icono;
+        this.toastTexto.textContent = mensaje;
+        this.toast.classList.add('mostrar');
+        setTimeout(() => this.toast.classList.remove('mostrar'), 2500);
       }
     }
 
@@ -1528,13 +1731,30 @@
       renderizarCuidados();
 
       const themeBtn = $<HTMLButtonElement>('#themeBtn');
-      if (themeBtn) new ThemeManager(themeBtn);
+      const btnAuto = $<HTMLButtonElement>('#btnAuto');
+      const toast = $<HTMLElement>('#toastModo');
+      const toastIcono = $<HTMLElement>('#toastIcono');
+      const toastTexto = $<HTMLElement>('#toastTexto');
+
+      if (themeBtn && btnAuto && toast && toastIcono && toastTexto) {
+        new ThemeManager(themeBtn, btnAuto, toast, toastIcono, toastTexto);
+      }
 
       new HuellasFondo('huellas');
       new PerritoSeguidor();
 
       activarClicGlobal();
       activarTituloRotativo();
+
+      console.log(
+        '%c🐶 ¡Mundo Perruno cargado!%c\n' +
+        '• Clic en el botón para cambiar de modo\n' +
+        '• Botón 🔄 = modo automático (sistema + hora)\n' +
+        '• Ctrl+D = atajo de teclado\n' +
+        '• Doble clic = perrito seguidor',
+        'color:#b02a5b;font-size:18px;font-weight:bold;',
+        'color:#056e4a;font-size:13px;'
+      );
     });
   </script>
 </body>
