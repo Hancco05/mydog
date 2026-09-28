@@ -6,7 +6,6 @@
 <meta name="theme-color" content="#b02a5b">
 <title>🐶 Mundo Perruno - Todo sobre perritos</title>
 
-<!-- Bootstrap 5 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
@@ -80,9 +79,6 @@
     50%      { background-position: 100% 50%; }
   }
 
-  /* ============================================================
-     📌 NAVBAR (Bootstrap mejorado)
-     ============================================================ */
   .navbar-perruno {
     background: var(--navbar-bg) !important;
     backdrop-filter: blur(12px);
@@ -143,7 +139,6 @@
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23ffb3d1' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
   }
 
-  /* Botones de tema en navbar */
   .theme-toggle,
   .theme-mode-btn {
     background: var(--card);
@@ -185,9 +180,6 @@
     color: #1a1a2e;
   }
 
-  /* ============================================================
-     🐾 HUELLAS FLOTANTES
-     ============================================================ */
   .huellas { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
   .huella {
     position: absolute;
@@ -208,9 +200,6 @@
     z-index: 1;
   }
 
-  /* ============================================================
-     🌟 HEADER
-     ============================================================ */
   header.hero-header {
     text-align: center;
     padding: 25px 20px 10px;
@@ -231,9 +220,6 @@
     animation: fadeInUp 1.2s ease;
   }
 
-  /* ============================================================
-     🎬 ESCENARIO
-     ============================================================ */
   .escenario {
     width: 100%;
     max-width: 1000px;
@@ -339,9 +325,6 @@
     to   { transform: rotate(-35deg); }
   }
 
-  /* ============================================================
-     📝 TÍTULOS Y TARJETAS
-     ============================================================ */
   .seccion-titulo {
     text-align: center;
     font-size: clamp(1.25rem, 3.5vw, 1.7rem);
@@ -407,9 +390,6 @@
     margin-right: 5px;
   }
 
-  /* ============================================================
-     🐕 PERRITOS GRID (Bootstrap)
-     ============================================================ */
   .perro-card {
     background: var(--card);
     border-radius: 20px;
@@ -449,7 +429,6 @@
     margin: 0;
   }
 
-  /* Animaciones de perritos SVG */
   .perro-salchicha .cola-s { transform-box: fill-box; transform-origin: bottom left; animation: colaAgitar 0.4s ease-in-out infinite alternate; }
   .perro-salchicha .ojo-s { transform-box: fill-box; transform-origin: center; animation: parpadeo 4s infinite; }
   @keyframes parpadeo {
@@ -499,9 +478,6 @@
   .perro-galgo .pata-g3 { animation-delay: 0.24s; }
   .perro-galgo .pata-g4 { animation-delay: 0.36s; }
 
-  /* ============================================================
-     🧬 CIENCIA
-     ============================================================ */
   .taxonomia-card,
   .hero-ciencia,
   .ficha-cientifica,
@@ -753,9 +729,6 @@
     color: var(--accent);
   }
 
-  /* ============================================================
-     🦶 FOOTER
-     ============================================================ */
   footer {
     text-align: center;
     padding: 25px 15px;
@@ -765,9 +738,6 @@
     z-index: 1;
   }
 
-  /* ============================================================
-     🎉 EMOJIS POP
-     ============================================================ */
   .emoji-pop {
     position: fixed;
     font-size: 2rem;
@@ -785,9 +755,6 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* ============================================================
-     📢 TOAST
-     ============================================================ */
   .toast-modo {
     position: fixed;
     bottom: 25px;
@@ -814,9 +781,6 @@
     transform: translateX(-50%) translateY(0);
   }
 
-  /* ============================================================
-     📱 RESPONSIVE — TABLET (768px)
-     ============================================================ */
   @media (max-width: 991.98px) {
     body { padding-top: 62px; }
 
@@ -842,9 +806,6 @@
     }
   }
 
-  /* ============================================================
-     📱 RESPONSIVE — CELULAR (576px)
-     ============================================================ */
   @media (max-width: 767.98px) {
     .escenario {
       height: 160px;
@@ -882,9 +843,6 @@
     }
   }
 
-  /* ============================================================
-     📱 RESPONSIVE — CELULAR PEQUEÑO (480px)
-     ============================================================ */
   @media (max-width: 480px) {
     .escenario {
       height: 140px;
@@ -955,18 +913,12 @@
     }
   }
 
-  /* ============================================================
-     🖥️ RESPONSIVE — PANTALLAS GRANDES (1400px+)
-     ============================================================ */
   @media (min-width: 1400px) {
     .escenario { height: 220px; }
     .perro-card .svg-wrap { height: 180px; }
     .seccion-info { max-width: 900px; }
   }
 
-  /* ============================================================
-     🖨️ PRINT
-     ============================================================ */
   @media print {
     body { background: white; padding: 0; }
     .navbar-perruno,
@@ -996,9 +948,6 @@
 
   <div class="huellas" id="huellas"></div>
 
-  <!-- ============================================================
-       📌 NAVBAR BOOTSTRAP
-       ============================================================ -->
   <nav class="navbar navbar-expand-lg fixed-top navbar-perruno">
     <div class="container-xl">
       <a class="navbar-brand" href="#">
@@ -1024,9 +973,6 @@
     </div>
   </nav>
 
-  <!-- ============================================================
-       🌟 CONTENIDO PRINCIPAL
-       ============================================================ -->
   <div class="contenido-principal">
 
     <!-- HEADER -->
@@ -1035,7 +981,6 @@
       <p class="subtitle">Un sitio dedicado a los mejores amigos del hombre</p>
     </header>
 
-    <!-- ESCENARIO -->
     <div class="container-xl">
       <section class="escenario">
         <div class="sol"></div>
@@ -1066,7 +1011,6 @@
       </section>
     </div>
 
-    <!-- PERRITOS -->
     <section id="perritos" class="container-xl">
       <h2 class="seccion-titulo">🐕 Nuestros perritos</h2>
       <p class="seccion-desc">Dibujados y animados con código (SVG + CSS)</p>
@@ -1086,12 +1030,10 @@
       <div class="row g-3 g-md-4" id="perrosGrid"></div>
     </section>
 
-    <!-- CIENCIA -->
     <section id="ciencia" class="container-xl">
       <h2 class="seccion-titulo">🧬 El perro en la ciencia</h2>
       <p class="seccion-desc">Clasificación, evolución y datos biológicos</p>
 
-      <!-- HERO CIENTÍFICO -->
       <div class="hero-ciencia mb-4">
         <div class="row align-items-center g-4">
           <div class="col-12 col-lg-6">
@@ -1147,13 +1089,11 @@
         </div>
       </div>
 
-      <!-- FICHA CIENTÍFICA -->
       <div class="ficha-cientifica mb-4">
         <h3 class="ficha-titulo">📋 Ficha científica</h3>
         <div class="row g-2 g-md-3" id="fichaGrid"></div>
       </div>
 
-      <!-- DATO DESTACADO -->
       <div class="dato-destacado mb-4">
         <span class="dato-destacado-icono">🐕</span>
         <div class="dato-destacado-texto">
@@ -1167,7 +1107,6 @@
         <p>La <strong>domesticación</strong> ocurrió hace <span class="dato-clave">18,800-32,100 años</span> cuando lobos menos agresivos se acercaron a campamentos humanos buscando comida.</p>
       </div>
 
-      <!-- TAXONOMÍA -->
       <div class="taxonomia-card mb-4">
         <h3>📊 Clasificación Taxonómica</h3>
         <div class="seccion-info mb-3" style="border-left-color: var(--accent2);">
@@ -1176,7 +1115,6 @@
         <div class="taxonomia-lista" id="taxonomiaLista"></div>
       </div>
 
-      <!-- BIOLOGÍA -->
       <h3 class="comparativa-titulo text-center mb-2">📈 Biología y evolución</h3>
       <div class="seccion-info">
         <p>Los perros son <strong>omnívoros oportunistas</strong>: su dieta se ha adaptado a vegetales y carbohidratos. Tienen <strong>más genes para digerir almidón</strong> que los lobos.</p>
@@ -1184,14 +1122,12 @@
       </div>
       <div class="row g-3 mb-4" id="bioGrid"></div>
 
-      <!-- PERRO VS LOBO -->
       <h3 class="comparativa-titulo text-center mb-2">🐺 Perro vs Lobo: diferencias clave</h3>
       <div class="seccion-info">
         <p>Aunque comparten el <strong>99.9% del ADN</strong>, perros y lobos tienen diferencias notables tras miles de años de domesticación.</p>
       </div>
       <div class="row g-3 mb-4" id="comparativaGrid"></div>
 
-      <!-- SENTIDOS -->
       <h3 class="sentidos-titulo text-center mb-2">👃 Los sentidos del perro</h3>
       <div class="seccion-info">
         <p>Los perros son criaturas <strong>olfativas</strong>. Su olfato detecta concentraciones <span class="dato-clave">100,000 veces más bajas</span> que un humano. El oído alcanza los <strong>65,000 Hz</strong>.</p>
@@ -1199,7 +1135,6 @@
       <div class="row g-3 mb-4" id="sentidosGrid"></div>
     </section>
 
-    <!-- CURIOSIDADES -->
     <section id="curiosidades" class="container-xl">
       <h2 class="seccion-titulo">💡 ¿Sabías que...?</h2>
       <p class="seccion-desc">Datos curiosos sobre los perros</p>
@@ -1209,7 +1144,6 @@
       <div class="row g-3" id="curiosidadesGrid"></div>
     </section>
 
-    <!-- CUIDADOS -->
     <section id="cuidados" class="container-xl">
       <h2 class="seccion-titulo">🩺 Cuidados básicos</h2>
       <p class="seccion-desc">Consejos para un perrito feliz y saludable</p>
@@ -1224,22 +1158,17 @@
     </footer>
   </div>
 
-  <!-- Toast -->
   <div class="toast-modo" id="toastModo">
     <span id="toastIcono">🌙</span>
     <span id="toastTexto">Modo oscuro activado</span>
   </div>
 
-  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
   (function() {
     'use strict';
 
-    /* ============================================================
-       📦 DATOS
-       ============================================================ */
     const perros = [
       { titulo: 'Salchicha', raza: 'Dachshund · Pequeño y valiente', descripcion: 'Cuerpo largo, patas cortas y un corazón enorme.', clase: 'perro-salchicha',
         svg: `<svg viewBox="0 0 260 140" xmlns="http://www.w3.org/2000/svg">
@@ -1446,9 +1375,6 @@
         puntos: ['Empieza desde cachorro', 'Refuerzo positivo', 'Órdenes básicas', 'Sé constante y paciente'] }
     ];
 
-    /* ============================================================
-       🎨 RENDER
-       ============================================================ */
     function renderizarPerros() {
       const grid = document.getElementById('perrosGrid');
       if (!grid) return;
@@ -1564,9 +1490,6 @@
       });
     }
 
-    /* ============================================================
-       🌗 TEMA
-       ============================================================ */
     const themeBtn = document.getElementById('themeBtn');
     const btnAuto = document.getElementById('btnAuto');
     const toast = document.getElementById('toastModo');
@@ -1687,9 +1610,6 @@
       }
     });
 
-    /* ============================================================
-       💥 Explosión de emojis
-       ============================================================ */
     function efectoExplosion(x, y, simbolos, cantidad) {
       cantidad = cantidad || 6;
       for (let i = 0; i < cantidad; i++) {
@@ -1705,9 +1625,6 @@
       }
     }
 
-    /* ============================================================
-       🐾 Huellas flotantes
-       ============================================================ */
     function iniciarHuellas() {
       const cont = document.getElementById('huellas');
       if (!cont) return;
@@ -1727,9 +1644,6 @@
       setInterval(crear, 1600);
     }
 
-    /* ============================================================
-       🐕 Perrito seguidor
-       ============================================================ */
     function iniciarPerritoSeguidor() {
       const el = document.createElement('div');
       el.textContent = '🐕';
@@ -1763,9 +1677,6 @@
       animar();
     }
 
-    /* ============================================================
-       📸 Título rotativo
-       ============================================================ */
     function iniciarTituloRotativo() {
       const t = ['🐶 Mundo Perruno', '🐾 Todo sobre perritos', '🦴 Aprende a cuidarlos'];
       let i = 0;
@@ -1775,9 +1686,6 @@
       }, 3500);
     }
 
-    /* ============================================================
-       🎊 Clic global
-       ============================================================ */
     function iniciarClicGlobal() {
       document.addEventListener('click', function(e) {
         const target = e.target;
@@ -1786,9 +1694,6 @@
       });
     }
 
-    /* ============================================================
-       🚀 INIT
-       ============================================================ */
     function iniciar() {
       renderizarPerros();
       renderizarFicha();
