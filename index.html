@@ -2,8 +2,12 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#b02a5b">
 <title>🐶 Mundo Perruno - Todo sobre perritos</title>
+
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
   :root {
@@ -19,6 +23,7 @@
     --cielo: #bde5f7;
     --pasto: #a8e6a3;
     --game-bg: #fff0f5;
+    --navbar-bg: rgba(255, 255, 255, 0.9);
   }
 
   body.dark {
@@ -34,11 +39,15 @@
     --cielo: #1f2d4a;
     --pasto: #2d4a2d;
     --game-bg: #1f1f3a;
+    --navbar-bg: rgba(37, 37, 63, 0.9);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 70px;
+  }
 
   body {
     font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
@@ -47,10 +56,10 @@
     animation: gradientShift 15s ease infinite;
     color: var(--text);
     min-height: 100vh;
-    padding: 12px;
     overflow-x: hidden;
     transition: color 0.5s, background 0.5s;
     line-height: 1.5;
+    padding-top: 65px;
   }
 
   body, p, span, div, li, h1, h2, h3, h4, h5, h6,
@@ -71,7 +80,114 @@
     50%      { background-position: 100% 50%; }
   }
 
-  /* Huellas flotantes */
+  /* ============================================================
+     📌 NAVBAR (Bootstrap mejorado)
+     ============================================================ */
+  .navbar-perruno {
+    background: var(--navbar-bg) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--accent);
+    box-shadow: 0 4px 20px var(--shadow);
+    padding: 8px 0;
+    transition: background 0.5s;
+  }
+
+  .navbar-perruno .navbar-brand {
+    color: var(--accent) !important;
+    font-size: 1.3rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: rebote 2s ease-in-out infinite;
+  }
+
+  @keyframes rebote {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-4px); }
+  }
+
+  .navbar-perruno .nav-link {
+    color: var(--text) !important;
+    font-weight: 500;
+    padding: 8px 14px !important;
+    border-radius: 10px;
+    transition: all 0.3s;
+    font-size: 0.95rem;
+  }
+
+  .navbar-perruno .nav-link:hover,
+  .navbar-perruno .nav-link:focus {
+    background: var(--game-bg);
+    color: var(--accent) !important;
+    transform: translateY(-2px);
+  }
+
+  .navbar-toggler {
+    border: 2px solid var(--accent) !important;
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: transparent;
+  }
+
+  .navbar-toggler:focus {
+    box-shadow: 0 0 0 3px var(--shadow);
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23b02a5b' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  }
+
+  body.dark .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23ffb3d1' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  }
+
+  /* Botones de tema en navbar */
+  .theme-toggle,
+  .theme-mode-btn {
+    background: var(--card);
+    border: 2px solid var(--accent);
+    color: var(--text);
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 12px var(--shadow);
+    transition: all 0.3s;
+    font-family: inherit;
+  }
+
+  .theme-toggle {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  .theme-toggle:hover { transform: scale(1.05); }
+  .theme-toggle:active { transform: scale(0.95); }
+
+  .theme-mode-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    position: relative;
+  }
+
+  .theme-mode-btn:hover { transform: scale(1.1) rotate(10deg); }
+  .theme-mode-btn[data-activo="true"] {
+    background: var(--accent);
+    color: #fff;
+  }
+  body.dark .theme-mode-btn[data-activo="true"] {
+    color: #1a1a2e;
+  }
+
+  /* ============================================================
+     🐾 HUELLAS FLOTANTES
+     ============================================================ */
   .huellas { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
   .huella {
     position: absolute;
@@ -86,172 +202,40 @@
     100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
   }
 
-  /* Controles de tema */
-  .theme-controls {
-    position: fixed;
-    top: 15px; right: 15px;
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    z-index: 100;
+  /* Contenido principal sobre huellas */
+  .contenido-principal {
+    position: relative;
+    z-index: 1;
   }
 
-  .theme-toggle {
-    background: var(--card);
-    border: 2px solid var(--accent);
-    color: var(--text);
-    border-radius: 50px;
-    padding: 10px 18px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: bold;
-    box-shadow: 0 4px 20px var(--shadow);
-    transition: all 0.3s;
-    font-family: inherit;
+  /* ============================================================
+     🌟 HEADER
+     ============================================================ */
+  header.hero-header {
+    text-align: center;
+    padding: 25px 20px 10px;
+    position: relative;
+    z-index: 1;
   }
-  .theme-toggle:hover { transform: scale(1.08); }
-  .theme-toggle:active { transform: scale(0.95); }
-
-  .theme-mode-btn {
-    background: var(--card);
-    border: 2px solid var(--accent);
-    color: var(--text);
-    border-radius: 50%;
-    width: 42px;
-    height: 42px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    box-shadow: 0 4px 20px var(--shadow);
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: inherit;
-  }
-  .theme-mode-btn:hover { transform: scale(1.1) rotate(10deg); }
-  .theme-mode-btn:active { transform: scale(0.9); }
-  .theme-mode-btn[data-activo="true"] {
-    background: var(--accent);
-    color: #fff;
-  }
-  body.dark .theme-mode-btn[data-activo="true"] {
-    color: #1a1a2e;
-  }
-
-  /* Tooltip en botones */
-  .theme-mode-btn::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    top: 50px;
-    right: 0;
-    background: var(--card);
-    color: var(--text);
-    padding: 6px 10px;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s;
-    box-shadow: 0 4px 12px var(--shadow);
-    border: 1px solid var(--accent);
-  }
-  .theme-mode-btn:hover::after { opacity: 1; }
-
-  /* Header */
-  header { text-align: center; padding: 15px 20px 5px; position: relative; z-index: 1; }
-  h1 {
-    font-size: clamp(1.8rem, 5vw, 2.8rem);
+  .hero-header h1 {
+    font-size: clamp(1.7rem, 5vw, 2.8rem);
     color: var(--accent);
     text-shadow: 2px 2px 0 var(--shadow);
     animation: rebote 2s ease-in-out infinite;
     display: inline-block;
   }
-  @keyframes rebote {
-    0%, 100% { transform: translateY(0) rotate(-1deg); }
-    50%      { transform: translateY(-8px) rotate(1deg); }
-  }
-  .subtitle {
+  .hero-header .subtitle {
     margin-top: 8px;
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 2.2vw, 1.05rem);
     color: var(--text-soft);
     animation: fadeInUp 1.2s ease;
   }
 
-  /* Títulos de sección */
-  .seccion-titulo {
-    text-align: center;
-    font-size: clamp(1.3rem, 3.5vw, 1.7rem);
-    color: var(--accent);
-    margin: 30px auto 5px;
-    position: relative; z-index: 1;
-  }
-  .seccion-desc {
-    text-align: center;
-    color: var(--text-soft);
-    margin-bottom: 12px;
-    font-size: 0.9rem;
-    position: relative; z-index: 1;
-  }
-
-  /* Tarjeta de información */
-  .seccion-info {
-    max-width: 820px;
-    margin: 0 auto 20px;
-    padding: 16px 22px;
-    background: var(--card);
-    border-radius: 14px;
-    border-left: 5px solid var(--accent);
-    box-shadow: 0 3px 12px var(--shadow);
-    font-size: 0.92rem;
-    line-height: 1.55;
-    text-align: left;
-    color: var(--text);
-    position: relative;
-    z-index: 1;
-    animation: aparecer 0.6s ease both;
-  }
-
-  @keyframes aparecer {
-    from { opacity: 0; transform: translateY(15px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .seccion-info p { margin-bottom: 8px; color: var(--text); }
-  .seccion-info p:last-child { margin-bottom: 0; }
-  .seccion-info strong { color: var(--accent); }
-  .seccion-info em { color: var(--accent2); font-style: italic; }
-  .seccion-info code {
-    background: var(--game-bg);
-    padding: 2px 6px;
-    border-radius: 5px;
-    font-family: 'Consolas', monospace;
-    font-size: 0.88rem;
-    color: var(--accent);
-    font-weight: bold;
-  }
-  .seccion-info ul { list-style: none; margin: 6px 0; padding-left: 0; }
-  .seccion-info li { padding: 2px 0 2px 20px; position: relative; color: var(--text); }
-  .seccion-info li::before {
-    content: '🐾';
-    position: absolute;
-    left: 0;
-    color: var(--accent);
-    font-size: 0.85rem;
-  }
-  .seccion-info .dato-clave {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: #ffffff;
-    padding: 1px 8px;
-    border-radius: 10px;
-    font-size: 0.82rem;
-    font-weight: bold;
-    margin-right: 5px;
-  }
-
-  /* ESCENARIO */
+  /* ============================================================
+     🎬 ESCENARIO
+     ============================================================ */
   .escenario {
+    width: 100%;
     max-width: 1000px;
     height: 180px;
     margin: 15px auto;
@@ -263,6 +247,7 @@
     background: var(--cielo);
     transition: background 0.6s;
   }
+
   .sol {
     position: absolute;
     top: 20px; right: 30px;
@@ -354,15 +339,77 @@
     to   { transform: rotate(-35deg); }
   }
 
-  /* GALERÍA DE PERRITOS */
-  .perros-grid {
-    max-width: 1200px;
-    margin: 12px auto 25px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 18px;
-    position: relative; z-index: 1;
+  /* ============================================================
+     📝 TÍTULOS Y TARJETAS
+     ============================================================ */
+  .seccion-titulo {
+    text-align: center;
+    font-size: clamp(1.25rem, 3.5vw, 1.7rem);
+    color: var(--accent);
+    margin: 30px auto 5px;
+    position: relative;
+    z-index: 1;
   }
+  .seccion-desc {
+    text-align: center;
+    color: var(--text-soft);
+    margin-bottom: 12px;
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+    position: relative;
+    z-index: 1;
+  }
+
+  .seccion-info {
+    max-width: 820px;
+    margin: 0 auto 20px;
+    padding: 16px 22px;
+    background: var(--card);
+    border-radius: 14px;
+    border-left: 5px solid var(--accent);
+    box-shadow: 0 3px 12px var(--shadow);
+    font-size: clamp(0.85rem, 2vw, 0.92rem);
+    line-height: 1.55;
+    text-align: left;
+    color: var(--text);
+    position: relative;
+    z-index: 1;
+  }
+  .seccion-info p { margin-bottom: 8px; color: var(--text); }
+  .seccion-info p:last-child { margin-bottom: 0; }
+  .seccion-info strong { color: var(--accent); }
+  .seccion-info em { color: var(--accent2); font-style: italic; }
+  .seccion-info code {
+    background: var(--game-bg);
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-family: 'Consolas', monospace;
+    font-size: 0.88em;
+    color: var(--accent);
+    font-weight: bold;
+  }
+  .seccion-info ul { list-style: none; margin: 6px 0; padding-left: 0; }
+  .seccion-info li { padding: 3px 0 3px 22px; position: relative; color: var(--text); }
+  .seccion-info li::before {
+    content: '🐾';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.85rem;
+  }
+  .seccion-info .dato-clave {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #ffffff;
+    padding: 1px 8px;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: bold;
+    margin-right: 5px;
+  }
+
+  /* ============================================================
+     🐕 PERRITOS GRID (Bootstrap)
+     ============================================================ */
   .perro-card {
     background: var(--card);
     border-radius: 20px;
@@ -374,7 +421,7 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    animation: aparecer 0.6s ease both;
+    height: 100%;
   }
   .perro-card:hover {
     transform: translateY(-6px) scale(1.02);
@@ -399,8 +446,10 @@
     font-size: 0.9rem;
     color: var(--text-soft);
     line-height: 1.35;
+    margin: 0;
   }
 
+  /* Animaciones de perritos SVG */
   .perro-salchicha .cola-s { transform-box: fill-box; transform-origin: bottom left; animation: colaAgitar 0.4s ease-in-out infinite alternate; }
   .perro-salchicha .ojo-s { transform-box: fill-box; transform-origin: center; animation: parpadeo 4s infinite; }
   @keyframes parpadeo {
@@ -450,15 +499,27 @@
   .perro-galgo .pata-g3 { animation-delay: 0.24s; }
   .perro-galgo .pata-g4 { animation-delay: 0.36s; }
 
-  /* CIENCIA */
-  .taxonomia { max-width: 800px; margin: 12px auto 20px; position: relative; z-index: 1; }
-  .taxonomia-card {
+  /* ============================================================
+     🧬 CIENCIA
+     ============================================================ */
+  .taxonomia-card,
+  .hero-ciencia,
+  .ficha-cientifica,
+  .dato-destacado,
+  .bio-card,
+  .comp-item,
+  .sentido-card,
+  .curiosidad,
+  .cuidado {
     background: var(--card);
+    color: var(--text);
+    box-shadow: 0 4px 14px var(--shadow);
+    transition: transform 0.3s;
+  }
+
+  .taxonomia-card {
     padding: 20px;
     border-radius: 18px;
-    box-shadow: 0 5px 16px var(--shadow);
-    color: var(--text);
-    animation: aparecer 0.6s ease both;
   }
   .taxonomia-card h3 {
     color: var(--accent);
@@ -466,15 +527,6 @@
     margin-bottom: 14px;
     text-align: center;
   }
-  .taxonomia-card .seccion-info {
-    color: var(--text);
-    margin-bottom: 14px;
-    border-left: 4px solid var(--accent2);
-    animation: none;
-  }
-  .taxonomia-card .seccion-info p,
-  .taxonomia-card .seccion-info li { color: var(--text); }
-  .taxonomia-card .seccion-info strong { color: var(--accent); }
   .taxonomia-lista { display: flex; flex-direction: column; gap: 5px; }
   .taxonomia-fila {
     display: flex;
@@ -486,6 +538,7 @@
     border-left: 4px solid var(--accent);
     color: var(--text);
     font-size: 0.92rem;
+    gap: 10px;
   }
   .taxonomia-fila .nivel {
     font-weight: bold;
@@ -498,31 +551,32 @@
     font-style: italic;
     color: var(--text);
     flex: 1;
+    word-break: break-word;
   }
 
-  .bio-grid {
-    max-width: 1100px;
-    margin: 12px auto 25px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 14px;
-    position: relative;
-    z-index: 1;
-  }
-  .bio-card {
-    background: var(--card);
+  .bio-card,
+  .curiosidad,
+  .cuidado,
+  .comp-item,
+  .sentido-card {
     padding: 16px;
     border-radius: 14px;
-    box-shadow: 0 4px 14px var(--shadow);
-    color: var(--text);
-    transition: transform 0.3s, box-shadow 0.3s;
-    cursor: pointer;
-    animation: aparecer 0.6s ease both;
+    height: 100%;
   }
-  .bio-card:hover {
+  .bio-card:hover,
+  .cuidado:hover,
+  .comp-item:hover,
+  .sentido-card:hover {
     transform: translateY(-5px) scale(1.02);
     box-shadow: 0 12px 30px var(--shadow);
   }
+  .curiosidad {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .curiosidad:hover { transform: translateX(5px) scale(1.01); }
+
   .bio-icono {
     font-size: 2rem;
     display: block;
@@ -530,115 +584,43 @@
     animation: balanceo 3s ease-in-out infinite;
   }
   .bio-card h4 { color: var(--accent); font-size: 1rem; margin-bottom: 6px; }
-  .bio-card p {
-    font-size: 0.9rem;
-    line-height: 1.45;
-    color: var(--text-soft);
-  }
+  .bio-card p { font-size: 0.9rem; line-height: 1.45; color: var(--text-soft); margin: 0; }
 
-  .comparativa { max-width: 1000px; margin: 12px auto 20px; position: relative; z-index: 1; }
-  .comparativa-titulo {
-    text-align: center;
-    color: var(--accent);
-    font-size: 1.25rem;
-    margin: 20px 0 10px;
-  }
-  .comparativa-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 12px;
-  }
   .comp-item {
-    background: var(--card);
-    padding: 14px 16px;
-    border-radius: 14px;
-    box-shadow: 0 3px 12px var(--shadow);
     border-left: 5px solid var(--accent);
-    color: var(--text);
-    transition: transform 0.3s;
-    animation: aparecer 0.6s ease both;
   }
-  .comp-item:hover { transform: translateX(5px) scale(1.01); }
   .comp-item h4 { color: var(--accent); font-size: 0.95rem; margin-bottom: 4px; }
-  .comp-item p { font-size: 0.88rem; line-height: 1.4; color: var(--text-soft); }
+  .comp-item p { font-size: 0.88rem; line-height: 1.4; color: var(--text-soft); margin: 0; }
 
-  .sentidos { max-width: 1100px; margin: 12px auto 20px; position: relative; z-index: 1; }
-  .sentidos-titulo {
-    text-align: center;
-    color: var(--accent);
-    font-size: 1.25rem;
-    margin: 20px 0 10px;
-  }
-  .sentidos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 14px;
-  }
   .sentido-card {
-    background: var(--card);
-    padding: 16px;
-    border-radius: 14px;
-    box-shadow: 0 4px 14px var(--shadow);
     display: flex;
     gap: 12px;
     align-items: flex-start;
-    color: var(--text);
-    transition: transform 0.3s;
-    animation: aparecer 0.6s ease both;
   }
-  .sentido-card:hover { transform: translateY(-4px) scale(1.01); }
   .sentido-icono {
     font-size: 1.9rem;
     flex-shrink: 0;
     animation: bounceEmoji 2.5s ease-in-out infinite;
   }
   .sentido-info h4 { color: var(--accent); font-size: 0.95rem; margin-bottom: 4px; }
-  .sentido-info p { font-size: 0.88rem; line-height: 1.4; color: var(--text-soft); }
+  .sentido-info p { font-size: 0.88rem; line-height: 1.4; color: var(--text-soft); margin: 0; }
 
-  /* HERO CIENCIA */
   .hero-ciencia {
-    max-width: 1100px;
-    margin: 12px auto 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    align-items: center;
     padding: 22px;
-    background: var(--card);
     border-radius: 20px;
-    box-shadow: 0 8px 22px var(--shadow);
-    position: relative;
-    z-index: 1;
-    animation: aparecer 0.6s ease both;
   }
   .hero-perro svg { width: 100%; max-width: 260px; height: auto; display: block; margin: 0 auto; }
-  .hero-cola {
-    transform-box: fill-box;
-    transform-origin: bottom left;
-    animation: colaAgitar 0.4s ease-in-out infinite alternate;
-  }
-  .hero-oreja {
-    transform-box: fill-box;
-    transform-origin: top center;
-    animation: orejaSuave 2s ease-in-out infinite alternate;
-  }
-  .hero-ojo {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: parpadeo 4s infinite;
-  }
-  .hero-lengua {
-    transform-box: fill-box;
-    transform-origin: top center;
-    animation: lenguitaLamer 1.5s ease-in-out infinite;
-  }
+  .hero-cola { transform-box: fill-box; transform-origin: bottom left; animation: colaAgitar 0.4s ease-in-out infinite alternate; }
+  .hero-oreja { transform-box: fill-box; transform-origin: top center; animation: orejaSuave 2s ease-in-out infinite alternate; }
+  .hero-ojo { transform-box: fill-box; transform-origin: center; animation: parpadeo 4s infinite; }
+  .hero-lengua { transform-box: fill-box; transform-origin: top center; animation: lenguitaLamer 1.5s ease-in-out infinite; }
   .hero-adn { animation: flotarAdn 3s ease-in-out infinite; }
   .hero-adn-2 { animation-delay: 1.5s; }
   @keyframes flotarAdn {
     0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
     50%      { transform: translateY(-12px) rotate(180deg); opacity: 1; }
   }
-  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
   .hero-stat {
     background: var(--game-bg);
     padding: 14px 12px;
@@ -646,13 +628,12 @@
     border-left: 4px solid var(--accent);
     text-align: center;
     transition: transform 0.3s;
+    height: 100%;
   }
-  .hero-stat:hover {
-    transform: translateY(-4px) scale(1.03);
-  }
+  .hero-stat:hover { transform: translateY(-4px) scale(1.03); }
   .hero-stat-num {
     display: block;
-    font-size: 1.4rem;
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
     font-weight: bold;
     color: var(--accent);
     line-height: 1.1;
@@ -660,33 +641,17 @@
   }
   .hero-stat-label {
     display: block;
-    font-size: 0.78rem;
+    font-size: clamp(0.72rem, 1.8vw, 0.78rem);
     color: var(--text-soft);
     line-height: 1.3;
   }
 
-  /* FICHA CIENTÍFICA */
-  .ficha-cientifica {
-    max-width: 1100px;
-    margin: 12px auto 20px;
-    padding: 22px;
-    background: var(--card);
-    border-radius: 20px;
-    box-shadow: 0 8px 22px var(--shadow);
-    position: relative;
-    z-index: 1;
-    animation: aparecer 0.6s ease both;
-  }
+  .ficha-cientifica { padding: 22px; border-radius: 20px; }
   .ficha-titulo {
     text-align: center;
     color: var(--accent);
     font-size: 1.25rem;
     margin-bottom: 16px;
-  }
-  .ficha-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 10px;
   }
   .ficha-item {
     display: flex;
@@ -697,14 +662,10 @@
     border-radius: 12px;
     border-left: 4px solid var(--accent);
     transition: transform 0.3s;
+    height: 100%;
   }
-  .ficha-item:hover {
-    transform: translateX(5px);
-  }
-  .ficha-emoji {
-    font-size: 1.5rem;
-    flex-shrink: 0;
-  }
+  .ficha-item:hover { transform: translateX(5px); }
+  .ficha-emoji { font-size: 1.5rem; flex-shrink: 0; }
   .ficha-item strong {
     display: block;
     color: var(--accent);
@@ -715,20 +676,14 @@
   }
   .ficha-item p { font-size: 0.88rem; color: var(--text-soft); line-height: 1.3; margin: 0; }
 
-  /* DATO DESTACADO */
   .dato-destacado {
-    max-width: 900px;
-    margin: 12px auto 20px;
+    padding: 18px 22px;
+    border-radius: 16px;
+    border: 2px dashed var(--accent);
+    background: var(--game-bg);
     display: flex;
     gap: 16px;
     align-items: center;
-    padding: 18px 22px;
-    background: var(--game-bg);
-    border-radius: 16px;
-    border: 2px dashed var(--accent);
-    position: relative;
-    z-index: 1;
-    animation: aparecer 0.6s ease both;
   }
   .dato-destacado-icono {
     font-size: 2.5rem;
@@ -748,63 +703,27 @@
     margin: 0;
   }
 
-  /* CURIOSIDADES */
-  .curiosidades {
-    max-width: 1100px;
-    margin: 12px auto 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 12px;
-    position: relative; z-index: 1;
-  }
-  .curiosidad {
-    background: var(--card);
-    padding: 14px 16px;
-    border-radius: 14px;
-    box-shadow: 0 3px 12px var(--shadow);
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    color: var(--text);
-    transition: transform 0.3s;
-    animation: aparecer 0.6s ease both;
-  }
-  .curiosidad:hover { transform: translateX(5px) scale(1.01); }
   .curiosidad-icono {
     font-size: 1.6rem;
     flex-shrink: 0;
-    display: inline-block;
     animation: bounceEmoji 2s ease-in-out infinite;
   }
   @keyframes bounceEmoji {
     0%, 100% { transform: translateY(0) rotate(-3deg); }
     50%      { transform: translateY(-5px) rotate(3deg); }
   }
-  .curiosidad-texto { font-size: 0.9rem; line-height: 1.4; text-align: left; color: var(--text-soft); }
-  .curiosidad-texto strong { color: var(--accent); display: block; margin-bottom: 3px; }
+  .curiosidad-texto {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    text-align: left;
+    color: var(--text-soft);
+  }
+  .curiosidad-texto strong {
+    color: var(--accent);
+    display: block;
+    margin-bottom: 3px;
+  }
 
-  /* CUIDADOS */
-  .cuidados {
-    max-width: 1100px;
-    margin: 12px auto 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 14px;
-    position: relative; z-index: 1;
-  }
-  .cuidado {
-    background: var(--card);
-    border-radius: 16px;
-    padding: 16px;
-    box-shadow: 0 4px 14px var(--shadow);
-    color: var(--text);
-    transition: transform 0.3s;
-    animation: aparecer 0.6s ease both;
-  }
-  .cuidado:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 12px 30px var(--shadow);
-  }
   .cuidado-icono {
     font-size: 2.1rem;
     display: block;
@@ -818,8 +737,8 @@
     50%      { transform: rotate(6deg) scale(1.08); }
   }
   .cuidado h3 { color: var(--accent); font-size: 1.05rem; margin-bottom: 6px; }
-  .cuidado p { font-size: 0.9rem; line-height: 1.45; color: var(--text-soft); }
-  .cuidado ul { list-style: none; margin-top: 8px; }
+  .cuidado p { font-size: 0.9rem; line-height: 1.45; color: var(--text-soft); margin: 0; }
+  .cuidado ul { list-style: none; margin-top: 8px; padding-left: 0; }
   .cuidado li {
     font-size: 0.88rem;
     padding: 3px 0 3px 18px;
@@ -834,14 +753,21 @@
     color: var(--accent);
   }
 
+  /* ============================================================
+     🦶 FOOTER
+     ============================================================ */
   footer {
     text-align: center;
     padding: 25px 15px;
     color: var(--text-soft);
     font-size: 0.88rem;
-    position: relative; z-index: 1;
+    position: relative;
+    z-index: 1;
   }
 
+  /* ============================================================
+     🎉 EMOJIS POP
+     ============================================================ */
   .emoji-pop {
     position: fixed;
     font-size: 2rem;
@@ -859,10 +785,12 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Notificación toast del cambio de modo */
+  /* ============================================================
+     📢 TOAST
+     ============================================================ */
   .toast-modo {
     position: fixed;
-    bottom: 30px;
+    bottom: 25px;
     left: 50%;
     transform: translateX(-50%) translateY(100px);
     background: var(--card);
@@ -872,39 +800,194 @@
     border: 2px solid var(--accent);
     box-shadow: 0 8px 25px var(--shadow);
     font-weight: bold;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     z-index: 1000;
     opacity: 0;
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     display: flex;
     align-items: center;
     gap: 10px;
+    max-width: 90vw;
   }
   .toast-modo.mostrar {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
   }
 
-  @media (max-width: 750px) {
-    .hero-ciencia { grid-template-columns: 1fr; gap: 18px; }
-    .hero-stats { grid-template-columns: 1fr 1fr; }
-    .dato-destacado { flex-direction: column; text-align: center; }
-    .theme-controls { flex-direction: column; gap: 6px; }
-    .theme-toggle { font-size: 0.85rem; padding: 8px 14px; }
-    .theme-mode-btn { width: 38px; height: 38px; font-size: 1rem; }
+  /* ============================================================
+     📱 RESPONSIVE — TABLET (768px)
+     ============================================================ */
+  @media (max-width: 991.98px) {
+    body { padding-top: 62px; }
+
+    .navbar-perruno .nav-link {
+      padding: 10px 14px !important;
+    }
+
+    .navbar-perruno .navbar-nav {
+      padding: 10px 0;
+    }
+
+    .escenario {
+      height: 200px;
+    }
+
+    .hero-ciencia {
+      padding: 18px;
+    }
+
+    .theme-toggle {
+      font-size: 0.85rem;
+      padding: 7px 14px;
+    }
   }
 
-  @media (max-width: 600px) {
-    body { padding: 8px; }
-    .escenario { height: 140px; }
-    .sol { width: 35px; height: 35px; top: 12px; right: 20px; }
+  /* ============================================================
+     📱 RESPONSIVE — CELULAR (576px)
+     ============================================================ */
+  @media (max-width: 767.98px) {
+    .escenario {
+      height: 160px;
+    }
+    .sol {
+      width: 35px;
+      height: 35px;
+      top: 12px;
+      right: 20px;
+    }
     .arbol { font-size: 1.8rem; }
     .perrito-runner { width: 60px; }
+
     .perro-card .svg-wrap { height: 130px; }
-    h1 { font-size: 1.6rem; }
-    .seccion-titulo { font-size: 1.2rem; margin-top: 20px; }
-    .ficha-grid, .bio-grid, .cuidados, .curiosidades, .comparativa-grid {
-      grid-template-columns: 1fr;
+
+    .dato-destacado {
+      flex-direction: column;
+      text-align: center;
+      gap: 10px;
+    }
+
+    .hero-ciencia {
+      padding: 16px;
+    }
+
+    .theme-controls-mobile {
+      display: flex;
+      gap: 8px;
+      padding: 8px 0;
+      justify-content: center;
+    }
+
+    .seccion-info {
+      padding: 14px 18px;
+    }
+  }
+
+  /* ============================================================
+     📱 RESPONSIVE — CELULAR PEQUEÑO (480px)
+     ============================================================ */
+  @media (max-width: 480px) {
+    .escenario {
+      height: 140px;
+      border-radius: 14px;
+    }
+    .sol {
+      width: 30px;
+      height: 30px;
+      top: 10px;
+      right: 15px;
+    }
+    .arbol { font-size: 1.5rem; bottom: 35px; }
+    .arbol-2 { font-size: 1.3rem; }
+    .perrito-runner { width: 55px; bottom: 8px; }
+
+    .perro-card {
+      padding: 12px 10px 14px;
+    }
+    .perro-card .svg-wrap { height: 110px; }
+    .perro-card h3 { font-size: 1rem; }
+    .perro-card p { font-size: 0.82rem; }
+
+    .ficha-item { padding: 8px 12px; gap: 8px; }
+    .ficha-emoji { font-size: 1.3rem; }
+
+    .hero-stat { padding: 10px 8px; }
+    .hero-stat-num { font-size: 1.1rem; }
+    .hero-stat-label { font-size: 0.7rem; }
+
+    .taxonomia-fila {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+      padding: 8px 12px;
+    }
+    .taxonomia-fila .valor { text-align: left; }
+    .taxonomia-fila .nivel { min-width: auto; }
+
+    .bio-card,
+    .cuidado,
+    .curiosidad,
+    .comp-item,
+    .sentido-card {
+      padding: 12px;
+    }
+
+    .bio-icono { font-size: 1.6rem; }
+    .cuidado-icono { font-size: 1.8rem; }
+    .curiosidad-icono { font-size: 1.4rem; }
+    .sentido-icono { font-size: 1.6rem; }
+
+    .dato-destacado { padding: 14px 16px; }
+    .dato-destacado-icono { font-size: 2rem; }
+
+    .theme-toggle {
+      font-size: 0.8rem;
+      padding: 6px 12px;
+    }
+    .theme-mode-btn {
+      width: 36px;
+      height: 36px;
+      font-size: 0.9rem;
+    }
+
+    .toast-modo {
+      font-size: 0.82rem;
+      padding: 10px 18px;
+    }
+  }
+
+  /* ============================================================
+     🖥️ RESPONSIVE — PANTALLAS GRANDES (1400px+)
+     ============================================================ */
+  @media (min-width: 1400px) {
+    .escenario { height: 220px; }
+    .perro-card .svg-wrap { height: 180px; }
+    .seccion-info { max-width: 900px; }
+  }
+
+  /* ============================================================
+     🖨️ PRINT
+     ============================================================ */
+  @media print {
+    body { background: white; padding: 0; }
+    .navbar-perruno,
+    .huellas,
+    .toast-modo,
+    .theme-controls { display: none !important; }
+    .perro-card,
+    .bio-card,
+    .cuidado {
+      page-break-inside: avoid;
+    }
+  }
+
+  /* Accesibilidad: menos movimiento si el usuario lo prefiere */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
     }
   }
 </style>
@@ -913,378 +996,370 @@
 
   <div class="huellas" id="huellas"></div>
 
-  <!-- 🌗 CONTROLES DE TEMA -->
-  <div class="theme-controls">
-    <button class="theme-toggle" id="themeBtn" aria-label="Cambiar tema">
-      🌙 Modo oscuro
-    </button>
-    <button class="theme-mode-btn" id="btnAuto" data-tooltip="Auto (sistema + hora)" aria-label="Modo automático">
-      🔄
-    </button>
-  </div>
+  <!-- ============================================================
+       📌 NAVBAR BOOTSTRAP
+       ============================================================ -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-perruno">
+    <div class="container-xl">
+      <a class="navbar-brand" href="#">
+        🐶 Mundo Perruno
+      </a>
 
-  <header>
-    <h1>🐶 Mundo Perruno</h1>
-    <p class="subtitle">Un sitio dedicado a los mejores amigos del hombre</p>
-  </header>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Menú">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  <!-- ESCENARIO -->
-  <section class="escenario" id="escenario">
-    <div class="sol"></div>
-    <div class="nube nube-1"></div>
-    <div class="nube nube-2"></div>
-    <div class="arbol arbol-1">🌳</div>
-    <div class="arbol arbol-2">🌲</div>
-    <div class="pasto"></div>
-
-    <svg class="perrito-runner" viewBox="0 0 260 180" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="140" cy="165" rx="80" ry="8" fill="rgba(0,0,0,0.2)"/>
-      <path class="cola-runner" d="M 55 110 Q 25 80 30 45" stroke="#d89060" stroke-width="14" stroke-linecap="round" fill="none"/>
-      <rect class="pata pata-1" x="75" y="125" width="13" height="45" rx="6" fill="#b96a3a"/>
-      <rect class="pata pata-2" x="95" y="125" width="13" height="45" rx="6" fill="#c97a4a"/>
-      <rect class="pata pata-3" x="165" y="125" width="13" height="45" rx="6" fill="#c97a4a"/>
-      <rect class="pata pata-4" x="185" y="125" width="13" height="45" rx="6" fill="#b96a3a"/>
-      <ellipse cx="135" cy="105" rx="75" ry="40" fill="#d89060"/>
-      <circle cx="215" cy="80" r="40" fill="#e0a074"/>
-      <ellipse class="oreja-runner" cx="200" cy="50" rx="13" ry="28" fill="#a85a2a" transform="rotate(-20 200 50)"/>
-      <circle cx="225" cy="75" r="5" fill="#222"/>
-      <circle cx="226" cy="73" r="1.7" fill="#fff"/>
-      <circle cx="205" cy="75" r="4.5" fill="#222"/>
-      <circle cx="206" cy="73" r="1.5" fill="#fff"/>
-      <ellipse cx="242" cy="98" rx="16" ry="12" fill="#f5e0c8"/>
-      <ellipse cx="247" cy="93" rx="5" ry="4" fill="#222"/>
-      <ellipse cx="238" cy="112" rx="4" ry="7" fill="#ff6b8a"/>
-    </svg>
-  </section>
-
-  <!-- GALERÍA DE PERRITOS -->
-  <h2 class="seccion-titulo">🐕 Nuestros perritos</h2>
-  <p class="seccion-desc">Dibujados y animados con código (SVG + CSS)</p>
-  <div class="seccion-info">
-    <p><span class="dato-clave">6 razas</span> Todos los perritos están creados con <strong>SVG</strong> y animados con <strong>CSS</strong>. Pertenecen a la misma especie, <em>Canis lupus familiaris</em>, pero se han desarrollado <strong>más de 340 razas</strong>.</p>
-    <ul>
-      <li><strong>Dachshund (salchicha)</strong>: cuerpo alargado, criado para cazar tejones.</li>
-      <li><strong>Pastor Alemán</strong>: inteligente, usado en policía y rescate.</li>
-      <li><strong>Husky Siberiano</strong>: tirador de trineos, con ojos azules.</li>
-      <li><strong>Bulldog Francés</strong>: tranquilo, compañero de sofá.</li>
-      <li><strong>Golden Retriever</strong>: la raza familiar por excelencia.</li>
-      <li><strong>Galgo</strong>: el perro más rápido, alcanza <strong>70 km/h</strong>.</li>
-    </ul>
-  </div>
-  <section class="perros-grid" id="perrosGrid"></section>
-
-  <!-- INFORMACIÓN CIENTÍFICA -->
-  <h2 class="seccion-titulo">🧬 El perro en la ciencia</h2>
-  <p class="seccion-desc">Clasificación, evolución y datos biológicos</p>
-
-  <section class="hero-ciencia">
-    <div class="hero-perro">
-      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="haloGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#b02a5b" stop-opacity="0.3"/>
-            <stop offset="100%" stop-color="#b02a5b" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-        <circle cx="150" cy="150" r="140" fill="url(#haloGrad)"/>
-        <ellipse cx="150" cy="265" rx="95" ry="10" fill="rgba(0,0,0,0.18)"/>
-        <path class="hero-cola" d="M 70 190 Q 30 150 40 90" stroke="#c97a4a" stroke-width="16" stroke-linecap="round" fill="none"/>
-        <rect x="95" y="210" width="20" height="55" rx="10" fill="#a85a2a"/>
-        <rect x="130" y="210" width="20" height="55" rx="10" fill="#c97a4a"/>
-        <rect x="180" y="210" width="20" height="55" rx="10" fill="#c97a4a"/>
-        <rect x="210" y="210" width="20" height="55" rx="10" fill="#a85a2a"/>
-        <ellipse cx="160" cy="175" rx="90" ry="55" fill="#d89060"/>
-        <rect x="118" y="135" width="90" height="12" rx="6" fill="#b02a5b"/>
-        <circle cx="163" cy="150" r="8" fill="#ffd166" stroke="#b35c00" stroke-width="2"/>
-        <circle cx="215" cy="115" r="55" fill="#e0a074"/>
-        <ellipse class="hero-oreja" cx="185" cy="80" rx="18" ry="38" fill="#a85a2a" transform="rotate(-25 185 80)"/>
-        <ellipse class="hero-oreja" cx="245" cy="80" rx="18" ry="38" fill="#a85a2a" transform="rotate(25 245 80)"/>
-        <circle class="hero-ojo" cx="200" cy="110" r="7" fill="#222"/>
-        <circle class="hero-ojo" cx="230" cy="110" r="7" fill="#222"/>
-        <circle cx="202" cy="107" r="2.5" fill="#fff"/>
-        <circle cx="232" cy="107" r="2.5" fill="#fff"/>
-        <ellipse cx="215" cy="140" rx="24" ry="18" fill="#f5e0c8"/>
-        <ellipse cx="215" cy="132" rx="7" ry="5" fill="#222"/>
-        <ellipse class="hero-lengua" cx="215" cy="152" rx="6" ry="10" fill="#ff6b8a"/>
-        <g class="hero-adn">
-          <circle cx="60" cy="60" r="4" fill="#b02a5b"/>
-          <circle cx="80" cy="75" r="4" fill="#b35c00"/>
-          <circle cx="65" cy="90" r="4" fill="#b02a5b"/>
-        </g>
-        <g class="hero-adn hero-adn-2">
-          <circle cx="250" cy="60" r="4" fill="#b35c00"/>
-          <circle cx="270" cy="75" r="4" fill="#b02a5b"/>
-          <circle cx="255" cy="90" r="4" fill="#b35c00"/>
-        </g>
-      </svg>
-    </div>
-
-    <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-num">32,100</span><span class="hero-stat-label">años de domesticación</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">340+</span><span class="hero-stat-label">razas registradas</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">99.9%</span><span class="hero-stat-label">ADN compartido con el lobo</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">1</span><span class="hero-stat-label">sola especie: Canis lupus familiaris</span></div>
-    </div>
-  </section>
-
-  <section class="ficha-cientifica">
-    <h3 class="ficha-titulo">📋 Ficha científica</h3>
-    <div class="ficha-grid">
-      <div class="ficha-item"><span class="ficha-emoji">🔬</span><div><strong>Nombre científico</strong><p><em>Canis lupus familiaris</em></p></div></div>
-      <div class="ficha-item"><span class="ficha-emoji">🌍</span><div><strong>Origen</strong><p>Europa y Asia (Paleolítico)</p></div></div>
-      <div class="ficha-item"><span class="ficha-emoji">🦴</span><div><strong>Dieta</strong><p>Omnívoro oportunista</p></div></div>
-      <div class="ficha-item"><span class="ficha-emoji">⚖️</span><div><strong>Peso</strong><p>1 kg (chihuahua) — 90 kg (gran danés)</p></div></div>
-      <div class="ficha-item"><span class="ficha-emoji">⏱️</span><div><strong>Esperanza de vida</strong><p>10 a 15 años</p></div></div>
-      <div class="ficha-item"><span class="ficha-emoji">🌡️</span><div><strong>Temperatura</strong><p>38.0 — 39.2 °C</p></div></div>
-      <div class="ficha-item"><span class="ficha-emoji">❤️</span><div><strong>Ritmo cardíaco</strong><p>60 — 160 lpm</p></div></div>
-      <div class="ficha-item"><span class="ficha-emoji">🦷</span><div><strong>Dentición</strong><p>42 dientes en adultos</p></div></div>
-      <div class="ficha-item"><span class="ficha-emoji">🧠</span><div><strong>Inteligencia</strong><p>Niño de 2-3 años</p></div></div>
-      <div class="ficha-item"><span class="ficha-emoji">👂</span><div><strong>Audición</strong><p>Hasta 65,000 Hz</p></div></div>
-      <div class="ficha-item"><span class="ficha-emoji">👃</span><div><strong>Olfato</strong><p>220 millones de receptores</p></div></div>
-      <div class="ficha-item"><span class="ficha-emoji">💤</span><div><strong>Sueño diario</strong><p>12 a 14 horas</p></div></div>
-    </div>
-  </section>
-
-  <section class="dato-destacado">
-    <span class="dato-destacado-icono">🐕</span>
-    <div class="dato-destacado-texto">
-      <strong>¿Sabías que...?</strong>
-      <p>Los perros son el <strong>primer animal domesticado</strong> de la historia, miles de años antes que el ganado, los gatos o las aves de corral.</p>
-    </div>
-  </section>
-
-  <div class="seccion-info">
-    <p>El perro doméstico es un <strong>mamífero carnívoro</strong> de la familia <em>Canidae</em>. Su nombre científico es <code>Canis lupus familiaris</code>, clasificado como <strong>subespecie del lobo gris</strong>.</p>
-    <p>La <strong>domesticación</strong> ocurrió hace <span class="dato-clave">18,800-32,100 años</span> cuando lobos menos agresivos se acercaron a campamentos humanos buscando comida.</p>
-  </div>
-
-  <section class="taxonomia">
-    <div class="taxonomia-card">
-      <h3>📊 Clasificación Taxonómica</h3>
-      <div class="seccion-info">
-        <p>La <strong>taxonomía</strong> clasifica a los seres vivos en niveles jerárquicos:</p>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="#perritos">🐕 Perritos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#ciencia">🧬 Ciencia</a></li>
+          <li class="nav-item"><a class="nav-link" href="#curiosidades">💡 Curiosidades</a></li>
+          <li class="nav-item"><a class="nav-link" href="#cuidados">🩺 Cuidados</a></li>
+          <li class="nav-item d-flex gap-2 mt-2 mt-lg-0 ms-lg-3 theme-controls-mobile">
+            <button class="theme-toggle" id="themeBtn" type="button">🌙 Modo oscuro</button>
+            <button class="theme-mode-btn" id="btnAuto" type="button" data-tooltip="Auto" aria-label="Auto">🔄</button>
+          </li>
+        </ul>
       </div>
-      <div class="taxonomia-lista" id="taxonomiaLista"></div>
     </div>
-  </section>
+  </nav>
 
-  <h3 class="comparativa-titulo">📈 Biología y evolución</h3>
-  <div class="seccion-info">
-    <p>Los perros son <strong>omnívoros oportunistas</strong>: su dieta se ha adaptado a vegetales y carbohidratos. Tienen <strong>más genes para digerir almidón</strong> que los lobos.</p>
-    <p>El perro más longevo fue <strong>Bluey</strong>, un pastor australiano que vivió <span class="dato-clave">29 años y 5 meses</span>.</p>
+  <!-- ============================================================
+       🌟 CONTENIDO PRINCIPAL
+       ============================================================ -->
+  <div class="contenido-principal">
+
+    <!-- HEADER -->
+    <header class="hero-header container-xl">
+      <h1>🐶 Mundo Perruno</h1>
+      <p class="subtitle">Un sitio dedicado a los mejores amigos del hombre</p>
+    </header>
+
+    <!-- ESCENARIO -->
+    <div class="container-xl">
+      <section class="escenario">
+        <div class="sol"></div>
+        <div class="nube nube-1"></div>
+        <div class="nube nube-2"></div>
+        <div class="arbol arbol-1">🌳</div>
+        <div class="arbol arbol-2">🌲</div>
+        <div class="pasto"></div>
+
+        <svg class="perrito-runner" viewBox="0 0 260 180" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="140" cy="165" rx="80" ry="8" fill="rgba(0,0,0,0.2)"/>
+          <path class="cola-runner" d="M 55 110 Q 25 80 30 45" stroke="#d89060" stroke-width="14" stroke-linecap="round" fill="none"/>
+          <rect class="pata pata-1" x="75" y="125" width="13" height="45" rx="6" fill="#b96a3a"/>
+          <rect class="pata pata-2" x="95" y="125" width="13" height="45" rx="6" fill="#c97a4a"/>
+          <rect class="pata pata-3" x="165" y="125" width="13" height="45" rx="6" fill="#c97a4a"/>
+          <rect class="pata pata-4" x="185" y="125" width="13" height="45" rx="6" fill="#b96a3a"/>
+          <ellipse cx="135" cy="105" rx="75" ry="40" fill="#d89060"/>
+          <circle cx="215" cy="80" r="40" fill="#e0a074"/>
+          <ellipse class="oreja-runner" cx="200" cy="50" rx="13" ry="28" fill="#a85a2a" transform="rotate(-20 200 50)"/>
+          <circle cx="225" cy="75" r="5" fill="#222"/>
+          <circle cx="226" cy="73" r="1.7" fill="#fff"/>
+          <circle cx="205" cy="75" r="4.5" fill="#222"/>
+          <circle cx="206" cy="73" r="1.5" fill="#fff"/>
+          <ellipse cx="242" cy="98" rx="16" ry="12" fill="#f5e0c8"/>
+          <ellipse cx="247" cy="93" rx="5" ry="4" fill="#222"/>
+          <ellipse cx="238" cy="112" rx="4" ry="7" fill="#ff6b8a"/>
+        </svg>
+      </section>
+    </div>
+
+    <!-- PERRITOS -->
+    <section id="perritos" class="container-xl">
+      <h2 class="seccion-titulo">🐕 Nuestros perritos</h2>
+      <p class="seccion-desc">Dibujados y animados con código (SVG + CSS)</p>
+
+      <div class="seccion-info">
+        <p><span class="dato-clave">6 razas</span> Todos los perritos están creados con <strong>SVG</strong> y animados con <strong>CSS</strong>. Pertenecen a la misma especie, <em>Canis lupus familiaris</em>, pero se han desarrollado <strong>más de 340 razas</strong>.</p>
+        <ul>
+          <li><strong>Dachshund (salchicha)</strong>: cuerpo alargado, criado para cazar tejones.</li>
+          <li><strong>Pastor Alemán</strong>: inteligente, usado en policía y rescate.</li>
+          <li><strong>Husky Siberiano</strong>: tirador de trineos, con ojos azules.</li>
+          <li><strong>Bulldog Francés</strong>: tranquilo, compañero de sofá.</li>
+          <li><strong>Golden Retriever</strong>: la raza familiar por excelencia.</li>
+          <li><strong>Galgo</strong>: el perro más rápido, alcanza <strong>70 km/h</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="row g-3 g-md-4" id="perrosGrid"></div>
+    </section>
+
+    <!-- CIENCIA -->
+    <section id="ciencia" class="container-xl">
+      <h2 class="seccion-titulo">🧬 El perro en la ciencia</h2>
+      <p class="seccion-desc">Clasificación, evolución y datos biológicos</p>
+
+      <!-- HERO CIENTÍFICO -->
+      <div class="hero-ciencia mb-4">
+        <div class="row align-items-center g-4">
+          <div class="col-12 col-lg-6">
+            <div class="hero-perro">
+              <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <radialGradient id="haloGrad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#b02a5b" stop-opacity="0.3"/>
+                    <stop offset="100%" stop-color="#b02a5b" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <circle cx="150" cy="150" r="140" fill="url(#haloGrad)"/>
+                <ellipse cx="150" cy="265" rx="95" ry="10" fill="rgba(0,0,0,0.18)"/>
+                <path class="hero-cola" d="M 70 190 Q 30 150 40 90" stroke="#c97a4a" stroke-width="16" stroke-linecap="round" fill="none"/>
+                <rect x="95" y="210" width="20" height="55" rx="10" fill="#a85a2a"/>
+                <rect x="130" y="210" width="20" height="55" rx="10" fill="#c97a4a"/>
+                <rect x="180" y="210" width="20" height="55" rx="10" fill="#c97a4a"/>
+                <rect x="210" y="210" width="20" height="55" rx="10" fill="#a85a2a"/>
+                <ellipse cx="160" cy="175" rx="90" ry="55" fill="#d89060"/>
+                <rect x="118" y="135" width="90" height="12" rx="6" fill="#b02a5b"/>
+                <circle cx="163" cy="150" r="8" fill="#ffd166" stroke="#b35c00" stroke-width="2"/>
+                <circle cx="215" cy="115" r="55" fill="#e0a074"/>
+                <ellipse class="hero-oreja" cx="185" cy="80" rx="18" ry="38" fill="#a85a2a" transform="rotate(-25 185 80)"/>
+                <ellipse class="hero-oreja" cx="245" cy="80" rx="18" ry="38" fill="#a85a2a" transform="rotate(25 245 80)"/>
+                <circle class="hero-ojo" cx="200" cy="110" r="7" fill="#222"/>
+                <circle class="hero-ojo" cx="230" cy="110" r="7" fill="#222"/>
+                <circle cx="202" cy="107" r="2.5" fill="#fff"/>
+                <circle cx="232" cy="107" r="2.5" fill="#fff"/>
+                <ellipse cx="215" cy="140" rx="24" ry="18" fill="#f5e0c8"/>
+                <ellipse cx="215" cy="132" rx="7" ry="5" fill="#222"/>
+                <ellipse class="hero-lengua" cx="215" cy="152" rx="6" ry="10" fill="#ff6b8a"/>
+                <g class="hero-adn">
+                  <circle cx="60" cy="60" r="4" fill="#b02a5b"/>
+                  <circle cx="80" cy="75" r="4" fill="#b35c00"/>
+                  <circle cx="65" cy="90" r="4" fill="#b02a5b"/>
+                </g>
+                <g class="hero-adn hero-adn-2">
+                  <circle cx="250" cy="60" r="4" fill="#b35c00"/>
+                  <circle cx="270" cy="75" r="4" fill="#b02a5b"/>
+                  <circle cx="255" cy="90" r="4" fill="#b35c00"/>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="row g-3">
+              <div class="col-6"><div class="hero-stat"><span class="hero-stat-num">32,100</span><span class="hero-stat-label">años de domesticación</span></div></div>
+              <div class="col-6"><div class="hero-stat"><span class="hero-stat-num">340+</span><span class="hero-stat-label">razas registradas</span></div></div>
+              <div class="col-6"><div class="hero-stat"><span class="hero-stat-num">99.9%</span><span class="hero-stat-label">ADN con el lobo</span></div></div>
+              <div class="col-6"><div class="hero-stat"><span class="hero-stat-num">1</span><span class="hero-stat-label">sola especie</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FICHA CIENTÍFICA -->
+      <div class="ficha-cientifica mb-4">
+        <h3 class="ficha-titulo">📋 Ficha científica</h3>
+        <div class="row g-2 g-md-3" id="fichaGrid"></div>
+      </div>
+
+      <!-- DATO DESTACADO -->
+      <div class="dato-destacado mb-4">
+        <span class="dato-destacado-icono">🐕</span>
+        <div class="dato-destacado-texto">
+          <strong>¿Sabías que...?</strong>
+          <p>Los perros son el <strong>primer animal domesticado</strong> de la historia, miles de años antes que el ganado, los gatos o las aves de corral.</p>
+        </div>
+      </div>
+
+      <div class="seccion-info">
+        <p>El perro doméstico es un <strong>mamífero carnívoro</strong> de la familia <em>Canidae</em>. Su nombre científico es <code>Canis lupus familiaris</code>, clasificado como <strong>subespecie del lobo gris</strong>.</p>
+        <p>La <strong>domesticación</strong> ocurrió hace <span class="dato-clave">18,800-32,100 años</span> cuando lobos menos agresivos se acercaron a campamentos humanos buscando comida.</p>
+      </div>
+
+      <!-- TAXONOMÍA -->
+      <div class="taxonomia-card mb-4">
+        <h3>📊 Clasificación Taxonómica</h3>
+        <div class="seccion-info mb-3" style="border-left-color: var(--accent2);">
+          <p>La <strong>taxonomía</strong> clasifica a los seres vivos en niveles jerárquicos:</p>
+        </div>
+        <div class="taxonomia-lista" id="taxonomiaLista"></div>
+      </div>
+
+      <!-- BIOLOGÍA -->
+      <h3 class="comparativa-titulo text-center mb-2">📈 Biología y evolución</h3>
+      <div class="seccion-info">
+        <p>Los perros son <strong>omnívoros oportunistas</strong>: su dieta se ha adaptado a vegetales y carbohidratos. Tienen <strong>más genes para digerir almidón</strong> que los lobos.</p>
+        <p>El perro más longevo fue <strong>Bluey</strong>, un pastor australiano que vivió <span class="dato-clave">29 años y 5 meses</span>.</p>
+      </div>
+      <div class="row g-3 mb-4" id="bioGrid"></div>
+
+      <!-- PERRO VS LOBO -->
+      <h3 class="comparativa-titulo text-center mb-2">🐺 Perro vs Lobo: diferencias clave</h3>
+      <div class="seccion-info">
+        <p>Aunque comparten el <strong>99.9% del ADN</strong>, perros y lobos tienen diferencias notables tras miles de años de domesticación.</p>
+      </div>
+      <div class="row g-3 mb-4" id="comparativaGrid"></div>
+
+      <!-- SENTIDOS -->
+      <h3 class="sentidos-titulo text-center mb-2">👃 Los sentidos del perro</h3>
+      <div class="seccion-info">
+        <p>Los perros son criaturas <strong>olfativas</strong>. Su olfato detecta concentraciones <span class="dato-clave">100,000 veces más bajas</span> que un humano. El oído alcanza los <strong>65,000 Hz</strong>.</p>
+      </div>
+      <div class="row g-3 mb-4" id="sentidosGrid"></div>
+    </section>
+
+    <!-- CURIOSIDADES -->
+    <section id="curiosidades" class="container-xl">
+      <h2 class="seccion-titulo">💡 ¿Sabías que...?</h2>
+      <p class="seccion-desc">Datos curiosos sobre los perros</p>
+      <div class="seccion-info">
+        <p>Los perros son uno de los animales más estudiados. <strong>¿Sueñan?</strong> Sí, durante la fase <em>REM</em>. Su nariz tiene hasta <span class="dato-clave">300 millones</span> de receptores olfativos.</p>
+      </div>
+      <div class="row g-3" id="curiosidadesGrid"></div>
+    </section>
+
+    <!-- CUIDADOS -->
+    <section id="cuidados" class="container-xl">
+      <h2 class="seccion-titulo">🩺 Cuidados básicos</h2>
+      <p class="seccion-desc">Consejos para un perrito feliz y saludable</p>
+      <div class="seccion-info">
+        <p>Adoptar un perro es un <strong>compromiso de 10 a 15 años</strong>. Necesita <strong>alimentación de calidad</strong>, <strong>ejercicio diario</strong>, <strong>vacunas al día</strong> y <strong>amor</strong>. <em>Nunca</em> le des chocolate, uvas, cebolla, ajo o aguacate: son tóxicos.</p>
+      </div>
+      <div class="row g-3" id="cuidadosGrid"></div>
+    </section>
+
+    <footer>
+      Hecho con ❤️ para todos los perritos del mundo 🐾
+    </footer>
   </div>
-  <section class="bio-grid" id="bioGrid"></section>
 
-  <h3 class="comparativa-titulo">🐺 Perro vs Lobo: diferencias clave</h3>
-  <div class="seccion-info">
-    <p>Aunque comparten el <strong>99.9% del ADN</strong>, perros y lobos tienen diferencias notables tras miles de años de domesticación.</p>
-  </div>
-  <div class="comparativa-grid" id="comparativaGrid"></div>
-
-  <h3 class="sentidos-titulo">👃 Los sentidos del perro</h3>
-  <div class="seccion-info">
-    <p>Los perros son criaturas <strong>olfativas</strong>. Su olfato detecta concentraciones <span class="dato-clave">100,000 veces más bajas</span> que un humano. El oído alcanza los <strong>65,000 Hz</strong>, y la vista, aunque débil en colores, es excelente en penumbra.</p>
-  </div>
-  <div class="sentidos-grid" id="sentidosGrid"></div>
-
-  <h2 class="seccion-titulo">💡 ¿Sabías que...?</h2>
-  <p class="seccion-desc">Datos curiosos sobre los perros</p>
-  <div class="seccion-info">
-    <p>Los perros son uno de los animales más estudiados. <strong>¿Sueñan?</strong> Sí, durante la fase <em>REM</em>. <strong>¿Nos entienden?</strong> Procesan palabras de forma similar a nosotros. Su nariz tiene hasta <span class="dato-clave">300 millones</span> de receptores olfativos.</p>
-  </div>
-  <section class="curiosidades" id="curiosidades"></section>
-
-  <h2 class="seccion-titulo">🩺 Cuidados básicos</h2>
-  <p class="seccion-desc">Consejos para un perrito feliz y saludable</p>
-  <div class="seccion-info">
-    <p>Adoptar un perro es un <strong>compromiso de 10 a 15 años</strong>. Necesita <strong>alimentación de calidad</strong>, <strong>ejercicio diario</strong>, <strong>vacunas al día</strong>, <strong>amor</strong> y atención veterinaria regular. <em>Nunca</em> le des chocolate, uvas, cebolla, ajo o aguacate: son tóxicos.</p>
-  </div>
-  <section class="cuidados" id="cuidados"></section>
-
-  <footer>Hecho con ❤️ para todos los perritos del mundo 🐾</footer>
-
-  <!-- Toast de notificación -->
+  <!-- Toast -->
   <div class="toast-modo" id="toastModo">
     <span id="toastIcono">🌙</span>
     <span id="toastTexto">Modo oscuro activado</span>
   </div>
 
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script type="text/babel" data-presets="typescript" data-type="module">
-    interface Curiosidad { icono: string; titulo: string; texto: string; }
-    interface Cuidado { icono: string; titulo: string; descripcion: string; puntos: string[]; }
-    interface PerroSVG { titulo: string; raza: string; descripcion: string; clase: string; svg: string; }
-    interface TaxonomiaFila { nivel: string; valor: string; }
-    interface BioDato { icono: string; titulo: string; texto: string; }
-    interface Comparativa { titulo: string; texto: string; }
-    interface Sentido { icono: string; titulo: string; texto: string; }
-    interface ExplosionOptions { x: number; y: number; simbolos: string[]; cantidad?: number; }
-    type Tema = 'claro' | 'oscuro';
-    type FuenteTema = 'manual' | 'sistema' | 'hora';
+  <script>
+  (function() {
+    'use strict';
 
-    const perros: PerroSVG[] = [
-      {
-        titulo: 'Salchicha',
-        raza: 'Dachshund · Pequeño y valiente',
-        descripcion: 'Cuerpo largo, patas cortas y un corazón enorme.',
-        clase: 'perro-salchicha',
-        svg: `
-          <svg viewBox="0 0 260 140" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="130" cy="125" rx="90" ry="8" fill="rgba(0,0,0,0.15)"/>
-            <path class="cola-s" d="M 45 65 Q 20 50 25 30" stroke="#b96a3a" stroke-width="9" stroke-linecap="round" fill="none"/>
-            <rect x="50" y="60" width="150" height="42" rx="21" fill="#c97a4a"/>
-            <rect x="65" y="95" width="16" height="25" rx="7" fill="#a85a2a"/>
-            <rect x="160" y="95" width="16" height="25" rx="7" fill="#a85a2a"/>
-            <ellipse cx="215" cy="70" rx="32" ry="30" fill="#d89060"/>
-            <ellipse class="oreja-s" cx="200" cy="60" rx="10" ry="22" fill="#a85a2a" transform="rotate(-15 200 60)"/>
-            <ellipse class="oreja-s" cx="228" cy="60" rx="10" ry="22" fill="#a85a2a" transform="rotate(15 228 60)"/>
-            <circle class="ojo-s" cx="207" cy="66" r="4.5" fill="#222"/>
-            <circle class="ojo-s" cx="223" cy="66" r="4.5" fill="#222"/>
-            <circle cx="208" cy="64.5" r="1.5" fill="#fff"/>
-            <circle cx="224" cy="64.5" r="1.5" fill="#fff"/>
-            <ellipse cx="215" cy="84" rx="12" ry="9" fill="#f5e0c8"/>
-            <ellipse cx="215" cy="80" rx="4" ry="3" fill="#222"/>
-            <ellipse class="lengua-s" cx="215" cy="92" rx="4" ry="6" fill="#ff6b8a"/>
-          </svg>
-        `,
-      },
-      {
-        titulo: 'Pastor Alemán',
-        raza: 'German Shepherd · Fiel y protector',
-        descripcion: 'Inteligente, valiente y muy leal.',
-        clase: 'perro-pastor',
-        svg: `
-          <svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="120" cy="185" rx="75" ry="8" fill="rgba(0,0,0,0.15)"/>
-            <path class="cola-p" d="M 55 135 Q 30 110 35 75" stroke="#8b5a2b" stroke-width="12" stroke-linecap="round" fill="none"/>
-            <rect x="60" y="145" width="18" height="42" rx="8" fill="#6b4318"/>
-            <rect x="85" y="145" width="18" height="42" rx="8" fill="#8b5a2b"/>
-            <ellipse cx="120" cy="130" rx="65" ry="42" fill="#a0522d"/>
-            <ellipse cx="120" cy="145" rx="45" ry="22" fill="#d4a574"/>
-            <rect x="140" y="145" width="18" height="42" rx="8" fill="#8b5a2b"/>
-            <rect x="163" y="145" width="18" height="42" rx="8" fill="#6b4318"/>
-            <circle cx="180" cy="85" r="38" fill="#a0522d"/>
-            <ellipse cx="205" cy="100" rx="18" ry="14" fill="#6b4318"/>
-            <ellipse cx="205" cy="94" rx="6" ry="4.5" fill="#222"/>
-            <path class="oreja-p" d="M 155 55 L 165 20 L 185 55 Z" fill="#6b4318"/>
-            <path class="oreja-p" d="M 175 55 L 195 22 L 205 55 Z" fill="#6b4318"/>
-            <circle class="ojo-p" cx="170" cy="82" r="5" fill="#222"/>
-            <circle class="ojo-p" cx="192" cy="82" r="5" fill="#222"/>
-            <circle cx="171" cy="80" r="1.7" fill="#fff"/>
-            <circle cx="193" cy="80" r="1.7" fill="#fff"/>
-          </svg>
-        `,
-      },
-      {
-        titulo: 'Husky',
-        raza: 'Siberian Husky · Aventurero',
-        descripcion: 'Ojos azules, energía infinita y un aullido único.',
-        clase: 'perro-husky',
-        svg: `
-          <svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="120" cy="185" rx="75" ry="8" fill="rgba(0,0,0,0.15)"/>
-            <path class="cola-h" d="M 55 130 Q 20 100 25 60" stroke="#8ca4be" stroke-width="20" stroke-linecap="round" fill="none"/>
-            <rect x="60" y="145" width="18" height="42" rx="8" fill="#6e7f96"/>
-            <rect x="85" y="145" width="18" height="42" rx="8" fill="#8ca4be"/>
-            <rect x="140" y="145" width="18" height="42" rx="8" fill="#8ca4be"/>
-            <rect x="163" y="145" width="18" height="42" rx="8" fill="#6e7f96"/>
-            <ellipse cx="120" cy="130" rx="65" ry="42" fill="#8ca4be"/>
-            <ellipse cx="120" cy="150" rx="40" ry="22" fill="#f0f4f8"/>
-            <circle cx="180" cy="85" r="40" fill="#a8bed4"/>
-            <ellipse cx="180" cy="95" rx="26" ry="24" fill="#f0f4f8"/>
-            <ellipse cx="180" cy="100" rx="20" ry="14" fill="#fff"/>
-            <path d="M 152 55 L 160 18 L 180 52 Z" fill="#6e7f96"/>
-            <path d="M 178 52 L 198 20 L 208 55 Z" fill="#6e7f96"/>
-            <circle class="ojo-h" cx="170" cy="82" r="6" fill="#1e88e5"/>
-            <circle class="ojo-h" cx="192" cy="82" r="6" fill="#1e88e5"/>
-            <circle cx="171.5" cy="80" r="2" fill="#fff"/>
-            <circle cx="193.5" cy="80" r="2" fill="#fff"/>
-            <ellipse cx="180" cy="102" rx="5" ry="4" fill="#222"/>
-            <ellipse class="lengua-h" cx="180" cy="115" rx="5" ry="7" fill="#ff6b8a"/>
-          </svg>
-        `,
-      },
-      {
-        titulo: 'Bulldog',
-        raza: 'Bulldog Francés · Tranquilo',
-        descripcion: 'Orejas de murciélago y muy relajado.',
-        clase: 'perro-bulldog',
-        svg: `
-          <svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="120" cy="165" rx="75" ry="8" fill="rgba(0,0,0,0.15)"/>
-            <ellipse class="respira" cx="120" cy="125" rx="75" ry="45" fill="#c9a48a"/>
-            <rect x="60" y="150" width="20" height="18" rx="8" fill="#a88870"/>
-            <rect x="160" y="150" width="20" height="18" rx="8" fill="#a88870"/>
-            <ellipse class="respira" cx="120" cy="80" rx="55" ry="50" fill="#d8b89a"/>
-            <path d="M 70 45 L 68 12 Q 90 20 100 45 Z" fill="#8b6b52"/>
-            <path d="M 170 45 L 172 12 Q 150 20 140 45 Z" fill="#8b6b52"/>
-            <circle cx="95" cy="75" r="14" fill="#8b6b52"/>
-            <circle class="ojo-b" cx="95" cy="75" r="5" fill="#222"/>
-            <circle class="ojo-b" cx="145" cy="75" r="5" fill="#222"/>
-            <circle cx="96.5" cy="73" r="1.7" fill="#fff"/>
-            <circle cx="146.5" cy="73" r="1.7" fill="#fff"/>
-            <ellipse cx="120" cy="100" rx="28" ry="18" fill="#a88870"/>
-            <ellipse cx="120" cy="92" rx="6" ry="4.5" fill="#222"/>
-            <path d="M 120 96 Q 120 105 108 105" stroke="#222" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <path d="M 120 96 Q 120 105 132 105" stroke="#222" stroke-width="2" fill="none" stroke-linecap="round"/>
-          </svg>
-        `,
-      },
-      {
-        titulo: 'Cachorro',
-        raza: 'Golden Retriever · Bebé',
-        descripcion: 'Pequeño, torpe y adorable.',
-        clase: 'perro-cachorro',
-        svg: `
-          <svg viewBox="0 0 220 180" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="110" cy="165" rx="65" ry="8" fill="rgba(0,0,0,0.15)"/>
-            <path class="cola-c" d="M 60 120 Q 30 105 35 80" stroke="#e8b86a" stroke-width="12" stroke-linecap="round" fill="none"/>
-            <g class="cuerpo-c">
-              <ellipse cx="110" cy="125" rx="60" ry="38" fill="#f0c980"/>
-              <rect x="65" y="145" width="18" height="25" rx="8" fill="#e8b86a"/>
-              <rect x="140" y="145" width="18" height="25" rx="8" fill="#e8b86a"/>
-              <circle cx="160" cy="85" r="42" fill="#f5d497"/>
-              <ellipse cx="130" cy="90" rx="14" ry="28" fill="#e8b86a" transform="rotate(-25 130 90)"/>
-              <ellipse cx="190" cy="90" rx="14" ry="28" fill="#e8b86a" transform="rotate(25 190 90)"/>
-              <circle class="ojo-c" cx="148" cy="80" r="6" fill="#222"/>
-              <circle class="ojo-c" cx="172" cy="80" r="6" fill="#222"/>
-              <circle cx="150" cy="77" r="2.3" fill="#fff"/>
-              <circle cx="174" cy="77" r="2.3" fill="#fff"/>
-              <ellipse cx="160" cy="102" rx="18" ry="13" fill="#f5e0c8"/>
-              <ellipse cx="160" cy="97" rx="5" ry="4" fill="#222"/>
-              <path d="M 155 108 Q 160 120 165 108 Z" fill="#ff6b8a"/>
-            </g>
-          </svg>
-        `,
-      },
-      {
-        titulo: 'Galgo',
-        raza: 'Greyhound · El más rápido',
-        descripcion: 'Elegante, atlético y veloz.',
-        clase: 'perro-galgo',
-        svg: `
-          <svg viewBox="0 0 260 180" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="130" cy="165" rx="90" ry="8" fill="rgba(0,0,0,0.15)"/>
-            <path class="cola-g" d="M 55 110 Q 25 85 30 55" stroke="#8a6a4a" stroke-width="10" stroke-linecap="round" fill="none"/>
-            <rect class="pata-g pata-g1" x="70" y="120" width="12" height="50" rx="6" fill="#6b4f30"/>
-            <rect class="pata-g pata-g2" x="90" y="120" width="12" height="50" rx="6" fill="#8a6a4a"/>
-            <rect class="pata-g pata-g3" x="170" y="120" width="12" height="50" rx="6" fill="#8a6a4a"/>
-            <rect class="pata-g pata-g4" x="190" y="120" width="12" height="50" rx="6" fill="#6b4f30"/>
-            <ellipse cx="130" cy="100" rx="80" ry="32" fill="#a08060"/>
-            <path d="M 185 90 Q 205 70 220 70" stroke="#a08060" stroke-width="22" fill="none" stroke-linecap="round"/>
-            <ellipse cx="230" cy="68" rx="25" ry="16" fill="#b89878"/>
-            <ellipse cx="248" cy="70" rx="12" ry="7" fill="#8a6a4a"/>
-            <ellipse cx="254" cy="68" rx="3.5" ry="2.5" fill="#222"/>
-            <circle cx="235" cy="63" r="3.5" fill="#222"/>
-            <circle cx="236" cy="62" r="1.2" fill="#fff"/>
-            <path d="M 222 52 L 218 38 L 232 48 Z" fill="#6b4f30"/>
-          </svg>
-        `,
-      },
+    /* ============================================================
+       📦 DATOS
+       ============================================================ */
+    const perros = [
+      { titulo: 'Salchicha', raza: 'Dachshund · Pequeño y valiente', descripcion: 'Cuerpo largo, patas cortas y un corazón enorme.', clase: 'perro-salchicha',
+        svg: `<svg viewBox="0 0 260 140" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="130" cy="125" rx="90" ry="8" fill="rgba(0,0,0,0.15)"/>
+          <path class="cola-s" d="M 45 65 Q 20 50 25 30" stroke="#b96a3a" stroke-width="9" stroke-linecap="round" fill="none"/>
+          <rect x="50" y="60" width="150" height="42" rx="21" fill="#c97a4a"/>
+          <rect x="65" y="95" width="16" height="25" rx="7" fill="#a85a2a"/>
+          <rect x="160" y="95" width="16" height="25" rx="7" fill="#a85a2a"/>
+          <ellipse cx="215" cy="70" rx="32" ry="30" fill="#d89060"/>
+          <ellipse class="oreja-s" cx="200" cy="60" rx="10" ry="22" fill="#a85a2a" transform="rotate(-15 200 60)"/>
+          <ellipse class="oreja-s" cx="228" cy="60" rx="10" ry="22" fill="#a85a2a" transform="rotate(15 228 60)"/>
+          <circle class="ojo-s" cx="207" cy="66" r="4.5" fill="#222"/>
+          <circle class="ojo-s" cx="223" cy="66" r="4.5" fill="#222"/>
+          <circle cx="208" cy="64.5" r="1.5" fill="#fff"/>
+          <circle cx="224" cy="64.5" r="1.5" fill="#fff"/>
+          <ellipse cx="215" cy="84" rx="12" ry="9" fill="#f5e0c8"/>
+          <ellipse cx="215" cy="80" rx="4" ry="3" fill="#222"/>
+          <ellipse class="lengua-s" cx="215" cy="92" rx="4" ry="6" fill="#ff6b8a"/>
+        </svg>` },
+      { titulo: 'Pastor Alemán', raza: 'German Shepherd · Fiel y protector', descripcion: 'Inteligente, valiente y muy leal.', clase: 'perro-pastor',
+        svg: `<svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="120" cy="185" rx="75" ry="8" fill="rgba(0,0,0,0.15)"/>
+          <path class="cola-p" d="M 55 135 Q 30 110 35 75" stroke="#8b5a2b" stroke-width="12" stroke-linecap="round" fill="none"/>
+          <rect x="60" y="145" width="18" height="42" rx="8" fill="#6b4318"/>
+          <rect x="85" y="145" width="18" height="42" rx="8" fill="#8b5a2b"/>
+          <ellipse cx="120" cy="130" rx="65" ry="42" fill="#a0522d"/>
+          <ellipse cx="120" cy="145" rx="45" ry="22" fill="#d4a574"/>
+          <rect x="140" y="145" width="18" height="42" rx="8" fill="#8b5a2b"/>
+          <rect x="163" y="145" width="18" height="42" rx="8" fill="#6b4318"/>
+          <circle cx="180" cy="85" r="38" fill="#a0522d"/>
+          <ellipse cx="205" cy="100" rx="18" ry="14" fill="#6b4318"/>
+          <ellipse cx="205" cy="94" rx="6" ry="4.5" fill="#222"/>
+          <path class="oreja-p" d="M 155 55 L 165 20 L 185 55 Z" fill="#6b4318"/>
+          <path class="oreja-p" d="M 175 55 L 195 22 L 205 55 Z" fill="#6b4318"/>
+          <circle class="ojo-p" cx="170" cy="82" r="5" fill="#222"/>
+          <circle class="ojo-p" cx="192" cy="82" r="5" fill="#222"/>
+          <circle cx="171" cy="80" r="1.7" fill="#fff"/>
+          <circle cx="193" cy="80" r="1.7" fill="#fff"/>
+        </svg>` },
+      { titulo: 'Husky', raza: 'Siberian Husky · Aventurero', descripcion: 'Ojos azules, energía infinita y un aullido único.', clase: 'perro-husky',
+        svg: `<svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="120" cy="185" rx="75" ry="8" fill="rgba(0,0,0,0.15)"/>
+          <path class="cola-h" d="M 55 130 Q 20 100 25 60" stroke="#8ca4be" stroke-width="20" stroke-linecap="round" fill="none"/>
+          <rect x="60" y="145" width="18" height="42" rx="8" fill="#6e7f96"/>
+          <rect x="85" y="145" width="18" height="42" rx="8" fill="#8ca4be"/>
+          <rect x="140" y="145" width="18" height="42" rx="8" fill="#8ca4be"/>
+          <rect x="163" y="145" width="18" height="42" rx="8" fill="#6e7f96"/>
+          <ellipse cx="120" cy="130" rx="65" ry="42" fill="#8ca4be"/>
+          <ellipse cx="120" cy="150" rx="40" ry="22" fill="#f0f4f8"/>
+          <circle cx="180" cy="85" r="40" fill="#a8bed4"/>
+          <ellipse cx="180" cy="95" rx="26" ry="24" fill="#f0f4f8"/>
+          <ellipse cx="180" cy="100" rx="20" ry="14" fill="#fff"/>
+          <path d="M 152 55 L 160 18 L 180 52 Z" fill="#6e7f96"/>
+          <path d="M 178 52 L 198 20 L 208 55 Z" fill="#6e7f96"/>
+          <circle class="ojo-h" cx="170" cy="82" r="6" fill="#1e88e5"/>
+          <circle class="ojo-h" cx="192" cy="82" r="6" fill="#1e88e5"/>
+          <circle cx="171.5" cy="80" r="2" fill="#fff"/>
+          <circle cx="193.5" cy="80" r="2" fill="#fff"/>
+          <ellipse cx="180" cy="102" rx="5" ry="4" fill="#222"/>
+          <ellipse class="lengua-h" cx="180" cy="115" rx="5" ry="7" fill="#ff6b8a"/>
+        </svg>` },
+      { titulo: 'Bulldog', raza: 'Bulldog Francés · Tranquilo', descripcion: 'Orejas de murciélago y muy relajado.', clase: 'perro-bulldog',
+        svg: `<svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="120" cy="165" rx="75" ry="8" fill="rgba(0,0,0,0.15)"/>
+          <ellipse class="respira" cx="120" cy="125" rx="75" ry="45" fill="#c9a48a"/>
+          <rect x="60" y="150" width="20" height="18" rx="8" fill="#a88870"/>
+          <rect x="160" y="150" width="20" height="18" rx="8" fill="#a88870"/>
+          <ellipse class="respira" cx="120" cy="80" rx="55" ry="50" fill="#d8b89a"/>
+          <path d="M 70 45 L 68 12 Q 90 20 100 45 Z" fill="#8b6b52"/>
+          <path d="M 170 45 L 172 12 Q 150 20 140 45 Z" fill="#8b6b52"/>
+          <circle cx="95" cy="75" r="14" fill="#8b6b52"/>
+          <circle class="ojo-b" cx="95" cy="75" r="5" fill="#222"/>
+          <circle class="ojo-b" cx="145" cy="75" r="5" fill="#222"/>
+          <circle cx="96.5" cy="73" r="1.7" fill="#fff"/>
+          <circle cx="146.5" cy="73" r="1.7" fill="#fff"/>
+          <ellipse cx="120" cy="100" rx="28" ry="18" fill="#a88870"/>
+          <ellipse cx="120" cy="92" rx="6" ry="4.5" fill="#222"/>
+          <path d="M 120 96 Q 120 105 108 105" stroke="#222" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M 120 96 Q 120 105 132 105" stroke="#222" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>` },
+      { titulo: 'Cachorro', raza: 'Golden Retriever · Bebé', descripcion: 'Pequeño, torpe y adorable.', clase: 'perro-cachorro',
+        svg: `<svg viewBox="0 0 220 180" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="110" cy="165" rx="65" ry="8" fill="rgba(0,0,0,0.15)"/>
+          <path class="cola-c" d="M 60 120 Q 30 105 35 80" stroke="#e8b86a" stroke-width="12" stroke-linecap="round" fill="none"/>
+          <g class="cuerpo-c">
+            <ellipse cx="110" cy="125" rx="60" ry="38" fill="#f0c980"/>
+            <rect x="65" y="145" width="18" height="25" rx="8" fill="#e8b86a"/>
+            <rect x="140" y="145" width="18" height="25" rx="8" fill="#e8b86a"/>
+            <circle cx="160" cy="85" r="42" fill="#f5d497"/>
+            <ellipse cx="130" cy="90" rx="14" ry="28" fill="#e8b86a" transform="rotate(-25 130 90)"/>
+            <ellipse cx="190" cy="90" rx="14" ry="28" fill="#e8b86a" transform="rotate(25 190 90)"/>
+            <circle class="ojo-c" cx="148" cy="80" r="6" fill="#222"/>
+            <circle class="ojo-c" cx="172" cy="80" r="6" fill="#222"/>
+            <circle cx="150" cy="77" r="2.3" fill="#fff"/>
+            <circle cx="174" cy="77" r="2.3" fill="#fff"/>
+            <ellipse cx="160" cy="102" rx="18" ry="13" fill="#f5e0c8"/>
+            <ellipse cx="160" cy="97" rx="5" ry="4" fill="#222"/>
+            <path d="M 155 108 Q 160 120 165 108 Z" fill="#ff6b8a"/>
+          </g>
+        </svg>` },
+      { titulo: 'Galgo', raza: 'Greyhound · El más rápido', descripcion: 'Elegante, atlético y veloz.', clase: 'perro-galgo',
+        svg: `<svg viewBox="0 0 260 180" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="130" cy="165" rx="90" ry="8" fill="rgba(0,0,0,0.15)"/>
+          <path class="cola-g" d="M 55 110 Q 25 85 30 55" stroke="#8a6a4a" stroke-width="10" stroke-linecap="round" fill="none"/>
+          <rect class="pata-g pata-g1" x="70" y="120" width="12" height="50" rx="6" fill="#6b4f30"/>
+          <rect class="pata-g pata-g2" x="90" y="120" width="12" height="50" rx="6" fill="#8a6a4a"/>
+          <rect class="pata-g pata-g3" x="170" y="120" width="12" height="50" rx="6" fill="#8a6a4a"/>
+          <rect class="pata-g pata-g4" x="190" y="120" width="12" height="50" rx="6" fill="#6b4f30"/>
+          <ellipse cx="130" cy="100" rx="80" ry="32" fill="#a08060"/>
+          <path d="M 185 90 Q 205 70 220 70" stroke="#a08060" stroke-width="22" fill="none" stroke-linecap="round"/>
+          <ellipse cx="230" cy="68" rx="25" ry="16" fill="#b89878"/>
+          <ellipse cx="248" cy="70" rx="12" ry="7" fill="#8a6a4a"/>
+          <ellipse cx="254" cy="68" rx="3.5" ry="2.5" fill="#222"/>
+          <circle cx="235" cy="63" r="3.5" fill="#222"/>
+          <circle cx="236" cy="62" r="1.2" fill="#fff"/>
+          <path d="M 222 52 L 218 38 L 232 48 Z" fill="#6b4f30"/>
+        </svg>` }
     ];
 
-    const taxonomia: TaxonomiaFila[] = [
+    const taxonomia = [
       { nivel: 'Reino',      valor: 'Animalia' },
       { nivel: 'Filo',       valor: 'Chordata' },
       { nivel: 'Clase',      valor: 'Mammalia' },
@@ -1292,37 +1367,52 @@
       { nivel: 'Familia',    valor: 'Canidae' },
       { nivel: 'Género',     valor: 'Canis' },
       { nivel: 'Especie',    valor: 'Canis lupus' },
-      { nivel: 'Subespecie', valor: 'Canis lupus familiaris' },
+      { nivel: 'Subespecie', valor: 'Canis lupus familiaris' }
     ];
 
-    const bioDatos: BioDato[] = [
+    const ficha = [
+      { icono: '🔬', titulo: 'Nombre científico', valor: 'Canis lupus familiaris' },
+      { icono: '🌍', titulo: 'Origen', valor: 'Europa y Asia (Paleolítico)' },
+      { icono: '🦴', titulo: 'Dieta', valor: 'Omnívoro oportunista' },
+      { icono: '⚖️', titulo: 'Peso', valor: '1 kg a 90 kg según la raza' },
+      { icono: '⏱️', titulo: 'Esperanza de vida', valor: '10 a 15 años' },
+      { icono: '🌡️', titulo: 'Temperatura corporal', valor: '38.0 — 39.2 °C' },
+      { icono: '❤️', titulo: 'Ritmo cardíaco', valor: '60 — 160 lpm' },
+      { icono: '🦷', titulo: 'Dentición', valor: '42 dientes en adultos' },
+      { icono: '🧠', titulo: 'Inteligencia', valor: 'Niño de 2-3 años' },
+      { icono: '👂', titulo: 'Audición', valor: 'Hasta 65,000 Hz' },
+      { icono: '👃', titulo: 'Olfato', valor: '220 millones de receptores' },
+      { icono: '💤', titulo: 'Sueño diario', valor: '12 a 14 horas' }
+    ];
+
+    const bioDatos = [
       { icono: '🧬', titulo: 'Especie única',        texto: 'Todos los perros pertenecen a una sola especie: Canis lupus familiaris.' },
       { icono: '⏳', titulo: 'Origen antiguo',       texto: 'La domesticación comenzó hace 18,800-32,100 años, en el Paleolítico.' },
       { icono: '🐺', titulo: 'Descendiente del lobo', texto: 'El lobo gris es su antecesor directo; comparten casi el mismo ADN.' },
       { icono: '🧠', titulo: 'Cerebro más pequeño',  texto: 'Sus cerebros son un 10% más pequeños que los de los lobos.' },
-      { icono: '🦷', titulo: 'Dientes reducidos',     texto: 'Su cráneo es un 20% menor y sus dientes más pequeños que los del lobo.' },
+      { icono: '🦷', titulo: 'Dientes reducidos',     texto: 'Su cráneo es un 20% menor que el de un lobo de tamaño similar.' },
       { icono: '🐾', titulo: 'Glándulas en las patas', texto: 'Tienen glándulas sudoríparas en las almohadillas; los lobos no.' },
-      { icono: '💤', titulo: 'Esperanza de vida',     texto: 'Razas pequeñas viven 15-16 años; grandes, la mitad.' },
-      { icono: '🌍', titulo: '+340 razas',            texto: 'La FCI reconoce aproximadamente 340-360 razas de perros.' },
+      { icono: '💤', titulo: 'Esperanza de vida',     texto: 'Razas pequeñas viven 15-16 años; las grandes, la mitad.' },
+      { icono: '🌍', titulo: '+340 razas',            texto: 'La FCI reconoce aproximadamente 340-360 razas de perros.' }
     ];
 
-    const comparativas: Comparativa[] = [
+    const comparativas = [
       { titulo: 'Tamaño del cráneo',      texto: 'El perro tiene un cráneo ~20% más pequeño que un lobo similar.' },
       { titulo: 'Tamaño del cerebro',     texto: 'El cerebro del perro es ~10% más pequeño y requiere menos calorías.' },
       { titulo: 'Cola',                    texto: 'La cola del perro tiende a curvarse hacia arriba; la del lobo no.' },
       { titulo: 'Glándulas sudoríparas',  texto: 'El perro las tiene en las almohadillas de las patas; el lobo no.' },
       { titulo: 'Ciclo reproductivo',     texto: 'La perra tiene ~2 celos al año; la loba solo uno, en primavera.' },
-      { titulo: 'Madurez sexual',          texto: 'El perro madura a los 6-9 meses; el lobo a los 2 años.' },
+      { titulo: 'Madurez sexual',          texto: 'El perro madura a los 6-9 meses; el lobo a los 2 años.' }
     ];
 
-    const sentidos: Sentido[] = [
+    const sentidos = [
       { icono: '👃', titulo: 'Olfato', texto: 'Tiene ~220 millones de células olfativas, frente a 5 millones del humano.' },
       { icono: '👂', titulo: 'Oído',   texto: 'Escucha sonidos 4 veces más lejanos que un humano y detecta ultrasonidos.' },
       { icono: '👀', titulo: 'Vista',  texto: 'No distinguen bien los colores, pero detectan mejor el movimiento.' },
-      { icono: '👅', titulo: 'Gusto',  texto: 'Detectan sabores dulces, salados y amargos, pero con menos papilas.' },
+      { icono: '👅', titulo: 'Gusto',  texto: 'Detectan sabores dulces, salados y amargos, pero con menos papilas.' }
     ];
 
-    const curiosidades: Curiosidad[] = [
+    const curiosidades = [
       { icono: '👃', titulo: 'Súper olfato',         texto: 'Su olfato es hasta 40 veces más potente que el nuestro.' },
       { icono: '👂', titulo: 'Oído fino',            texto: 'Escuchan sonidos 4 veces más lejanos y detectan ultrasonidos.' },
       { icono: '💤', titulo: 'Sueñan como nosotros', texto: 'Entran en fase REM y sueñan con sus dueños.' },
@@ -1334,10 +1424,10 @@
       { icono: '🐕', titulo: 'Más de 340 razas',     texto: 'Existen más de 340 razas reconocidas en el mundo.' },
       { icono: '⏱️', titulo: 'Velocidad récord',     texto: 'Un galgo puede correr hasta 70 km/h.' },
       { icono: '🎵', titulo: 'Les gusta la música',  texto: 'La música clásica los relaja y reduce su estrés.' },
-      { icono: '😴', titulo: 'Duermen mucho',        texto: 'Los perros adultos duermen entre 12 y 14 horas al día.' },
+      { icono: '😴', titulo: 'Duermen mucho',        texto: 'Los perros adultos duermen entre 12 y 14 horas al día.' }
     ];
 
-    const cuidados: Cuidado[] = [
+    const cuidados = [
       { icono: '🍖', titulo: 'Alimentación', descripcion: 'Una buena dieta da energía.',
         puntos: ['Comida según edad y tamaño', 'Horarios fijos (2 veces al día)', 'Nunca chocolate ni uvas', 'Agua limpia siempre'] },
       { icono: '🏃', titulo: 'Ejercicio', descripcion: 'Un perro cansado es feliz.',
@@ -1353,376 +1443,355 @@
       { icono: '🚑', titulo: 'Emergencias', descripcion: 'Saber actuar salva vidas.',
         puntos: ['Número del veterinario a mano', 'Botiquín básico', 'Vómitos o decaimiento = alarma', 'Nunca automediques'] },
       { icono: '🎓', titulo: 'Educación', descripcion: 'Un perro educado es feliz.',
-        puntos: ['Empieza desde cachorro', 'Refuerzo positivo', 'Órdenes básicas', 'Sé constante y paciente'] },
+        puntos: ['Empieza desde cachorro', 'Refuerzo positivo', 'Órdenes básicas', 'Sé constante y paciente'] }
     ];
 
-    const $ = <T extends HTMLElement>(sel: string): T | null => document.querySelector<T>(sel);
-    const random = (min: number, max: number): number => Math.random() * (max - min) + min;
-    const randomItem = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
-
     /* ============================================================
-       🌗 ThemeManager con auto-detección (sistema + hora)
+       🎨 RENDER
        ============================================================ */
-    class ThemeManager {
-      private readonly key = 'tema';
-      private readonly keyManual = 'tema-manual';
-      private readonly body: HTMLElement = document.body;
-      private readonly btn: HTMLButtonElement;
-      private readonly btnAuto: HTMLButtonElement;
-      private readonly toast: HTMLElement;
-      private readonly toastIcono: HTMLElement;
-      private readonly toastTexto: HTMLElement;
-      private usandoAuto: boolean = true;
-      private mediaQuery: MediaQueryList;
-
-      constructor(
-        btn: HTMLButtonElement,
-        btnAuto: HTMLButtonElement,
-        toast: HTMLElement,
-        toastIcono: HTMLElement,
-        toastTexto: HTMLElement,
-      ) {
-        this.btn = btn;
-        this.btnAuto = btnAuto;
-        this.toast = toast;
-        this.toastIcono = toastIcono;
-        this.toastTexto = toastTexto;
-        this.mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-        // Detectar si el usuario ya eligió manualmente antes
-        const manualGuardado = localStorage.getItem(this.keyManual);
-        this.usandoAuto = manualGuardado !== 'false';
-
-        this.inicializar();
-
-        // Eventos
-        this.btn.addEventListener('click', () => this.toggleManual());
-        this.btnAuto.addEventListener('click', () => this.toggleAuto());
-
-        // Escuchar cambios del sistema operativo
-        this.mediaQuery.addEventListener('change', () => {
-          if (this.usandoAuto) this.aplicarAuto(false);
-        });
-
-        // Atajo de teclado: Ctrl + D
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'd' && e.ctrlKey) {
-            e.preventDefault();
-            this.toggleManual();
-          }
-        });
-
-        // Revisar la hora cada 5 minutos
-        setInterval(() => {
-          if (this.usandoAuto) this.aplicarAuto(false);
-        }, 5 * 60 * 1000);
-      }
-
-      /* --------- Inicialización --------- */
-      private inicializar(): void {
-        if (this.usandoAuto) {
-          this.aplicarAuto(true);
-        } else {
-          const guardado = localStorage.getItem(this.key) as Tema | null;
-          this.aplicar(guardado === 'oscuro' ? 'oscuro' : 'claro', false);
-        }
-        this.actualizarBotonAuto();
-      }
-
-      /* --------- Cambio manual --------- */
-      private toggleManual(): void {
-        const nuevo: Tema = this.body.classList.contains('dark') ? 'claro' : 'oscuro';
-        this.aplicar(nuevo, true);
-        localStorage.setItem(this.key, nuevo);
-      }
-
-      /* --------- Toggle entre auto y manual --------- */
-      private toggleAuto(): void {
-        this.usandoAuto = !this.usandoAuto;
-        localStorage.setItem(this.keyManual, this.usandoAuto ? 'true' : 'false');
-
-        if (this.usandoAuto) {
-          this.aplicarAuto(true);
-        }
-        this.actualizarBotonAuto();
-      }
-
-      /* --------- Aplicar según sistema + hora --------- */
-      private aplicarAuto(mostrarToast: boolean): void {
-        const hora = new Date().getHours();
-        const esNoche = hora >= 19 || hora < 7;
-        const prefiereOscuroSistema = this.mediaQuery.matches;
-
-        // Regla: si es de noche → oscuro. Si es de día → sigue la preferencia del sistema
-        let tema: Tema;
-        if (esNoche) {
-          tema = 'oscuro';
-        } else if (prefiereOscuroSistema && hora >= 17) {
-          tema = 'oscuro';
-        } else {
-          tema = 'claro';
-        }
-
-        this.aplicar(tema, mostrarToast);
-      }
-
-      /* --------- Aplicar tema --------- */
-      private aplicar(tema: Tema, mostrarToast: boolean): void {
-        const esOscuro = tema === 'oscuro';
-        const cambio = this.body.classList.contains('dark') !== esOscuro;
-        this.body.classList.toggle('dark', esOscuro);
-        this.btn.textContent = esOscuro ? '☀️ Modo diurno' : '🌙 Modo oscuro';
-
-        if (cambio && mostrarToast) {
-          this.mostrarToast(tema);
-          efectoExplosion({
-            x: window.innerWidth - 80, y: 50,
-            simbolos: esOscuro ? ['🌙', '⭐', '✨'] : ['☀️', '🌞', '✨'],
-            cantidad: 8,
-          });
-        }
-      }
-
-      /* --------- Actualizar botón auto --------- */
-      private actualizarBotonAuto(): void {
-        this.btnAuto.dataset.activo = this.usandoAuto ? 'true' : 'false';
-        this.btnAuto.dataset.tooltip = this.usandoAuto
-          ? 'Auto activo (sistema + hora)'
-          : 'Auto desactivado';
-      }
-
-      /* --------- Toast --------- */
-      private mostrarToast(tema: Tema): void {
-        const hora = new Date().getHours();
-        const esNoche = hora >= 19 || hora < 7;
-        let mensaje: string;
-        let icono: string;
-
-        if (this.usandoAuto) {
-          if (esNoche) {
-            icono = '🌙';
-            mensaje = 'Modo nocturno automático (es de noche)';
-          } else {
-            icono = tema === 'oscuro' ? '🌙' : '☀️';
-            mensaje = tema === 'oscuro'
-              ? 'Modo oscuro (preferencia del sistema)'
-              : 'Modo claro (día)';
-          }
-        } else {
-          icono = tema === 'oscuro' ? '🌙' : '☀️';
-          mensaje = tema === 'oscuro' ? 'Modo nocturno activado' : 'Modo diurno activado';
-        }
-
-        this.toastIcono.textContent = icono;
-        this.toastTexto.textContent = mensaje;
-        this.toast.classList.add('mostrar');
-        setTimeout(() => this.toast.classList.remove('mostrar'), 2500);
-      }
-    }
-
-    function efectoExplosion({ x, y, simbolos, cantidad = 6 }: ExplosionOptions): void {
-      for (let i = 0; i < cantidad; i++) {
-        const span = document.createElement('span');
-        span.className = 'emoji-pop';
-        span.textContent = randomItem(simbolos);
-        span.style.left = `${x}px`;
-        span.style.top = `${y}px`;
-        span.style.animationDelay = `${i * 0.05}s`;
-        span.style.fontSize = `${random(1.5, 3)}rem`;
-        document.body.appendChild(span);
-        setTimeout(() => span.remove(), 1200);
-      }
-    }
-
-    class HuellasFondo {
-      private container: HTMLElement;
-      private readonly emojis = ['🐾', '🦴', '🐶', '❤️', '🐕', '🎾'];
-
-      constructor(id: string) {
-        const el = document.getElementById(id);
-        if (!el) throw new Error(`No se encontró #${id}`);
-        this.container = el;
-        for (let i = 0; i < 6; i++) setTimeout(() => this.crear(), i * 350);
-        setInterval(() => this.crear(), 1600);
-      }
-
-      private crear(): void {
-        const h = document.createElement('div');
-        h.className = 'huella';
-        h.textContent = randomItem(this.emojis);
-        h.style.left = `${Math.random() * 100}%`;
-        h.style.fontSize = `${random(1, 2.2)}rem`;
-        h.style.animationDuration = `${random(9, 16)}s`;
-        h.style.animationDelay = `${Math.random() * 2}s`;
-        this.container.appendChild(h);
-        setTimeout(() => h.remove(), 18000);
-      }
-    }
-
-    function renderizarPerros(): void {
-      const grid = $<HTMLElement>('#perrosGrid');
+    function renderizarPerros() {
+      const grid = document.getElementById('perrosGrid');
       if (!grid) return;
-      perros.forEach(({ titulo, raza, descripcion, clase, svg }) => {
-        const card = document.createElement('div');
-        card.className = `perro-card ${clase}`;
-        card.innerHTML = `
-          <div class="svg-wrap">${svg}</div>
-          <h3>${titulo}</h3>
-          <div class="raza">${raza}</div>
-          <p>${descripcion}</p>
-        `;
-        grid.appendChild(card);
+      perros.forEach(function(p) {
+        const col = document.createElement('div');
+        col.className = 'col-12 col-sm-6 col-lg-4';
+        col.innerHTML = '<div class="perro-card ' + p.clase + '">' +
+          '<div class="svg-wrap">' + p.svg + '</div>' +
+          '<h3>' + p.titulo + '</h3>' +
+          '<div class="raza">' + p.raza + '</div>' +
+          '<p>' + p.descripcion + '</p>' +
+        '</div>';
+        grid.appendChild(col);
       });
     }
 
-    function renderizarTaxonomia(): void {
-      const cont = $<HTMLElement>('#taxonomiaLista');
+    function renderizarFicha() {
+      const cont = document.getElementById('fichaGrid');
       if (!cont) return;
-      taxonomia.forEach(({ nivel, valor }) => {
+      ficha.forEach(function(f) {
+        const col = document.createElement('div');
+        col.className = 'col-12 col-sm-6 col-lg-4 col-xl-3';
+        col.innerHTML = '<div class="ficha-item">' +
+          '<span class="ficha-emoji">' + f.icono + '</span>' +
+          '<div><strong>' + f.titulo + '</strong><p>' + f.valor + '</p></div>' +
+        '</div>';
+        cont.appendChild(col);
+      });
+    }
+
+    function renderizarTaxonomia() {
+      const cont = document.getElementById('taxonomiaLista');
+      if (!cont) return;
+      taxonomia.forEach(function(t) {
         const fila = document.createElement('div');
         fila.className = 'taxonomia-fila';
-        fila.innerHTML = `<span class="nivel">${nivel}</span><span class="valor">${valor}</span>`;
+        fila.innerHTML = '<span class="nivel">' + t.nivel + '</span>' +
+                         '<span class="valor">' + t.valor + '</span>';
         cont.appendChild(fila);
       });
     }
 
-    function renderizarBio(): void {
-      const cont = $<HTMLElement>('#bioGrid');
+    function renderizarBio() {
+      const cont = document.getElementById('bioGrid');
       if (!cont) return;
-      bioDatos.forEach(({ icono, titulo, texto }) => {
-        const card = document.createElement('div');
-        card.className = 'bio-card';
-        card.innerHTML = `<span class="bio-icono">${icono}</span><h4>${titulo}</h4><p>${texto}</p>`;
-        cont.appendChild(card);
+      bioDatos.forEach(function(b) {
+        const col = document.createElement('div');
+        col.className = 'col-12 col-sm-6 col-lg-4 col-xl-3';
+        col.innerHTML = '<div class="bio-card">' +
+          '<span class="bio-icono">' + b.icono + '</span>' +
+          '<h4>' + b.titulo + '</h4><p>' + b.texto + '</p>' +
+        '</div>';
+        cont.appendChild(col);
       });
     }
 
-    function renderizarComparativa(): void {
-      const cont = $<HTMLElement>('#comparativaGrid');
+    function renderizarComparativa() {
+      const cont = document.getElementById('comparativaGrid');
       if (!cont) return;
-      comparativas.forEach(({ titulo, texto }) => {
-        const div = document.createElement('div');
-        div.className = 'comp-item';
-        div.innerHTML = `<h4>${titulo}</h4><p>${texto}</p>`;
-        cont.appendChild(div);
+      comparativas.forEach(function(c) {
+        const col = document.createElement('div');
+        col.className = 'col-12 col-sm-6 col-lg-4';
+        col.innerHTML = '<div class="comp-item">' +
+          '<h4>' + c.titulo + '</h4><p>' + c.texto + '</p>' +
+        '</div>';
+        cont.appendChild(col);
       });
     }
 
-    function renderizarSentidos(): void {
-      const cont = $<HTMLElement>('#sentidosGrid');
+    function renderizarSentidos() {
+      const cont = document.getElementById('sentidosGrid');
       if (!cont) return;
-      sentidos.forEach(({ icono, titulo, texto }) => {
-        const card = document.createElement('div');
-        card.className = 'sentido-card';
-        card.innerHTML = `
-          <span class="sentido-icono">${icono}</span>
-          <div class="sentido-info"><h4>${titulo}</h4><p>${texto}</p></div>
-        `;
-        cont.appendChild(card);
+      sentidos.forEach(function(s) {
+        const col = document.createElement('div');
+        col.className = 'col-12 col-sm-6 col-lg-3';
+        col.innerHTML = '<div class="sentido-card">' +
+          '<span class="sentido-icono">' + s.icono + '</span>' +
+          '<div class="sentido-info"><h4>' + s.titulo + '</h4><p>' + s.texto + '</p></div>' +
+        '</div>';
+        cont.appendChild(col);
       });
     }
 
-    function renderizarCuriosidades(): void {
-      const cont = $<HTMLElement>('#curiosidades');
+    function renderizarCuriosidades() {
+      const cont = document.getElementById('curiosidadesGrid');
       if (!cont) return;
-      curiosidades.forEach(({ icono, titulo, texto }) => {
-        const div = document.createElement('div');
-        div.className = 'curiosidad';
-        div.innerHTML = `
-          <span class="curiosidad-icono">${icono}</span>
-          <div class="curiosidad-texto"><strong>${titulo}</strong>${texto}</div>
-        `;
-        cont.appendChild(div);
+      curiosidades.forEach(function(c) {
+        const col = document.createElement('div');
+        col.className = 'col-12 col-sm-6 col-lg-4 col-xl-3';
+        col.innerHTML = '<div class="curiosidad">' +
+          '<span class="curiosidad-icono">' + c.icono + '</span>' +
+          '<div class="curiosidad-texto"><strong>' + c.titulo + '</strong>' + c.texto + '</div>' +
+        '</div>';
+        cont.appendChild(col);
       });
     }
 
-    function renderizarCuidados(): void {
-      const cont = $<HTMLElement>('#cuidados');
+    function renderizarCuidados() {
+      const cont = document.getElementById('cuidadosGrid');
       if (!cont) return;
-      cuidados.forEach(({ icono, titulo, descripcion, puntos }) => {
-        const card = document.createElement('div');
-        card.className = 'cuidado';
-        const ul = puntos.map(p => `<li>${p}</li>`).join('');
-        card.innerHTML = `
-          <span class="cuidado-icono">${icono}</span>
-          <h3>${titulo}</h3>
-          <p>${descripcion}</p>
-          <ul>${ul}</ul>
-        `;
-        cont.appendChild(card);
+      cuidados.forEach(function(c) {
+        const col = document.createElement('div');
+        col.className = 'col-12 col-sm-6 col-lg-4 col-xl-3';
+        let ul = '';
+        c.puntos.forEach(function(p) { ul += '<li>' + p + '</li>'; });
+        col.innerHTML = '<div class="cuidado">' +
+          '<span class="cuidado-icono">' + c.icono + '</span>' +
+          '<h3>' + c.titulo + '</h3>' +
+          '<p>' + c.descripcion + '</p>' +
+          '<ul>' + ul + '</ul>' +
+        '</div>';
+        cont.appendChild(col);
       });
     }
 
-    class PerritoSeguidor {
-      private el: HTMLDivElement;
-      private activo: boolean = false;
-      private mouseX: number = 0;
-      private mouseY: number = 0;
-      private x: number = 0;
-      private y: number = 0;
+    /* ============================================================
+       🌗 TEMA
+       ============================================================ */
+    const themeBtn = document.getElementById('themeBtn');
+    const btnAuto = document.getElementById('btnAuto');
+    const toast = document.getElementById('toastModo');
+    const toastIcono = document.getElementById('toastIcono');
+    const toastTexto = document.getElementById('toastTexto');
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-      constructor() {
-        this.el = document.createElement('div');
-        this.el.textContent = '🐕';
-        this.el.style.cssText = `
-          position: fixed;
-          font-size: 2.4rem;
-          pointer-events: none;
-          z-index: 998;
-          filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-          display: none;
-        `;
-        document.body.appendChild(this.el);
-        document.addEventListener('dblclick', () => this.toggle());
-        document.addEventListener('mousemove', (e) => {
-          this.mouseX = e.clientX;
-          this.mouseY = e.clientY;
-        });
-        this.animar();
+    let usandoAuto = true;
+
+    function aplicarTema(tema, mostrarToast) {
+      const esOscuro = tema === 'oscuro';
+      const cambio = document.body.classList.contains('dark') !== esOscuro;
+      document.body.classList.toggle('dark', esOscuro);
+      if (themeBtn) {
+        themeBtn.textContent = esOscuro ? '☀️ Diurno' : '🌙 Nocturno';
+      }
+      if (cambio && mostrarToast) {
+        mostrarNotificacion(tema);
+        efectoExplosion(
+          window.innerWidth - 60, 60,
+          esOscuro ? ['🌙', '⭐', '✨'] : ['☀️', '🌞', '✨'],
+          8
+        );
+      }
+    }
+
+    function mostrarNotificacion(tema) {
+      if (!toast || !toastIcono || !toastTexto) return;
+      const hora = new Date().getHours();
+      const esNoche = hora >= 19 || hora < 7;
+      let mensaje = '';
+      let icono = '';
+
+      if (usandoAuto) {
+        if (esNoche) {
+          icono = '🌙';
+          mensaje = 'Modo nocturno (es de noche)';
+        } else {
+          icono = tema === 'oscuro' ? '🌙' : '☀️';
+          mensaje = tema === 'oscuro' ? 'Modo oscuro activado' : 'Modo claro activado';
+        }
+      } else {
+        icono = tema === 'oscuro' ? '🌙' : '☀️';
+        mensaje = tema === 'oscuro' ? 'Modo nocturno activado' : 'Modo diurno activado';
       }
 
-      private toggle(): void {
-        this.activo = !this.activo;
-        this.el.style.display = this.activo ? 'block' : 'none';
-        if (this.activo) {
-          efectoExplosion({
-            x: window.innerWidth / 2, y: window.innerHeight / 2,
-            simbolos: ['🐕', '🐾', '❤️'], cantidad: 10,
-          });
-        }
-      }
-
-      private animar = (): void => {
-        if (this.activo) {
-          this.x += (this.mouseX - this.x) * 0.08;
-          this.y += (this.mouseY - this.y) * 0.08;
-          this.el.style.left = `${this.x - 20}px`;
-          this.el.style.top = `${this.y - 20}px`;
-        }
-        requestAnimationFrame(this.animar);
-      };
+      toastIcono.textContent = icono;
+      toastTexto.textContent = mensaje;
+      toast.classList.add('mostrar');
+      setTimeout(function() { toast.classList.remove('mostrar'); }, 2500);
     }
 
-    function activarTituloRotativo(): void {
+    function aplicarAuto(mostrarToast) {
+      const hora = new Date().getHours();
+      const esNoche = hora >= 19 || hora < 7;
+      const prefiereOscuro = mediaQuery.matches;
+      let tema;
+      if (esNoche) tema = 'oscuro';
+      else if (prefiereOscuro && hora >= 17) tema = 'oscuro';
+      else tema = 'claro';
+      aplicarTema(tema, mostrarToast);
+    }
+
+    function actualizarBotonAuto() {
+      if (!btnAuto) return;
+      btnAuto.dataset.activo = usandoAuto ? 'true' : 'false';
+      btnAuto.dataset.tooltip = usandoAuto ? 'Auto activo' : 'Auto desactivado';
+    }
+
+    function inicializarTema() {
+      const manualGuardado = localStorage.getItem('tema-manual');
+      usandoAuto = manualGuardado !== 'false';
+      if (usandoAuto) aplicarAuto(false);
+      else {
+        const guardado = localStorage.getItem('tema');
+        aplicarTema(guardado === 'oscuro' ? 'oscuro' : 'claro', false);
+      }
+      actualizarBotonAuto();
+    }
+
+    if (themeBtn) {
+      themeBtn.addEventListener('click', function() {
+        const nuevo = document.body.classList.contains('dark') ? 'claro' : 'oscuro';
+        aplicarTema(nuevo, true);
+        localStorage.setItem('tema', nuevo);
+      });
+    }
+
+    if (btnAuto) {
+      btnAuto.addEventListener('click', function() {
+        usandoAuto = !usandoAuto;
+        localStorage.setItem('tema-manual', usandoAuto ? 'true' : 'false');
+        if (usandoAuto) aplicarAuto(true);
+        actualizarBotonAuto();
+      });
+    }
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', function() {
+        if (usandoAuto) aplicarAuto(false);
+      });
+    } else if (mediaQuery.addListener) {
+      mediaQuery.addListener(function() {
+        if (usandoAuto) aplicarAuto(false);
+      });
+    }
+
+    setInterval(function() {
+      if (usandoAuto) aplicarAuto(false);
+    }, 5 * 60 * 1000);
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'd' && e.ctrlKey) {
+        e.preventDefault();
+        const nuevo = document.body.classList.contains('dark') ? 'claro' : 'oscuro';
+        aplicarTema(nuevo, true);
+        localStorage.setItem('tema', nuevo);
+      }
+    });
+
+    /* ============================================================
+       💥 Explosión de emojis
+       ============================================================ */
+    function efectoExplosion(x, y, simbolos, cantidad) {
+      cantidad = cantidad || 6;
+      for (let i = 0; i < cantidad; i++) {
+        const span = document.createElement('span');
+        span.className = 'emoji-pop';
+        span.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
+        span.style.left = x + 'px';
+        span.style.top = y + 'px';
+        span.style.animationDelay = (i * 0.05) + 's';
+        span.style.fontSize = (1.5 + Math.random() * 1.5) + 'rem';
+        document.body.appendChild(span);
+        setTimeout(function() { span.remove(); }, 1200);
+      }
+    }
+
+    /* ============================================================
+       🐾 Huellas flotantes
+       ============================================================ */
+    function iniciarHuellas() {
+      const cont = document.getElementById('huellas');
+      if (!cont) return;
+      const emojis = ['🐾', '🦴', '🐶', '❤️', '🐕', '🎾'];
+      function crear() {
+        const h = document.createElement('div');
+        h.className = 'huella';
+        h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        h.style.left = (Math.random() * 100) + '%';
+        h.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
+        h.style.animationDuration = (9 + Math.random() * 7) + 's';
+        h.style.animationDelay = (Math.random() * 2) + 's';
+        cont.appendChild(h);
+        setTimeout(function() { h.remove(); }, 18000);
+      }
+      for (let i = 0; i < 6; i++) setTimeout(crear, i * 350);
+      setInterval(crear, 1600);
+    }
+
+    /* ============================================================
+       🐕 Perrito seguidor
+       ============================================================ */
+    function iniciarPerritoSeguidor() {
+      const el = document.createElement('div');
+      el.textContent = '🐕';
+      el.style.cssText = 'position:fixed;font-size:2.4rem;pointer-events:none;z-index:998;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3));display:none;';
+      document.body.appendChild(el);
+      let activo = false;
+      let mx = 0, my = 0, x = 0, y = 0;
+
+      document.addEventListener('dblclick', function() {
+        activo = !activo;
+        el.style.display = activo ? 'block' : 'none';
+        if (activo) {
+          efectoExplosion(window.innerWidth / 2, window.innerHeight / 2, ['🐕', '🐾', '❤️'], 10);
+        }
+      });
+
+      document.addEventListener('mousemove', function(e) {
+        mx = e.clientX;
+        my = e.clientY;
+      });
+
+      function animar() {
+        if (activo) {
+          x += (mx - x) * 0.08;
+          y += (my - y) * 0.08;
+          el.style.left = (x - 20) + 'px';
+          el.style.top = (y - 20) + 'px';
+        }
+        requestAnimationFrame(animar);
+      }
+      animar();
+    }
+
+    /* ============================================================
+       📸 Título rotativo
+       ============================================================ */
+    function iniciarTituloRotativo() {
       const t = ['🐶 Mundo Perruno', '🐾 Todo sobre perritos', '🦴 Aprende a cuidarlos'];
       let i = 0;
-      setInterval(() => { i = (i + 1) % t.length; document.title = t[i]; }, 3500);
+      setInterval(function() {
+        i = (i + 1) % t.length;
+        document.title = t[i];
+      }, 3500);
     }
 
-    function activarClicGlobal(): void {
-      document.addEventListener('click', (e) => {
-        const target = e.target as HTMLElement;
-        if (target.closest('button')) return;
-        efectoExplosion({
-          x: e.clientX, y: e.clientY,
-          simbolos: ['🐾', '❤️', '🦴', '✨'],
-          cantidad: 4,
-        });
+    /* ============================================================
+       🎊 Clic global
+       ============================================================ */
+    function iniciarClicGlobal() {
+      document.addEventListener('click', function(e) {
+        const target = e.target;
+        if (target.closest && (target.closest('button') || target.closest('a'))) return;
+        efectoExplosion(e.clientX, e.clientY, ['🐾', '❤️', '🦴', '✨'], 4);
       });
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    /* ============================================================
+       🚀 INIT
+       ============================================================ */
+    function iniciar() {
       renderizarPerros();
+      renderizarFicha();
       renderizarTaxonomia();
       renderizarBio();
       renderizarComparativa();
@@ -1730,32 +1799,23 @@
       renderizarCuriosidades();
       renderizarCuidados();
 
-      const themeBtn = $<HTMLButtonElement>('#themeBtn');
-      const btnAuto = $<HTMLButtonElement>('#btnAuto');
-      const toast = $<HTMLElement>('#toastModo');
-      const toastIcono = $<HTMLElement>('#toastIcono');
-      const toastTexto = $<HTMLElement>('#toastTexto');
+      inicializarTema();
+      iniciarHuellas();
+      iniciarPerritoSeguidor();
+      iniciarClicGlobal();
+      iniciarTituloRotativo();
 
-      if (themeBtn && btnAuto && toast && toastIcono && toastTexto) {
-        new ThemeManager(themeBtn, btnAuto, toast, toastIcono, toastTexto);
-      }
+      console.log('%c🐶 ¡Mundo Perruno cargado! (responsive)',
+        'color:#b02a5b;font-size:16px;font-weight:bold;');
+    }
 
-      new HuellasFondo('huellas');
-      new PerritoSeguidor();
-
-      activarClicGlobal();
-      activarTituloRotativo();
-
-      console.log(
-        '%c🐶 ¡Mundo Perruno cargado!%c\n' +
-        '• Clic en el botón para cambiar de modo\n' +
-        '• Botón 🔄 = modo automático (sistema + hora)\n' +
-        '• Ctrl+D = atajo de teclado\n' +
-        '• Doble clic = perrito seguidor',
-        'color:#b02a5b;font-size:18px;font-weight:bold;',
-        'color:#056e4a;font-size:13px;'
-      );
-    });
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', iniciar);
+    } else {
+      iniciar();
+    }
+  })();
   </script>
+
 </body>
 </html>
