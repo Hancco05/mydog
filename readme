@@ -1,9 +1,24 @@
-Este es un sitio web dedicado a mi perrito!
+# Mundo Perruno
 
-*Diseñado con 
-#Javascript
-#Html 
-#css 
+Un sitio web dedicado a los perritos, con información científica, cuidados, curiosidades y perritos animados hechos 100% con código (SVG + CSS).
 
+![Vista previa de Mundo Perruno](image.png)
 
-image.png
+# Características
+
+- 6 perritos animados con SVG + CSS (sin imágenes externas)
+- Modo claro / oscuro manual + automático (sistema + hora del día)
+- Escenario animado con sol, nubes y perrito corriendo
+- Información científica: taxonomía, biología, comparativa perro vs lobo
+- 12 curiosidades sobre perros
+- 8 tarjetas de cuidados básicos
+- Diseño responsive para PC, tablet y celular (Bootstrap 5)
+- Huellas flotantes de fondo
+- Explosión de emojis al hacer clic
+- Perrito seguidor del mouse (doble clic para activar)
+
+# Cómo usar
+
+1. Descarga o clona este repositorio:
+   bash
+   git clone https://github.com/tu-usuario/mundo-perruno.git
